@@ -1,18 +1,16 @@
 package com.insight.util.pojo;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.insight.util.Json;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
- * code by stock<chonglei>
- *
- * @Date 2017/11/7
- * @author chenleijun
+ * @author 宣炳刚
+ * @date 2019/05/20
  * @remark 分页类
  */
 public class PageConfigDTO implements Serializable {
+    private static final long serialVersionUID = -1L;
 
     /**
      * 第几页
@@ -28,18 +26,6 @@ public class PageConfigDTO implements Serializable {
      * 偏移量
      */
     private Integer offset;
-
-    /**
-     * 开始日期
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startDate;
-
-    /**
-     * 截止日期
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endDate;
 
     public Integer getPage() {
         return page == null ? 1 : page;
@@ -65,19 +51,8 @@ public class PageConfigDTO implements Serializable {
         this.offset = offset;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    @Override
+    public String toString() {
+        return Json.toJson(this);
     }
 }
