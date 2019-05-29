@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author duxl
@@ -37,6 +38,22 @@ public final class Json {
     }
 
     private Json() {
+    }
+
+    /**
+     * 克隆一个对象或将一个对象转换成新的类型并复制相同属性的值
+     *
+     * @param type bean类型
+     * @param <T>  泛型
+     * @return bean
+     */
+    public static <T> T clone(Object obj, Class<T> type) {
+        String json = toJson(obj);
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+
+        return toBean(json, type);
     }
 
     /**
@@ -78,9 +95,9 @@ public final class Json {
     /**
      * 将json转换成指定类型的集合
      *
-     * @param json
-     * @param elementClasses
-     * @param <T>
+     * @param json           json数据
+     * @param elementClasses 集合元素类型
+     * @param <T>            泛型
      * @return List
      */
     public static <T> T toList(String json, Class<?>... elementClasses) {
@@ -119,12 +136,12 @@ public final class Json {
      * 先把bean转换为json字符串，再把json字符串进行base64编码
      *
      * @param obj bean
-     * @return
+     * @return base64编码的Json
      */
     public static String toBase64(Object obj) {
         String json = toJson(obj);
 
-        return Base64Encryptor.encode(json);
+        return Base64Encryptor.encode(Objects.requireNonNull(json));
     }
 
     /**

@@ -1,9 +1,14 @@
 package com.insight.util.service;
 
+import com.insight.util.DateHelper;
+import com.insight.util.Redis;
 import com.insight.util.pojo.Reply;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 宣炳刚
@@ -11,11 +16,6 @@ import javax.servlet.http.HttpServletRequest;
  * @remark 通用控制器基类
  */
 public class BaseController {
-
-    /**
-     * StringRedisTemplate
-     */
-    private StringRedisTemplate redis;
 
     /**
      * HttpServletRequest
@@ -112,12 +112,70 @@ public class BaseController {
         return verify.compare(key);
     }
 
-    public StringRedisTemplate getRedis() {
-        return redis;
+    /**
+     * 获取限流计时周期剩余秒数
+     *
+     * @param key     键值
+     * @param seconds 限流计时周期秒数
+     * @return 剩余秒数
+     */
+    public Integer getSurplus(String key, Integer seconds) {
+        if (key == null || key.isEmpty() || seconds == null || seconds.equals(0)) {
+            return 0;
+        }
+
+        key = "Limit:" + key;
+        String val = Redis.get(key);
+        if (val == null || val.isEmpty()) {
+            Redis.set(key, DateHelper.getDateTime(), seconds, TimeUnit.SECONDS);
+
+            return 0;
+        }
+
+        Date time = DateHelper.parseDateTime(val);
+        long bypast = System.currentTimeMillis() - Objects.requireNonNull(time).getTime();
+        if (bypast > 1000) {
+            return seconds - (int) bypast / 1000;
+        }
+
+        // 调用时间间隔低于1秒时,重置调用时间为当前时间作为惩罚
+        Redis.set(key, DateHelper.getDateTime(), seconds, TimeUnit.SECONDS);
+
+        return seconds;
     }
 
-    public void setRedis(StringRedisTemplate redis) {
-        this.redis = redis;
+    /**
+     * 是否被限流(超过限流计时周期最大访问次数)
+     *
+     * @param key     键值
+     * @param seconds 限流计时周期秒数
+     * @param max     调用限制次数
+     * @return 是否限制访问
+     */
+    public Boolean isLimited(String key, Integer seconds, Integer max) {
+        if (key == null || key.isEmpty() || seconds == null || seconds.equals(0)) {
+            return false;
+        }
+
+        // 如记录不存在,则记录访问次数为1
+        key = "Limit:" + key;
+        String val = Redis.get(key);
+        if (val == null || val.isEmpty()) {
+            Redis.set(key, "1", seconds, TimeUnit.SECONDS);
+
+            return false;
+        }
+
+        // 读取访问次数,如次数超过限制,返回true,否则访问次数增加1次
+        Integer count = Integer.valueOf(val);
+        Long expire = Redis.getExpire(key, TimeUnit.SECONDS);
+        if (count > max) {
+            return true;
+        }
+
+        count++;
+        Redis.set(key, count.toString(), expire, TimeUnit.SECONDS);
+        return false;
     }
 
     public HttpServletRequest getRequest() {

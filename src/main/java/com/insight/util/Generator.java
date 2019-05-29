@@ -1,9 +1,13 @@
 package com.insight.util;
 
+import com.insight.util.common.ApplicationContextHolder;
+import com.insight.util.common.LockHandler;
+import com.insight.util.pojo.Param;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author duxl
@@ -11,14 +15,40 @@ import java.util.UUID;
  * @remark 常用Generator
  */
 public final class Generator {
+    private LockHandler lock;
+    private Map<String, String> set;
 
-    private Generator() {
+    /**
+     * 构造函数
+     */
+    public Generator() {
+        this.lock = ApplicationContextHolder.getContext().getBean(LockHandler.class);
+
+        String val = Redis.get("GarbleSet");
+        if (val.isEmpty()) {
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < 100; i++) {
+                list.add(Util.flushLeft(i, 2));
+            }
+
+            Random random = new Random();
+            set = new HashMap<>();
+            for (int i = 0; i < 100; i++) {
+                int index = random.nextInt(100 - i);
+                set.put(Util.flushLeft(i, 2), list.get(index));
+                list.remove(index);
+            }
+
+            Redis.set("GarbleSet", Json.toJson(set));
+        } else {
+            set = Json.toMap(val);
+        }
     }
 
     /**
      * 生成uuid
      *
-     * @return
+     * @return uuid
      */
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "");
@@ -53,5 +83,119 @@ public final class Generator {
      */
     public static String randomAlphanumeric(int length) {
         return RandomStringUtils.randomAlphanumeric(length);
+    }
+
+
+    /**
+     * 获取指定格式的编码
+     *
+     * @param format 编码格式,日期格式为yyyy-MM-dd的组合,流水号格式为#l,l为流水号位数,前补0
+     * @param group  分组格式
+     * @return 编码
+     */
+    public String newCode(String format, String group) {
+        return newCode(format, group, true);
+    }
+
+    /**
+     * 获取指定格式的编码
+     *
+     * @param format    编码格式,日期格式为yyyy-MM-dd的组合,流水号格式为#l,l为流水号位数,前补0
+     * @param group     分组格式
+     * @param isEncrypt 是否加密流水号
+     * @return 编码
+     */
+    public String newCode(String format, String group, Boolean isEncrypt) {
+        int index = format.indexOf("#");
+        if (index < 0) {
+            return "编码格式不正确！需要有流水号段，例如：#4";
+        }
+
+        String length = format.substring(index + 1, index + 2);
+        int len = Integer.valueOf(length);
+        if (len < 2 || len > 8) {
+            return "编码格式不正确！流水号只允许2-8位";
+        }
+
+        // 格式化日期
+        format = replace(format);
+        group = replace(group);
+
+        // 获取分布式锁
+        Param param = new Param(group);
+        if (!lock.tryLock(param)) {
+            return null;
+        }
+
+        // 获取流水号
+        int no;
+        String key = "CodeGroup:" + group + "#" + length;
+        String val = Redis.get(key);
+        if (val == null || val.isEmpty()) {
+            if (isEncrypt) {
+                int max = (int) Math.pow(10, len);
+                Random random = new Random();
+                no = random.nextInt(max);
+            } else {
+                no = 1;
+            }
+        } else {
+            no = (Integer.valueOf(val) + 1);
+        }
+
+        // 更新流水号并释放锁
+        Redis.set(key, String.valueOf(no));
+        lock.releaseLock(param);
+
+        // 格式化流水号
+        String code = Util.flushLeft(no, len);
+        int l = code.length();
+        if (l > len) {
+            code = code.substring(l - len, l);
+        }
+
+        // 如需加密流水号,进行位数减一次迭代加密流水号
+        int i = len - 1;
+        while (isEncrypt && i > 0) {
+            i = i - 1;
+            code = garble(code);
+        }
+
+        return format.replace("#" + len, code);
+    }
+
+    /**
+     * 字符串混淆
+     *
+     * @param str 输入字符串
+     * @return 混淆后字符串
+     */
+    private String garble(String str) {
+        int len = str.length();
+        String first = len > 2 ? str.substring(0, 1) : "";
+        String high = len > 3 ? str.substring(1, len - 2) : "";
+        String low = set.get(str.substring(len - 2, len));
+
+        return high + low + first;
+    }
+
+    /**
+     * 日期替换
+     *
+     * @param str 原始字符串
+     * @return 替换后的字符串
+     */
+    private String replace(String str) {
+        String[] array = {"yyyy", "yy", "MM", "dd"};
+        for (String format : array) {
+            String date = DateHelper.getDateTime(format);
+            if (date == null || date.isEmpty()) {
+                continue;
+            }
+
+            str = str.replace(format, date);
+        }
+
+        return str;
     }
 }

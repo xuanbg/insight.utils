@@ -1,13 +1,11 @@
 package com.insight.util.service;
 
 import com.insight.util.Json;
+import com.insight.util.Redis;
 import com.insight.util.ReplyHelper;
 import com.insight.util.Util;
 import com.insight.util.common.ApplicationContextHolder;
-import com.insight.util.pojo.AccessToken;
-import com.insight.util.pojo.Reply;
-import com.insight.util.pojo.TokenInfo;
-import com.insight.util.pojo.UserInfo;
+import com.insight.util.pojo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -25,7 +23,6 @@ public class Verify {
     private final String hash;
 
     private TokenInfo basis = null;
-    private UserInfo info = null;
 
     /**
      * 用户ID
@@ -53,7 +50,6 @@ public class Verify {
 
         userId = accessToken.getUserId();
         basis = getToken(accessToken.getId());
-        info = getUserInfo();
     }
 
     /**
@@ -89,7 +85,7 @@ public class Verify {
             return ReplyHelper.invalidToken();
         }
 
-        if (info == null || info.getInvalid()) {
+        if (isInvalid()) {
             return ReplyHelper.fail("用户已被禁用");
         }
 
@@ -103,7 +99,7 @@ public class Verify {
             return ReplyHelper.success();
         }
 
-        logger.warn("用户『" + info.getAccount() + "』试图使用未授权的功能:" + function);
+        logger.warn("用户『" + getAccount() + "』试图使用未授权的功能:" + function);
         return ReplyHelper.noAuth();
     }
 
@@ -133,18 +129,36 @@ public class Verify {
     }
 
     /**
-     * 根据用户ID获取缓存中的用户信息
+     * 用户是否被禁用
      *
-     * @return UserInfo(可能为null)
+     * @return User(可能为null)
      */
-    private UserInfo getUserInfo() {
+    private boolean isInvalid() {
         String key = "User:" + userId;
-        String json = redis.opsForValue().get(key);
-        if (json == null || json.isEmpty()) {
+        Object value = Redis.get(key, "isInvalid");
+        if (value == null) {
+            return true;
+        }
+
+        return (boolean) value;
+    }
+
+    /**
+     * 获取用户账号
+     *
+     * @return 用户账号(可能为null)
+     */
+    private String getAccount() {
+        String key = "User:" + userId;
+        Object value = Redis.get(key, "user");
+        if (value == null) {
             return null;
         }
 
-        return Json.toBean(json, UserInfo.class);
+        String json = value.toString();
+        User user = Json.toBean(json, User.class);
+
+        return user.getAccount();
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.insight.util.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,11 @@ public class TokenInfo implements Serializable {
      * 单点登录
      */
     private Boolean signInOne;
+
+    /**
+     * 是否自动刷新
+     */
+    private Boolean autoRefresh;
 
     /**
      * 租户到期时间
@@ -157,6 +163,14 @@ public class TokenInfo implements Serializable {
 
     public void setSignInOne(Boolean signInOne) {
         this.signInOne = signInOne;
+    }
+
+    public Boolean getAutoRefresh() {
+        return autoRefresh;
+    }
+
+    public void setAutoRefresh(Boolean autoRefresh) {
+        this.autoRefresh = autoRefresh;
     }
 
     public Date getExpireDate() {

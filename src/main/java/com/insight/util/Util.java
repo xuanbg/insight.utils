@@ -27,6 +27,19 @@ public final class Util {
     }
 
     /**
+     * 数字转固定长度字符串,左补零
+     *
+     * @param num 输入数字
+     * @param len 字符串长度
+     * @return 转换后的字符串
+     */
+    public static String flushLeft(int num, int len) {
+        String format = "%0" + len + "d";
+
+        return String.format(format, num);
+    }
+
+    /**
      * 数值金额转换为中文大写金额
      *
      * @param amount 金额(两位小数)
@@ -108,7 +121,7 @@ public final class Util {
      *
      * @param source 原list
      * @param n      每个list size
-     * @param <T>
+     * @param <T>    类型
      * @return List<List>
      */
     public static <T> List<List<T>> splitList(List<T> source, Integer n) {
