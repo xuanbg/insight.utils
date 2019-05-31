@@ -69,7 +69,7 @@ public class User implements Serializable {
     /**
      * 用户是否内置
      */
-    private Boolean builtIn;
+    private Boolean builtin;
 
     /**
      * 用户是否失效
@@ -179,12 +179,12 @@ public class User implements Serializable {
         this.remark = remark;
     }
 
-    public Boolean getBuiltIn() {
-        return builtIn;
+    public Boolean getBuiltin() {
+        return builtin;
     }
 
-    public void setBuiltIn(Boolean builtIn) {
-        this.builtIn = builtIn;
+    public void setBuiltin(Boolean builtin) {
+        this.builtin = builtin;
     }
 
     public Boolean getInvalid() {
