@@ -24,8 +24,8 @@ public final class Generator {
     public Generator() {
         this.lock = ApplicationContextHolder.getContext().getBean(LockHandler.class);
 
-        String val = Redis.get("GarbleSet");
-        if (val.isEmpty()) {
+        String val = Redis.get("Config:GarbleSet");
+        if (val == null || val.isEmpty()) {
             List<String> list = new ArrayList<>();
             for (int i = 0; i < 100; i++) {
                 list.add(Util.flushLeft(i, 2));
@@ -39,7 +39,7 @@ public final class Generator {
                 list.remove(index);
             }
 
-            Redis.set("GarbleSet", Json.toJson(set));
+            Redis.set("Config:GarbleSet", Json.toJson(set));
         } else {
             set = Json.toMap(val);
         }
@@ -53,7 +53,6 @@ public final class Generator {
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "");
     }
-
 
     /**
      * 生成指定长度的随机数字字符串
@@ -84,7 +83,6 @@ public final class Generator {
     public static String randomAlphanumeric(int length) {
         return RandomStringUtils.randomAlphanumeric(length);
     }
-
 
     /**
      * 获取指定格式的编码

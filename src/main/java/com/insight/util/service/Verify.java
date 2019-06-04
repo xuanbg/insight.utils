@@ -135,12 +135,12 @@ public class Verify {
      */
     private boolean isInvalid() {
         String key = "User:" + userId;
-        Object value = Redis.get(key, "isInvalid");
+        String value = Redis.get(key, "IsInvalid");
         if (value == null) {
             return true;
         }
 
-        return (boolean) value;
+        return Boolean.valueOf(value);
     }
 
     /**
@@ -150,13 +150,12 @@ public class Verify {
      */
     private String getAccount() {
         String key = "User:" + userId;
-        Object value = Redis.get(key, "user");
+        String value = Redis.get(key, "User");
         if (value == null) {
             return null;
         }
 
-        String json = value.toString();
-        User user = Json.toBean(json, User.class);
+        User user = Json.toBean(value, User.class);
 
         return user.getAccount();
     }
@@ -170,6 +169,6 @@ public class Verify {
     private Boolean isPermit(String function) {
         List<String> functions = basis.getPermitFuncs();
 
-        return functions.stream().anyMatch(i -> i.contains(function));
+        return functions.stream().anyMatch(i -> i.equalsIgnoreCase(function));
     }
 }

@@ -41,8 +41,10 @@ public final class Redis {
      * @param field 字段名称
      * @return Value
      */
-    public static Object get(String key, String field) {
-        return redis.opsForHash().get(key, field);
+    public static String get(String key, String field) {
+        Object val = redis.opsForHash().get(key, field);
+
+        return val == null ? null : val.toString();
     }
 
     /**
