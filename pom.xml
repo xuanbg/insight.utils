@@ -4,7 +4,7 @@
 
     <groupId>com.insight</groupId>
     <artifactId>utils</artifactId>
-    <version>1.2.12.release</version>
+    <version>1.2.13.release</version>
     <build>
         <plugins>
             <plugin>
@@ -99,16 +99,6 @@
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
             <version>RELEASE</version>
         </dependency>
         <dependency>
