@@ -30,7 +30,7 @@ public class BaseController {
     /**
      * 令牌持有人信息
      */
-    protected LoginInfo loginInfo;
+    protected LoginInfo loginInfo = new LoginInfo();
 
     /**
      * 会话合法性验证
@@ -70,6 +70,12 @@ public class BaseController {
             key = null;
         }
 
+        tokenId = verify.getTokenId();
+        reply = verify.compare(key);
+        if (!reply.getSuccess()) {
+            return false;
+        }
+
         TokenInfo basis = verify.getBasis();
         loginInfo.setAppId(basis.getAppId());
         loginInfo.setTenantId(basis.getTenantId());
@@ -77,10 +83,7 @@ public class BaseController {
         loginInfo.setUserId(verify.getUserId());
         loginInfo.setUserName(verify.getUserName());
 
-        tokenId = verify.getTokenId();
-        reply = verify.compare(key);
-
-        return reply.getSuccess();
+        return true;
     }
 
     /**
