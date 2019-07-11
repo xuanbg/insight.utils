@@ -5,7 +5,10 @@ import com.insight.util.Redis;
 import com.insight.util.ReplyHelper;
 import com.insight.util.Util;
 import com.insight.util.common.ApplicationContextHolder;
-import com.insight.util.pojo.*;
+import com.insight.util.pojo.AccessToken;
+import com.insight.util.pojo.Reply;
+import com.insight.util.pojo.TokenInfo;
+import com.insight.util.pojo.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -20,9 +23,21 @@ import java.util.List;
 public class Verify {
     private final Logger logger;
     private final StringRedisTemplate redis;
+
+    /**
+     * 令牌哈希值
+     */
     private final String hash;
 
-    private TokenInfo basis = null;
+    /**
+     * 缓存中的令牌信息
+     */
+    private TokenInfo basis;
+
+    /**
+     * 令牌ID
+     */
+    private String tokenId;
 
     /**
      * 用户ID
@@ -32,15 +47,15 @@ public class Verify {
     /**
      * 构造方法
      *
-     * @param token     访问令牌
-     * @param userAgent 用户信息
+     * @param token       访问令牌
+     * @param fingerprint 用户特征串
      */
-    public Verify(String token, String userAgent) {
+    public Verify(String token, String fingerprint) {
         this.redis = ApplicationContextHolder.getContext().getBean(StringRedisTemplate.class);
         this.logger = LoggerFactory.getLogger(this.getClass());
 
         // 初始化参数
-        hash = Util.md5(token + userAgent);
+        hash = Util.md5(token + fingerprint);
         AccessToken accessToken = Json.toAccessToken(token);
         if (accessToken == null) {
             logger.error("提取验证信息失败。TokenManage is:" + token);
@@ -48,8 +63,9 @@ public class Verify {
             return;
         }
 
+        tokenId = accessToken.getId();
         userId = accessToken.getUserId();
-        basis = getToken(accessToken.getId());
+        basis = getToken();
     }
 
     /**
@@ -99,7 +115,9 @@ public class Verify {
             return ReplyHelper.success();
         }
 
-        logger.warn("用户『" + getAccount() + "』试图使用未授权的功能:" + function);
+        String account = getUser().getAccount();
+        logger.warn("用户『" + account + "』试图使用未授权的功能:" + function);
+
         return ReplyHelper.noAuth();
     }
 
@@ -113,17 +131,49 @@ public class Verify {
     }
 
     /**
+     * 获取缓存中的Token
+     *
+     * @return TokenInfo
+     */
+    public TokenInfo getBasis() {
+        return basis;
+    }
+
+    /**
+     * 获取令牌ID
+     *
+     * @return 令牌ID
+     */
+    public String getTokenId() {
+        return tokenId;
+    }
+
+    /**
+     * 获取令牌持有人的用户ID
+     *
+     * @return 用户ID
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * 获取令牌持有人的用户名
+     *
+     * @return 用户名
+     */
+    public String getUserName() {
+        return getUser().getName();
+    }
+
+    /**
      * 根据令牌ID获取缓存中的Token
      *
-     * @param tokenId 令牌ID
      * @return TokenInfo(可能为null)
      */
-    private TokenInfo getToken(String tokenId) {
+    private TokenInfo getToken() {
         String key = "Token:" + tokenId;
         String json = redis.opsForValue().get(key);
-        if (json == null || json.isEmpty()) {
-            return null;
-        }
 
         return Json.toBean(json, TokenInfo.class);
     }
@@ -144,20 +194,15 @@ public class Verify {
     }
 
     /**
-     * 获取用户账号
+     * 读取缓存中的用户数据
      *
-     * @return 用户账号(可能为null)
+     * @return 用户数据
      */
-    private String getAccount() {
+    private User getUser() {
         String key = "User:" + userId;
         String value = Redis.get(key, "User");
-        if (value == null) {
-            return null;
-        }
 
-        User user = Json.toBean(value, User.class);
-
-        return user.getAccount();
+        return Json.toBean(value, User.class);
     }
 
     /**

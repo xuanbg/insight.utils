@@ -101,6 +101,17 @@ public final class Redis {
     }
 
     /**
+     * 删除指定的Hash键
+     *
+     * @param key   键
+     * @param field 字段名称
+     */
+    public static void deleteKey(String key, String field) {
+
+        redis.opsForHash().delete(key, field);
+    }
+
+    /**
      * 删除hash
      *
      * @param key   键
