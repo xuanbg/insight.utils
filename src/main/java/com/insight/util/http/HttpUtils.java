@@ -1,10 +1,13 @@
-package com.insight.util.httpClient;
+package com.insight.util.http;
 
-import java.io.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author luwenbao
@@ -12,6 +15,7 @@ import java.nio.charset.StandardCharsets;
  * @remark
  */
 public class HttpUtils {
+    private static final Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
     /**
      * 根据url获取远程文件资源
@@ -37,19 +41,21 @@ public class HttpUtils {
             }
             data = bos.toByteArray();
             bos.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         } finally {
             try {
-                bos.close();
-                bis.close();
-                httpUrl.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
+                if (bos != null) {
+                    bos.close();
+                }
+                if (bis != null) {
+                    bis.close();
+                }
+                if (httpUrl != null) {
+                    httpUrl.disconnect();
+                }
+            } catch (IOException | NullPointerException e) {
+                logger.error(e.getMessage());
             }
         }
         return data;

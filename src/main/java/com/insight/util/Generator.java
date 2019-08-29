@@ -3,9 +3,7 @@ package com.insight.util;
 import com.insight.util.common.ApplicationContextHolder;
 import com.insight.util.common.LockHandler;
 import com.insight.util.pojo.Param;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.*;
 
@@ -110,7 +108,7 @@ public final class Generator {
         }
 
         String length = format.substring(index + 1, index + 2);
-        int len = Integer.valueOf(length);
+        int len = Integer.parseInt(length);
         if (len < 2 || len > 8) {
             return "编码格式不正确！流水号只允许2-8位";
         }
@@ -138,7 +136,7 @@ public final class Generator {
                 no = 1;
             }
         } else {
-            no = (Integer.valueOf(val) + 1);
+            no = (Integer.parseInt(val) + 1);
         }
 
         // 更新流水号并释放锁
