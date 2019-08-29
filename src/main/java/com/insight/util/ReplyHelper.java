@@ -407,6 +407,20 @@ public final class ReplyHelper {
     /**
      * 请求过于频繁
      *
+     * @param msg 错误消息
+     * @return Reply
+     */
+    public static Reply tooOften(String msg) {
+        if (msg != null && !msg.isEmpty()){
+            tooOftenReply.setMessage(msg);
+        }
+
+        return tooOftenReply;
+    }
+
+    /**
+     * 请求过于频繁
+     *
      * @param obj 数据对象
      * @return
      */
