@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @date 2019/05/20
  * @remark 分页类
  */
-public class PageConfigDTO implements Serializable {
+public class PageConfig implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**

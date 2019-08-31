@@ -10,7 +10,7 @@ import java.util.Date;
  * @date 2019/05/20
  * @remark 分页类
  */
-public class SearchDTO implements Serializable {
+public class Search implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
