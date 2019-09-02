@@ -65,7 +65,7 @@ public class Log implements Serializable {
     /**
      * 异常堆栈
      */
-    private String exception;
+    private Object exception;
 
     public String getRequestId() {
         return requestId;
@@ -147,11 +147,11 @@ public class Log implements Serializable {
         this.body = body;
     }
 
-    public String getException() {
+    public Object getException() {
         return exception;
     }
 
-    public void setException(String exception) {
+    public void setException(Object exception) {
         this.exception = exception;
     }
 }
