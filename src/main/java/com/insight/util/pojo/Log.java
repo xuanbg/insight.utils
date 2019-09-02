@@ -13,6 +13,11 @@ public class Log implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
+     * 请求ID
+     */
+    private String requestId;
+
+    /**
      * 日志时间
      */
     private Date time;
@@ -61,6 +66,14 @@ public class Log implements Serializable {
      * 异常堆栈
      */
     private String exception;
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
 
     public Date getTime() {
         return time;
