@@ -55,7 +55,7 @@ public class IDValidator {
         }
 
         if (idcard.length() == 15) {
-            return validate15IDCard(idcard);
+            return validate15Idcard(idcard);
         }
 
         return validate18Idcard(idcard);
@@ -165,7 +165,7 @@ public class IDValidator {
      * @param idcard
      * @return
      */
-    public static boolean validate15IDCard(String idcard) {
+    public static boolean validate15Idcard(String idcard) {
         if (idcard == null) {
             return false;
         }

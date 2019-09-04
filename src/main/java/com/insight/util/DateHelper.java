@@ -134,7 +134,7 @@ public final class DateHelper {
      *
      * @param dateStr 日期字符串
      * @param pattern 日期格式
-     * @return true/false
+     * @return 是否是给定格式
      */
     public static Boolean validateFormat(String dateStr, String pattern) {
         try {
@@ -195,7 +195,7 @@ public final class DateHelper {
     /**
      * 获取当月第一天
      *
-     * @return
+     * @return 日期
      */
     public static String getMonthFirstDay() {
         Calendar cal = Calendar.getInstance();
@@ -207,7 +207,7 @@ public final class DateHelper {
     /**
      * 获取当月最后一天
      *
-     * @return
+     * @return 日期
      */
     public static String getMonthLastDay() {
         Calendar cal = Calendar.getInstance();
@@ -223,7 +223,7 @@ public final class DateHelper {
     /**
      * 获取当前月天数
      *
-     * @return
+     * @return 天数
      */
     public static int getCurrentMonthDays() {
         Calendar cal = new GregorianCalendar();
@@ -234,9 +234,9 @@ public final class DateHelper {
     /**
      * 获取时间差天数
      *
-     * @param startDate
-     * @param endDate
-     * @return
+     * @param startDate 开始日期
+     * @param endDate   截止日期
+     * @return 天数
      */
     public static Integer getDiffDays(Date startDate, Date endDate) {
         long ei = getDiffSeconds(startDate, endDate);
@@ -247,9 +247,9 @@ public final class DateHelper {
     /**
      * 获取时间差秒
      *
-     * @param startDate
-     * @param endDate
-     * @return
+     * @param startDate 开始时间
+     * @param endDate   截止数据
+     * @return 秒数
      */
     public static Long getDiffSeconds(Date startDate, Date endDate) {
         if (startDate.after(endDate)) {
@@ -266,8 +266,8 @@ public final class DateHelper {
     /**
      * 计算当前时间到某一时间的秒数
      *
-     * @param endDate
-     * @return
+     * @param endDate 截止时间
+     * @return 秒数
      */
     public static Long getRemainSeconds(Date endDate) {
         return getRemainSeconds(endDate.getTime());
@@ -276,8 +276,8 @@ public final class DateHelper {
     /**
      * 计算当前时间到某一时间的秒数
      *
-     * @param endTime
-     * @return
+     * @param endTime 截止时间戳
+     * @return 秒数
      */
     public static Long getRemainSeconds(Long endTime) {
         return getRemainMilliSeconds(endTime) / 1000;
@@ -286,8 +286,8 @@ public final class DateHelper {
     /**
      * 计算当前时间到某一时间的毫秒数
      *
-     * @param endDate
-     * @return
+     * @param endDate 截止时间
+     * @return 毫秒数
      */
     public static Long getRemainMilliSeconds(Date endDate) {
         return getRemainMilliSeconds(endDate.getTime());
@@ -296,8 +296,8 @@ public final class DateHelper {
     /**
      * 计算当前时间到某一时间的毫秒数
      *
-     * @param endTime
-     * @return
+     * @param endTime 截止时间戳
+     * @return 毫秒数
      */
     public static Long getRemainMilliSeconds(Long endTime) {
         long currentTime = System.currentTimeMillis();
@@ -313,7 +313,7 @@ public final class DateHelper {
      *
      * @param date 输入的日期时间字符串
      * @return 格式化为yyyy-MM-dd HH-mm-ss格式的字符串
-     * @throws ParseException
+     * @throws ParseException 异常
      */
     public static String dateFormat(String date) throws ParseException {
         if (formatMap.isEmpty()) {
