@@ -1,11 +1,17 @@
 package com.insight.util.pojo;
 
+import com.insight.util.Json;
+
+import java.io.Serializable;
+
 /**
  * @author 宣炳刚
  * @date 2018/1/4
  * @remark 用户登录信息实体类
  */
-public class LoginInfo {
+public class LoginInfo implements Serializable {
+    private static final long serialVersionUID = -1L;
+
     /**
      * 应用ID
      */
@@ -69,5 +75,10 @@ public class LoginInfo {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Override
+    public String toString() {
+        return Json.toJson(this);
     }
 }

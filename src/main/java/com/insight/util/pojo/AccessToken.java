@@ -1,5 +1,7 @@
 package com.insight.util.pojo;
 
+import com.insight.util.Json;
+
 import java.io.Serializable;
 
 /**
@@ -63,5 +65,10 @@ public class AccessToken implements Serializable {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    @Override
+    public String toString() {
+        return Json.toJson(this);
     }
 }

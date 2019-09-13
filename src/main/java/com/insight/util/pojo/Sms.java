@@ -1,5 +1,9 @@
 package com.insight.util.pojo;
 
+import com.insight.util.Json;
+
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -7,16 +11,19 @@ import java.util.Map;
  * @date 2019-08-31
  * @remark 短信DTO
  */
-public class Sms {
+public class Sms implements Serializable {
+    private static final long serialVersionUID = -1L;
 
     /**
      * 手机号,多个手机号逗号分隔
      */
+    @NotEmpty(message = "手机号不能为空")
     private String mobiles;
 
     /**
      * 场景编号
      */
+    @NotEmpty(message = "发送场景不能为空")
     private String scene;
 
     /**
@@ -59,5 +66,10 @@ public class Sms {
 
     public void setParam(Map param) {
         this.param = param;
+    }
+
+    @Override
+    public String toString() {
+        return Json.toJson(this);
     }
 }

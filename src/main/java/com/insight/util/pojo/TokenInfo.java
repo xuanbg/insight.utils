@@ -1,6 +1,7 @@
 package com.insight.util.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.insight.util.Json;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -219,5 +220,10 @@ public class TokenInfo implements Serializable {
 
     public void setPermitFuncs(List<String> permitFuncs) {
         this.permitFuncs = permitFuncs;
+    }
+
+    @Override
+    public String toString() {
+        return Json.toJson(this);
     }
 }

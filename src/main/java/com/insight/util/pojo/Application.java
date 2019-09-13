@@ -1,5 +1,7 @@
 package com.insight.util.pojo;
 
+import com.insight.util.Json;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -165,5 +167,10 @@ public class Application implements Serializable {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    @Override
+    public String toString() {
+        return Json.toJson(this);
     }
 }

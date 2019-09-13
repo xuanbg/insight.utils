@@ -202,21 +202,6 @@ public final class ReplyHelper {
     /**
      * 请求成功
      *
-     * @param msg 消息
-     * @return Reply
-     */
-    public static Reply success(String msg) {
-        Reply reply = new Reply();
-        reply.setCode(200);
-        reply.setSuccess(true);
-        reply.setMessage(msg);
-
-        return reply;
-    }
-
-    /**
-     * 请求成功
-     *
      * @param data 数据
      * @param msg  消息
      * @return Reply

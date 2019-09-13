@@ -135,4 +135,9 @@ public final class Reply implements Serializable {
     public void setOption(Object option) {
         this.option = option;
     }
+
+    @Override
+    public String toString() {
+        return Json.toJson(this);
+    }
 }

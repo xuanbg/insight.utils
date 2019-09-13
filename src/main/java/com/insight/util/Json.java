@@ -1,17 +1,16 @@
 package com.insight.util;
 
-import com.insight.util.common.Base64Encryptor;
-import com.insight.util.pojo.AccessToken;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.insight.util.common.Base64Encryptor;
+import com.insight.util.pojo.AccessToken;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -63,6 +62,10 @@ public final class Json {
      * @return json
      */
     public static String toJson(Object obj) {
+        if (obj == null){
+            return null;
+        }
+
         try {
             return mapper.writeValueAsString(obj);
         } catch (IOException e) {
@@ -119,8 +122,28 @@ public final class Json {
      * @param json json
      * @return hashmap
      */
-    public static Map toMap(String json) {
+    public static HashMap toMap(String json) {
         if (json == null || json.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return mapper.readValue(json, HashMap.class);
+        } catch (IOException e) {
+            log(json);
+            return null;
+        }
+    }
+
+    /**
+     * 将对象转换为HashMap
+     *
+     * @param obj 对象
+     * @return hashmap
+     */
+    public static HashMap toMap(Object obj) {
+        String json = toJson(obj);
+        if (json == null || json.isEmpty()){
             return null;
         }
 
