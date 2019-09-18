@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author duxl
@@ -32,7 +31,6 @@ public final class Json {
 
     static {
         mapper.setDateFormat(myDateFormat);
-        //json串中有key为A，但指定转换的mybean中未定义属性A，会抛异常
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
@@ -48,9 +46,6 @@ public final class Json {
      */
     public static <T> T clone(Object obj, Class<T> type) {
         String json = toJson(obj);
-        if (json == null || json.isEmpty()) {
-            return null;
-        }
 
         return toBean(json, type);
     }
@@ -163,8 +158,11 @@ public final class Json {
      */
     public static String toBase64(Object obj) {
         String json = toJson(obj);
+        if (json == null || json.isEmpty()){
+            return null;
+        }
 
-        return Base64Encryptor.encode(Objects.requireNonNull(json));
+        return Base64Encryptor.encode(json);
     }
 
     /**
@@ -177,7 +175,9 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBeanFromBase64(String base64Str, Class<T> type) {
-        return toBean(Base64Encryptor.decodeToString(base64Str), type);
+        String json = Base64Encryptor.decodeToString(base64Str);
+
+        return toBean(json, type);
     }
 
     /**

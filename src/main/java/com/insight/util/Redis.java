@@ -82,7 +82,7 @@ public final class Redis {
     }
 
     /**
-     * 保存如不存在
+     * 以键值对方式保存数据到Redis
      *
      * @param key   键
      * @param value 值
@@ -119,13 +119,15 @@ public final class Redis {
     }
 
     /**
-     * 从Redis读取指定键的值
+     * 从Redis读取指定键的值并反序列化为对象后返回
      *
      * @param key 键
      * @return Value
      */
-    public static Map getHash(String key) {
-        return redis.opsForHash().entries(key);
+    public static <T> T get(String key, Class<T> type) {
+        Map val = redis.opsForHash().entries(key);
+
+        return Json.clone(val, type);
     }
 
     /**
@@ -174,7 +176,7 @@ public final class Redis {
     }
 
     /**
-     * 是否指定Key的成员
+     * 是否指定键的成员
      *
      * @param key    键
      * @param member Set成员
