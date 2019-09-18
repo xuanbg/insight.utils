@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2019/05/20
  * @remark 通用控制器基类
  */
-public final class Redis<T> {
+public final class Redis {
     private static StringRedisTemplate redis = ApplicationContextHolder.getContext().getBean(StringRedisTemplate.class);
 
     /**
