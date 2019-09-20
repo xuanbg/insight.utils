@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.util.Json;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class TokenInfo implements Serializable {
     private static final long serialVersionUID = -1L;
-    private static final int TIME_OUT = 1000 * 300;
+    private static final int TIME_OUT = 300;
 
     /**
      * 访问令牌MD5摘要
@@ -59,17 +60,17 @@ public class TokenInfo implements Serializable {
     /**
      * 租户到期时间
      */
-    private Date expireDate;
+    private LocalDate expireDate;
 
     /**
      * Token过期时间
      */
-    private Date expiryTime;
+    private LocalDateTime expiryTime;
 
     /**
      * Token失效时间
      */
-    private Date failureTime;
+    private LocalDateTime failureTime;
 
     /**
      * Token验证密钥
@@ -150,27 +151,27 @@ public class TokenInfo implements Serializable {
         this.autoRefresh = autoRefresh;
     }
 
-    public Date getExpireDate() {
+    public LocalDate getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(Date expireDate) {
+    public void setExpireDate(LocalDate expireDate) {
         this.expireDate = expireDate;
     }
 
-    public Date getExpiryTime() {
+    public LocalDateTime getExpiryTime() {
         return expiryTime;
     }
 
-    public void setExpiryTime(Date expiryTime) {
+    public void setExpiryTime(LocalDateTime expiryTime) {
         this.expiryTime = expiryTime;
     }
 
-    public Date getFailureTime() {
+    public LocalDateTime getFailureTime() {
         return failureTime;
     }
 
-    public void setFailureTime(Date failureTime) {
+    public void setFailureTime(LocalDateTime failureTime) {
         this.failureTime = failureTime;
     }
 
@@ -217,9 +218,9 @@ public class TokenInfo implements Serializable {
      */
     @JsonIgnore
     public Boolean isExpiry(Boolean isReal) {
-        Date now = new Date();
-        Date expiry = new Date(expiryTime.getTime() - (isReal ? TIME_OUT : 0));
-        return now.after(expiry);
+        LocalDateTime expiry = expiryTime.plusSeconds(isReal ? 0 : TIME_OUT);
+
+        return LocalDateTime.now().isAfter(expiry);
     }
 
     /**
@@ -229,7 +230,7 @@ public class TokenInfo implements Serializable {
      */
     @JsonIgnore
     public Boolean isFailure() {
-        return new Date().after(failureTime);
+        return LocalDateTime.now().isAfter(failureTime);
     }
 
     @Override
