@@ -2,6 +2,8 @@ package com.insight.util.pojo;
 
 import com.insight.util.Json;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
@@ -17,31 +19,37 @@ public class CustomMessage implements Serializable {
     /**
      * 应用ID
      */
+    @NotEmpty(message = "应用ID不能为空")
     private String appId;
 
     /**
      * 消息标签
      */
+    @NotEmpty(message = "消息标签不能为空")
     private String tag;
 
     /**
      * 发送类型:0.未定义;1.仅消息(001);2.仅推送(010);3.推送+消息(011);4.仅短信(100);5.消息+短信(101);6.推送+短信(110);7.消息+推送+短信(111)
      */
+    @NotNull(message = "发送类型类型不能为空")
     private Integer type;
 
     /**
      * 接收人,多个接收人使用逗号分隔
      */
+    @NotEmpty(message = "接收人不能为空")
     private String receivers;
 
     /**
      * 消息标题
      */
+    @NotEmpty(message = "消息标题不能为空")
     private String title;
 
     /**
      * 消息内容
      */
+    @NotEmpty(message = "消息内容不能为空")
     private String content;
 
     /**

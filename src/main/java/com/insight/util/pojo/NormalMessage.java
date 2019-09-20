@@ -2,6 +2,7 @@ package com.insight.util.pojo;
 
 import com.insight.util.Json;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -16,11 +17,13 @@ public class NormalMessage implements Serializable {
     /**
      * 场景编码
      */
+    @NotEmpty(message = "场景编码不能为空")
     private String sceneCode;
 
     /**
      * 应用ID
      */
+    @NotEmpty(message = "应用ID不能为空")
     private String appId;
 
     /**
@@ -31,6 +34,7 @@ public class NormalMessage implements Serializable {
     /**
      * 接收人,多个接收人使用逗号分隔
      */
+    @NotEmpty(message = "接收人不能为空")
     private String receivers;
 
     /**
