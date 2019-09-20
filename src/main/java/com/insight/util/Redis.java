@@ -3,10 +3,7 @@ package com.insight.util;
 import com.insight.util.common.ApplicationContextHolder;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -150,7 +147,7 @@ public final class Redis {
      * @param value 值
      */
     public static void set(String key, String field, Object value) {
-        redis.opsForHash().put(key, field, value);
+        redis.opsForHash().put(key, field, value.toString());
     }
 
     /**
@@ -160,8 +157,13 @@ public final class Redis {
      * @param map Map 对象
      */
     public static void set(String key, Map map) {
+        Map<String, String> hashMap = new HashMap<>(32);
+        for (Object k : map.keySet()) {
+            Object v = map.get(k);
+            hashMap.put(k.toString(), v == null ? null : v.toString());
+        }
 
-        redis.opsForHash().putAll(key, map);
+        redis.opsForHash().putAll(key, hashMap);
     }
 
     /**

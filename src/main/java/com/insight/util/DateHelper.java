@@ -31,7 +31,7 @@ public final class DateHelper {
     /**
      * 日期时间常用格式
      */
-    static String[] dateTimePatterns = {"yyyyMMddHHmmss", "yyyy-MM-dd HH:mm:ss"};
+    static String[] dateTimePatterns = {"yyyy-MM-dd HH:mm:ss", "yyyyMMddHHmmss"};
 
     private DateHelper() {
     }
