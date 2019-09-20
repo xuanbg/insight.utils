@@ -93,7 +93,7 @@ public final class ReplyHelper {
 
         //forbidden
         FORBID_REPLY.setCode(413);
-        FORBID_REPLY.setMessage("账户被禁止");
+        FORBID_REPLY.setMessage("账户被禁止使用");
         FORBID_REPLY.setSuccess(false);
 
         //invalid token
