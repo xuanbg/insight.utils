@@ -15,6 +15,12 @@ public class SmsCode implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
+     * 应用ID
+     */
+    @NotEmpty(message = "应用ID不能为空")
+    private String appId;
+
+    /**
      * 验证码类型:0.验证手机号;1.注册用户账号;2.重置密码;3.修改支付密码;4.修改手机号
      */
     @NotNull(message = "验证码类型不能为空")
@@ -27,16 +33,24 @@ public class SmsCode implements Serializable {
     private String mobile;
 
     /**
-     * 验证码
+     * 验证码长度
      */
-    @NotEmpty(message = "验证码不能为空")
-    private String code;
+    @NotNull(message = "验证码长度不能为空")
+    private Integer length;
 
     /**
      * 验证码有效时间(分钟)
      */
     @NotNull(message = "验证码有效时间不能为空")
     private Integer minutes;
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
     public Integer getType() {
         return type;
@@ -54,12 +68,12 @@ public class SmsCode implements Serializable {
         this.mobile = mobile;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getLength() {
+        return length;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setLength(Integer length) {
+        this.length = length;
     }
 
     public Integer getMinutes() {
