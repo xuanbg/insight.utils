@@ -3,12 +3,20 @@ package com.insight.util;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.insight.util.common.Base64Encryptor;
 import com.insight.util.pojo.AccessToken;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +38,11 @@ public final class Json {
     private static SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     static {
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        mapper.registerModule(javaTimeModule);
         mapper.setDateFormat(myDateFormat);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
@@ -57,7 +70,7 @@ public final class Json {
      * @return json
      */
     public static String toJson(Object obj) {
-        if (obj == null){
+        if (obj == null) {
             return null;
         }
 
@@ -138,7 +151,7 @@ public final class Json {
      */
     public static Map toMap(Object obj) {
         String json = toJson(obj);
-        if (json == null || json.isEmpty()){
+        if (json == null || json.isEmpty()) {
             return null;
         }
 
@@ -158,7 +171,7 @@ public final class Json {
      */
     public static String toBase64(Object obj) {
         String json = toJson(obj);
-        if (json == null || json.isEmpty()){
+        if (json == null || json.isEmpty()) {
             return null;
         }
 

@@ -5,29 +5,29 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author luwenbao
  * @date 2018/1/3.
  * @remark
  */
-public class JsonDateSerializer extends JsonDeserializer<LocalDateTime> {
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+public class DateSerializer extends JsonDeserializer<Date> {
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 反序列化
      *
      * @param jp   JsonParser
      * @param ctxt DeserializationContext
-     * @return LocalDateTime
+     * @return Date
      */
     @Override
-    public LocalDateTime deserialize(JsonParser jp, DeserializationContext ctxt) {
-        LocalDateTime date;
+    public Date deserialize(JsonParser jp, DeserializationContext ctxt) {
+        Date date;
         try {
-            date = LocalDateTime.parse(jp.getText(), formatter);
+            date = formatter.parse(jp.getText());
         } catch (Exception e) {
             return null;
         }
