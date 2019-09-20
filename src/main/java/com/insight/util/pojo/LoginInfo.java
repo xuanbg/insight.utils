@@ -79,6 +79,6 @@ public class LoginInfo implements Serializable {
 
     @Override
     public String toString() {
-        return Json.toJson(this);
+        return Json.toBase64(this);
     }
 }
