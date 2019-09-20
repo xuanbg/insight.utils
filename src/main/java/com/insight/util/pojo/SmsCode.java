@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * @author 宣炳刚
  * @date 2019-09-13
- * @remark
+ * @remark 短信验证码DTO
  */
 public class SmsCode implements Serializable {
     private static final long serialVersionUID = -1L;

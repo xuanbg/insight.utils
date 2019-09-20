@@ -44,6 +44,46 @@ public final class Reply implements Serializable {
     public Reply() {
     }
 
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public Object getOption() {
+        return option;
+    }
+
+    public void setOption(Object option) {
+        this.option = option;
+    }
+
     /**
      * 读取Data承载中的对象数据
      *
@@ -94,46 +134,6 @@ public final class Reply implements Serializable {
     public <T> T getListFromOption(Class<?>... type) {
         String json = Json.toJson(option);
         return Json.toList(json, type);
-    }
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public Object getOption() {
-        return option;
-    }
-
-    public void setOption(Object option) {
-        this.option = option;
     }
 
     @Override

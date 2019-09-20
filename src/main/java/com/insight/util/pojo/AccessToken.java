@@ -18,16 +18,6 @@ public class AccessToken implements Serializable {
     private String id;
 
     /**
-     * 用户ID
-     */
-    private String userId;
-
-    /**
-     * 用户名
-     */
-    private String userName;
-
-    /**
      * 安全码，用于验证令牌合法性
      */
     private String secret;
@@ -43,22 +33,6 @@ public class AccessToken implements Serializable {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getSecret() {
         return secret;
     }
@@ -69,6 +43,6 @@ public class AccessToken implements Serializable {
 
     @Override
     public String toString() {
-        return Json.toJson(this);
+        return Json.toBase64(this);
     }
 }

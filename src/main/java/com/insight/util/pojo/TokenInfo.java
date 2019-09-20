@@ -14,16 +14,17 @@ import java.util.List;
  */
 public class TokenInfo implements Serializable {
     private static final long serialVersionUID = -1L;
-
-    /**
-     * Token允许的超时毫秒数(300秒)
-     */
     private static final int TIME_OUT = 1000 * 300;
 
     /**
      * 访问令牌MD5摘要
      */
     private String hash;
+
+    /**
+     * 用户ID
+     */
+    private String userId;
 
     /**
      * 租户ID
@@ -85,45 +86,20 @@ public class TokenInfo implements Serializable {
      */
     private List<String> permitFuncs;
 
-    /**
-     * 验证Token是否合法
-     *
-     * @param hash 令牌哈希值
-     * @return Token是否合法
-     */
-    @JsonIgnore
-    public Boolean verifyToken(String hash) {
-        return this.hash.equals(hash);
-    }
-
-    /**
-     * Token是否过期
-     *
-     * @param isReal 是否实际过期时间
-     * @return Token是否过期
-     */
-    @JsonIgnore
-    public Boolean isExpiry(Boolean isReal) {
-        Date now = new Date();
-        Date expiry = new Date(expiryTime.getTime() - (isReal ? TIME_OUT : 0));
-        return now.after(expiry);
-    }
-
-    /**
-     * Token是否失效
-     *
-     * @return Token是否失效
-     */
-    public Boolean isFailure() {
-        return new Date().after(failureTime);
-    }
-
     public String getHash() {
         return hash;
     }
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTenantId() {
@@ -220,6 +196,40 @@ public class TokenInfo implements Serializable {
 
     public void setPermitFuncs(List<String> permitFuncs) {
         this.permitFuncs = permitFuncs;
+    }
+
+    /**
+     * 验证Token是否合法
+     *
+     * @param hash 令牌哈希值
+     * @return Token是否合法
+     */
+    @JsonIgnore
+    public Boolean verifyToken(String hash) {
+        return this.hash.equals(hash);
+    }
+
+    /**
+     * Token是否过期
+     *
+     * @param isReal 是否实际过期时间
+     * @return Token是否过期
+     */
+    @JsonIgnore
+    public Boolean isExpiry(Boolean isReal) {
+        Date now = new Date();
+        Date expiry = new Date(expiryTime.getTime() - (isReal ? TIME_OUT : 0));
+        return now.after(expiry);
+    }
+
+    /**
+     * Token是否失效
+     *
+     * @return Token是否失效
+     */
+    @JsonIgnore
+    public Boolean isFailure() {
+        return new Date().after(failureTime);
     }
 
     @Override
