@@ -2,8 +2,9 @@ package com.insight.util.pojo;
 
 import com.insight.util.Json;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * @author 宣炳刚
@@ -27,13 +28,13 @@ public class Search implements Serializable {
      * 开始日期
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date startDate;
+    private LocalDate startDate;
 
     /**
      * 截止日期
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date endDate;
+    private LocalDate endDate;
 
     public String getKey() {
         return key;
@@ -51,19 +52,19 @@ public class Search implements Serializable {
         this.status = status;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

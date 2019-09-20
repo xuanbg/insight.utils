@@ -2,34 +2,34 @@ package com.insight.util.annotation;
 
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author luwenbao
  * @date 2018/1/3.
  * @remark
  */
-public class JsonDateSerializer extends JsonDeserializer<Date> {
+public class JsonDateSerializer extends JsonDeserializer<LocalDateTime> {
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
+    /**
+     * 反序列化
+     *
+     * @param jp   JsonParser
+     * @param ctxt DeserializationContext
+     * @return LocalDateTime
+     */
     @Override
-    public Date deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
-
-        Date date = null;
+    public LocalDateTime deserialize(JsonParser jp, DeserializationContext ctxt) {
+        LocalDateTime date;
         try {
-            date = sdf.parse(jp.getText());
-        } catch (ParseException e) {
-            e.printStackTrace();
+            date = LocalDateTime.parse(jp.getText(), formatter);
+        } catch (Exception e) {
+            return null;
         }
         return date;
     }

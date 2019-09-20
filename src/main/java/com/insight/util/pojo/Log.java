@@ -3,7 +3,7 @@ package com.insight.util.pojo;
 import com.insight.util.Json;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author 宣炳刚
@@ -56,7 +56,7 @@ public class Log implements Serializable {
     /**
      * 创建时间
      */
-    private Date createdTime;
+    private LocalDateTime createdTime;
 
     public String getId() {
         return id;
@@ -122,11 +122,11 @@ public class Log implements Serializable {
         this.creatorId = creatorId;
     }
 
-    public Date getCreatedTime() {
+    public LocalDateTime getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
     }
 

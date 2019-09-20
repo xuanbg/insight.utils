@@ -5,7 +5,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -313,9 +312,8 @@ public final class DateHelper {
      *
      * @param date 输入的日期时间字符串
      * @return 格式化为yyyy-MM-dd HH-mm-ss格式的字符串
-     * @throws ParseException 异常
      */
-    public static String dateFormat(String date) throws ParseException {
+    public static String dateFormat(String date) {
         if (formatMap.isEmpty()) {
             formatMap.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$", "yyyy-MM-dd-HH-mm-ss");
             formatMap.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "yyyy-MM-dd-HH-mm");
@@ -332,23 +330,22 @@ public final class DateHelper {
             formatMap.put("^\\d{1,2}\\D+\\d{1,2}\\D+\\d{4}$", "dd-MM-yyyy");
         }
 
-        SimpleDateFormat format = null;
+        DateTimeFormatter formatter = null;
         for (String key : formatMap.keySet()) {
             if (Pattern.compile(key).matcher(date).matches()) {
-                format = new SimpleDateFormat(formatMap.get(key));
+                formatter = DateTimeFormatter.ofPattern(formatMap.get(key));
                 break;
             }
         }
 
-        if (format == null) {
+        if (formatter == null) {
             return null;
         }
 
         String result = date.replaceAll("\\D+", "-");
+        LocalDateTime dateValue = LocalDateTime.parse(result, formatter);
+        formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        Date dateValue = format.parse(result);
-
-        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(dateValue);
+        return formatter.format(dateValue);
     }
 }

@@ -1,9 +1,9 @@
 package com.insight.util.file;
 
+import com.insight.util.DateHelper;
 import com.insight.util.file.excel.ColumnName;
 import com.insight.util.file.excel.ExcelVer;
 import com.insight.util.file.excel.FieldInfo;
-import com.insight.util.DateHelper;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -14,10 +14,8 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.insight.util.file.excel.ColumnName.Policy;
@@ -34,7 +32,7 @@ public class ExcelHelper {
     /**
      * 日期格式
      */
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 工作簿
@@ -86,7 +84,6 @@ public class ExcelHelper {
      * 构造方法,用于从文件导入数据
      *
      * @param file 输入Excel文件(.xls|.xlsx)的路径
-     * @throws IOException
      */
     public ExcelHelper(String file) throws IOException {
         this(new FileInputStream(file));
@@ -96,7 +93,6 @@ public class ExcelHelper {
      * 构造方法,用于从文件导入数据
      *
      * @param data 输入字节流
-     * @throws IOException
      */
     public ExcelHelper(byte[] data) throws IOException {
         this(new ByteArrayInputStream(data));
@@ -106,7 +102,6 @@ public class ExcelHelper {
      * 构造方法,用于从文件流导入数据
      *
      * @param stream 文件流
-     * @throws IOException
      */
     public ExcelHelper(InputStream stream) throws IOException {
         try {
@@ -230,7 +225,6 @@ public class ExcelHelper {
      * 导出工作簿到Excel文件
      *
      * @param file 输出Excel文件(.xls|.xlsx)的路径及文件名
-     * @throws IOException
      */
     public void exportFile(String file) throws IOException {
         if (workbook == null) {
@@ -247,9 +241,6 @@ public class ExcelHelper {
      * @param list 输入数据集合
      * @param file 输出Excel文件(.xls|.xlsx)的路径及文件名
      * @param <T>  泛型参数
-     * @throws IOException
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
      */
     public <T> void exportFile(String file, List<T> list) throws IOException, NoSuchFieldException, IllegalAccessException {
         exportFile(file, list, null);
@@ -262,9 +253,6 @@ public class ExcelHelper {
      * @param file      输出Excel文件(.xls|.xlsx)的路径及文件名
      * @param <T>       泛型参数
      * @param sheetName Sheet名称
-     * @throws IOException
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
      */
     public <T> void exportFile(String file, List<T> list, String sheetName) throws IOException, NoSuchFieldException, IllegalAccessException {
         createSheet(list, sheetName);
@@ -275,7 +263,6 @@ public class ExcelHelper {
      * 导出工作簿到数据流
      *
      * @return 文件路径
-     * @throws IOException
      */
     public OutputStream exportStream() throws IOException {
         OutputStream stream = System.out;
@@ -292,9 +279,6 @@ public class ExcelHelper {
      * @param list 输入数据集合
      * @param <T>  泛型参数
      * @return 文件流
-     * @throws IOException
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
      */
     public <T> OutputStream exportStream(List<T> list) throws IOException, NoSuchFieldException, IllegalAccessException {
         return exportStream(list, null);
@@ -307,9 +291,6 @@ public class ExcelHelper {
      * @param <T>       泛型参数
      * @param sheetName Sheet名称
      * @return 文件流
-     * @throws IOException
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
      */
     public <T> OutputStream exportStream(List<T> list, String sheetName) throws IOException, NoSuchFieldException, IllegalAccessException {
         createSheet(list, sheetName);
@@ -323,8 +304,6 @@ public class ExcelHelper {
      * @param type 集合类型
      * @param <T>  泛型参数
      * @return 指定类型的集合
-     * @throws IllegalAccessException
-     * @throws InstantiationException
      */
     public <T> List<T> importSheet(Class<T> type) throws IllegalAccessException, InstantiationException, NoSuchFieldException, ParseException {
         return importSheet(0, type);
@@ -337,8 +316,6 @@ public class ExcelHelper {
      * @param type       集合类型
      * @param <T>        泛型参数
      * @return 指定类型的集合
-     * @throws IllegalAccessException
-     * @throws InstantiationException
      */
     public <T> List<T> importSheet(int sheetIndex, Class<T> type) throws IllegalAccessException, InstantiationException, NoSuchFieldException, ParseException {
         String name = workbook.getSheetName(sheetIndex);
@@ -353,8 +330,6 @@ public class ExcelHelper {
      * @param type      集合类型
      * @param <T>       泛型参数
      * @return 指定类型的集合
-     * @throws IllegalAccessException
-     * @throws InstantiationException
      */
     public <T> List<T> importSheet(String sheetName, Class<T> type) throws IllegalAccessException, InstantiationException, NoSuchFieldException, ParseException {
         Sheet sheet = workbook.getSheet(sheetName);
@@ -458,8 +433,6 @@ public class ExcelHelper {
      * @param item 指定类型的数据对象
      * @param type 指定的类型
      * @param <T>  类型参数
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
      */
     private <T> void writeRow(Row row, T item, Class type) throws NoSuchFieldException, IllegalAccessException {
         for (int i = 0; i < exportFields.size(); i++) {
@@ -474,14 +447,11 @@ public class ExcelHelper {
                 continue;
             }
 
-            switch (info.getTypeName()) {
-                case "Date":
-                    SimpleDateFormat format = new SimpleDateFormat(info.getDateFormat());
-                    cell.setCellValue(format.format(value));
-                    break;
-                default:
-                    cell.setCellValue(value.toString());
-                    break;
+            if ("Date".equals(info.getTypeName())) {
+                SimpleDateFormat format = new SimpleDateFormat(info.getDateFormat());
+                cell.setCellValue(format.format(value));
+            } else {
+                cell.setCellValue(value.toString());
             }
         }
     }
@@ -523,8 +493,6 @@ public class ExcelHelper {
      * @param type  集合类型
      * @param <T>   泛型参数
      * @return 指定类型的集合
-     * @throws IllegalAccessException
-     * @throws InstantiationException
      */
     private <T> List<T> toList(Sheet sheet, Class<T> type) throws IllegalAccessException, InstantiationException, NoSuchFieldException, ParseException {
         if (sheet == null || type == null) {
@@ -629,12 +597,13 @@ public class ExcelHelper {
                         return numberFormat(val, type);
                 }
             case NUMERIC:
-                switch (type) {
-                    case "Date":
-                        return formatter.format(cell.getDateCellValue());
-                    default:
-                        return numberFormat(cell.getNumericCellValue(), type);
+                if ("Date".equals(type)) {
+                    Date date = cell.getDateCellValue();
+
+                    return date == null ? null : formatter.format(date.toInstant());
                 }
+
+                return numberFormat(cell.getNumericCellValue(), type);
             case FORMULA:
                 switch (type) {
                     case "boolean":
@@ -661,10 +630,8 @@ public class ExcelHelper {
      * @param item  指定类型的数据对象
      * @param value 值
      * @param <T>   类型参数
-     * @throws IllegalAccessException
-     * @throws ParseException
      */
-    private <T> void setFieldValue(Field field, T item, Object value) throws IllegalAccessException, ParseException {
+    private <T> void setFieldValue(Field field, T item, Object value) throws IllegalAccessException {
         if (value == null) {
             return;
         }
@@ -672,25 +639,25 @@ public class ExcelHelper {
         String val = value.toString();
         switch (field.getType().getSimpleName()) {
             case "long":
-                field.setLong(item, Long.valueOf(val));
+                field.setLong(item, Long.parseLong(val));
                 break;
             case "int":
-                field.setInt(item, Integer.valueOf(val));
+                field.setInt(item, Integer.parseInt(val));
                 break;
             case "short":
-                field.setShort(item, Short.valueOf(val));
+                field.setShort(item, Short.parseShort(val));
                 break;
             case "byte":
-                field.setByte(item, Byte.valueOf(val));
+                field.setByte(item, Byte.parseByte(val));
                 break;
             case "double":
-                field.setDouble(item, Double.valueOf(val));
+                field.setDouble(item, Double.parseDouble(val));
                 break;
             case "float":
-                field.setFloat(item, Float.valueOf(val));
+                field.setFloat(item, Float.parseFloat(val));
                 break;
             case "boolean":
-                field.setBoolean(item, Boolean.valueOf(val));
+                field.setBoolean(item, Boolean.parseBoolean(val));
                 break;
             case "Integer":
                 field.set(item, Integer.valueOf(val));
@@ -711,7 +678,7 @@ public class ExcelHelper {
                 field.set(item, Boolean.valueOf(val));
                 break;
             case "BigDecimal":
-                field.set(item, BigDecimal.valueOf(Double.valueOf(val)));
+                field.set(item, BigDecimal.valueOf(Double.parseDouble(val)));
                 break;
             case "Date":
                 field.set(item, formatter.parse(val));
@@ -790,7 +757,7 @@ public class ExcelHelper {
      */
     private void initFieldsInfo(Class type) {
         fieldInfos = new ArrayList<>();
-        List<Field> fields = Arrays.asList(type.getDeclaredFields());
+        Field[] fields = type.getDeclaredFields();
         for (Field i : fields) {
             String typeName = i.getType().getSimpleName();
             FieldInfo info = new FieldInfo();

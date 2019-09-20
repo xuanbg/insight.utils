@@ -5,7 +5,7 @@ import com.insight.util.Json;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 /**
@@ -65,7 +65,7 @@ public class CustomMessage implements Serializable {
     /**
      * 消息失效日期
      */
-    private Date expireDate;
+    private LocalDate expireDate;
 
     public String getAppId() {
         return appId;
@@ -131,11 +131,11 @@ public class CustomMessage implements Serializable {
         isBroadcast = broadcast;
     }
 
-    public Date getExpireDate() {
+    public LocalDate getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(Date expireDate) {
+    public void setExpireDate(LocalDate expireDate) {
         this.expireDate = expireDate;
     }
 
