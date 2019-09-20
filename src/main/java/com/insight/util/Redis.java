@@ -159,7 +159,7 @@ public final class Redis {
      * @param key 键
      * @param map Map 对象
      */
-    public static void set(String key, Map<String, Object> map) {
+    public static void set(String key, Map map) {
 
         redis.opsForHash().putAll(key, map);
     }

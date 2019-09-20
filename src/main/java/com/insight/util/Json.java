@@ -9,8 +9,8 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author duxl
@@ -117,13 +117,13 @@ public final class Json {
      * @param json json
      * @return hashmap
      */
-    public static HashMap toMap(String json) {
+    public static Map toMap(String json) {
         if (json == null || json.isEmpty()) {
             return null;
         }
 
         try {
-            return mapper.readValue(json, HashMap.class);
+            return mapper.readValue(json, Map.class);
         } catch (IOException e) {
             log(json);
             return null;
@@ -136,14 +136,14 @@ public final class Json {
      * @param obj 对象
      * @return hashmap
      */
-    public static HashMap toMap(Object obj) {
+    public static Map toMap(Object obj) {
         String json = toJson(obj);
         if (json == null || json.isEmpty()){
             return null;
         }
 
         try {
-            return mapper.readValue(json, HashMap.class);
+            return mapper.readValue(json, Map.class);
         } catch (IOException e) {
             log(json);
             return null;
