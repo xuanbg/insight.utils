@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 2018/1/3.
  * @remark
  */
-public class DateSerializer extends JsonDeserializer<Date> {
+public class DateDeserializer extends JsonDeserializer<Date> {
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
