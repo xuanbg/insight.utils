@@ -55,7 +55,7 @@ public class CustomMessage implements Serializable {
     /**
      * 发送参数
      */
-    private Map params;
+    private Map<String, Object> params;
 
     /**
      * 是否广播消息
@@ -116,11 +116,11 @@ public class CustomMessage implements Serializable {
         this.content = content;
     }
 
-    public Map getParams() {
+    public Map<String, Object> getParams() {
         return params;
     }
 
-    public void setParams(Map params) {
+    public void setParams(Map<String, Object> params) {
         this.params = params;
     }
 

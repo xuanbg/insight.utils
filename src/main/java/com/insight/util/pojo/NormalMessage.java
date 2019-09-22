@@ -41,7 +41,7 @@ public class NormalMessage implements Serializable {
     /**
      * 自定义参数
      */
-    private Map params;
+    private Map<String, String> params;
 
     /**
      * 是否广播消息
@@ -81,11 +81,11 @@ public class NormalMessage implements Serializable {
         this.receivers = receivers;
     }
 
-    public Map getParams() {
+    public Map<String, String> getParams() {
         return params;
     }
 
-    public void setParams(Map params) {
+    public void setParams(Map<String, String> params) {
         this.params = params;
     }
 
