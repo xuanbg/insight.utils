@@ -60,6 +60,7 @@ public class CustomMessage implements Serializable {
     /**
      * 是否广播消息
      */
+    @NotNull(message = "广播设置不能为空")
     private Boolean isBroadcast;
 
     /**

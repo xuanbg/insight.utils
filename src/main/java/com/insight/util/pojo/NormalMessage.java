@@ -3,6 +3,7 @@ package com.insight.util.pojo;
 import com.insight.util.Json;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ public class NormalMessage implements Serializable {
     /**
      * 是否广播消息
      */
+    @NotNull(message = "广播设置不能为空")
     private Boolean isBroadcast;
 
     public String getSceneCode() {
