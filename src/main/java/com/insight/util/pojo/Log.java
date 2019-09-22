@@ -19,6 +19,11 @@ public class Log implements Serializable {
     private String id;
 
     /**
+     * 租户ID
+     */
+    private String tenantId;
+
+    /**
      * 类型
      */
     private OperateType type;
@@ -64,6 +69,14 @@ public class Log implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 
     public OperateType getType() {
