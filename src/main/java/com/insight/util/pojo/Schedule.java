@@ -19,6 +19,11 @@ public class Schedule<T> implements Serializable {
     private String id;
 
     /**
+     * 任务类型:0.消息;1.本地调用;2.远程调用
+     */
+    private Integer type;
+
+    /**
      * 调用方法
      */
     private String method;
@@ -54,6 +59,14 @@ public class Schedule<T> implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getMethod() {
