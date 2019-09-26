@@ -2,7 +2,7 @@ package com.insight.util;
 
 import com.insight.util.common.ApplicationContextHolder;
 import com.insight.util.common.LockHandler;
-import com.insight.util.pojo.Param;
+import com.insight.util.pojo.LockParam;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.*;
@@ -14,7 +14,7 @@ import java.util.*;
  */
 public final class Generator {
     private LockHandler lock;
-    private Map<String, String> set;
+    private Map<String, Object> set;
 
     /**
      * 构造函数
@@ -118,7 +118,7 @@ public final class Generator {
         group = replace(group);
 
         // 获取分布式锁
-        Param param = new Param(group);
+        LockParam param = new LockParam(group);
         if (!lock.tryLock(param)) {
             return null;
         }
@@ -170,7 +170,7 @@ public final class Generator {
         int len = str.length();
         String first = len > 2 ? str.substring(0, 1) : "";
         String high = len > 3 ? str.substring(1, len - 2) : "";
-        String low = set.get(str.substring(len - 2, len));
+        String low = String.valueOf(set.get(str.substring(len - 2, len)));
 
         return high + low + first;
     }

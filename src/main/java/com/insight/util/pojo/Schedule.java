@@ -2,6 +2,9 @@ package com.insight.util.pojo;
 
 import com.insight.util.Json;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -21,11 +24,14 @@ public class Schedule<T> implements Serializable {
     /**
      * 任务类型:0.消息;1.本地调用;2.远程调用
      */
+    @NotNull(message = "任务类型不能为空")
+    @Size(max = 2, message = "任务类型为:0.消息;1.本地调用;2.远程调用")
     private Integer type;
 
     /**
      * 调用方法
      */
+    @NotEmpty(message = "调用方法不能为空")
     private String method;
 
     /**
@@ -36,6 +42,7 @@ public class Schedule<T> implements Serializable {
     /**
      * 任务内容
      */
+    @NotNull(message = "任务数据不能为空")
     private T content;
 
     /**

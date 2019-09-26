@@ -38,6 +38,21 @@ public final class Redis {
     }
 
     /**
+     * 设置Key过期时间
+     *
+     * @param key  键
+     * @param time 时间长度
+     * @param unit 时间单位
+     */
+    public static void setExpire(String key, long time, TimeUnit unit) {
+        if (!hasKey(key)) {
+            return;
+        }
+
+        redis.expire(key, time, unit);
+    }
+
+    /**
      * 从Redis删除指定键
      *
      * @param key 键

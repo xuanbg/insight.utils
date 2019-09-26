@@ -1,7 +1,7 @@
 package com.insight.util.common;
 
 import com.insight.util.Redis;
-import com.insight.util.pojo.Param;
+import com.insight.util.pojo.LockParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -39,7 +39,7 @@ public class LockHandler {
      * @param paramExpireTime 获取成功后锁的过期时间
      * @return true 获取成功，false获取失败
      */
-    public boolean getLock(Param param, long timeout, long tryInterval, long paramExpireTime) {
+    public boolean getLock(LockParam param, long timeout, long tryInterval, long paramExpireTime) {
         String key = "Lock:" + param.getKey();
         String value = param.getValue();
         try {
@@ -72,7 +72,7 @@ public class LockHandler {
      * @param param 锁的名称
      * @return true 获取成功，false获取失败
      */
-    public boolean tryLock(Param param) {
+    public boolean tryLock(LockParam param) {
         return getLock(param, LOCK_TRY_TIMEOUT, LOCK_TRY_INTERVAL, LOCK_EXPIRE);
     }
 
@@ -83,7 +83,7 @@ public class LockHandler {
      * @param timeout 获取超时时间 单位ms
      * @return true 获取成功，false获取失败
      */
-    public boolean tryLock(Param param, long timeout) {
+    public boolean tryLock(LockParam param, long timeout) {
         return getLock(param, timeout, LOCK_TRY_INTERVAL, LOCK_EXPIRE);
     }
 
@@ -95,7 +95,7 @@ public class LockHandler {
      * @param tryInterval 多少毫秒尝试获取一次
      * @return true 获取成功，false获取失败
      */
-    public boolean tryLock(Param param, long timeout, long tryInterval) {
+    public boolean tryLock(LockParam param, long timeout, long tryInterval) {
         return getLock(param, timeout, tryInterval, LOCK_EXPIRE);
     }
 
@@ -108,16 +108,21 @@ public class LockHandler {
      * @param paramExpireTime 锁的过期
      * @return true 获取成功，false获取失败
      */
-    public boolean tryLock(Param param, long timeout, long tryInterval, long paramExpireTime) {
+    public boolean tryLock(LockParam param, long timeout, long tryInterval, long paramExpireTime) {
         return getLock(param, timeout, tryInterval, paramExpireTime);
     }
 
     /**
      * 释放锁
      */
-    public void releaseLock(Param param) {
+    public void releaseLock(LockParam param) {
         String key = "Lock:" + param.getKey();
-        if (!key.isEmpty()) {
+        if (key.isEmpty()) {
+            return;
+        }
+
+        String val = Redis.get(key);
+        if (val.equals(param.getValue())) {
             Redis.deleteKey(key);
         }
     }

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.insight.util.annotation.DateDeserializer;
 import com.insight.util.common.Base64Encryptor;
+import com.insight.util.common.RealType;
 import com.insight.util.pojo.AccessToken;
 import org.apache.commons.logging.LogFactory;
 
@@ -142,13 +143,14 @@ public final class Json {
      * @param json json
      * @return hashmap
      */
-    public static Map toMap(String json) {
+    public static Map<String, Object> toMap(String json) {
         if (json == null || json.isEmpty()) {
             return null;
         }
 
         try {
-            return mapper.readValue(json, Map.class);
+            RealType<Map<String, Object>> type = new RealType<>();
+            return mapper.readValue(json, type.getRealType());
         } catch (IOException e) {
             log(json);
             return null;
