@@ -14,7 +14,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.insight.util.annotation.DateDeserializer;
 import com.insight.util.common.Base64Encryptor;
-import com.insight.util.common.RealType;
 import com.insight.util.pojo.AccessToken;
 import org.apache.commons.logging.LogFactory;
 
@@ -24,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -149,8 +149,8 @@ public final class Json {
         }
 
         try {
-            RealType<Map<String, Object>> type = new RealType<>();
-            return mapper.readValue(json, type.getRealType());
+            //noinspection unchecked
+            return mapper.readValue(json, HashMap.class);
         } catch (IOException e) {
             log(json);
             return null;

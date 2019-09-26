@@ -1,22 +1,24 @@
 package com.insight.util.test;
 
 import com.insight.util.Json;
-import com.insight.util.encrypt.Encryptor;
 import com.insight.util.common.Base64Encryptor;
-import junit.framework.TestCase;
+import com.insight.util.encrypt.Encryptor;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Base64;
 
 import static java.lang.System.out;
 
-public class EncryptorTest extends TestCase {
+public class EncryptorTest {
 
     @Test
     public void testEncryptor() throws UnsupportedEncodingException {
+
+
         String des3 = Encryptor.des3Encrypt("des3test");
         out.println("des3 enc-----" + des3);
         out.println("des3 dec-----" + Encryptor.des3Decrypt(des3));
@@ -48,7 +50,7 @@ public class EncryptorTest extends TestCase {
         String base64 = Base64Encryptor.encode("base64test");
 
         out.println("base64-----" + base64);
-        out.println("base64 dec-----" + Base64Encryptor.decode(base64));
+        out.println("base64 dec-----" + Arrays.toString(Base64Encryptor.decode(base64)));
 
         String base642 = Base64Encryptor.encode("中文");
         out.println("base642-----" + base642);

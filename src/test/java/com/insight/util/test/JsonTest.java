@@ -1,20 +1,19 @@
 package com.insight.util.test;
 
-import com.insight.util.Json;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import junit.framework.TestCase;
+import com.insight.util.Json;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class JsonTest extends TestCase {
+public class JsonTest {
 
     @Test
     public void testJsonUtils() {
 
-        List<ExcelClass> lists = new ArrayList<ExcelClass>();
+        List<ExcelClass> lists = new ArrayList<>();
         ExcelClass e1 = new ExcelClass();
         e1.setId("a");
         e1.setName("testa");
@@ -34,10 +33,10 @@ public class JsonTest extends TestCase {
         System.out.println(json);
 
         //
-        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>();
         linkedHashMap.put("id", "testa");
         linkedHashMap.put("name", "testaname");
-        List ll1 = new ArrayList();
+        List<LinkedHashMap<String, String>> ll1 = new ArrayList<>();
         ll1.add(linkedHashMap);
 
 //        List<ExcelClass> listll1 = Json.toBean(ll1, ExcelClass.class);
@@ -69,8 +68,7 @@ public class JsonTest extends TestCase {
 //        System.out.println("VariFlight------------------" + lsv);
 
 
-        StringBuilder body = new StringBuilder();
-        String bodyStr = body.toString();
+        String bodyStr = "";
         System.out.println(bodyStr);
         Json.toMap(bodyStr);
     }
