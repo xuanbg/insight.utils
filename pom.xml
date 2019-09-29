@@ -142,6 +142,20 @@
             <version>3.5.1</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>local_release</id>
+            <url>http://192.168.236.8:8081/repository/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <distributionManagement>
         <repository>
             <id>release</id>
