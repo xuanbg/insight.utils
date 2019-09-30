@@ -21,6 +21,10 @@ public final class Base64Encryptor {
      * @return 编码后的字符串
      */
     public static String encode(String str) {
+        if (str == null || str.isEmpty()){
+            return null;
+        }
+
         return Base64.getEncoder().encodeToString(str.getBytes(Charset.defaultCharset()));
     }
 
@@ -31,6 +35,10 @@ public final class Base64Encryptor {
      * @return base64码
      */
     public static String encode(byte[] bytes) {
+        if (bytes == null || bytes.length == 0){
+            return null;
+        }
+
         return Base64.getEncoder().encodeToString(bytes);
     }
 
@@ -41,6 +49,10 @@ public final class Base64Encryptor {
      * @return 字符串
      */
     public static String decodeToString(String base64Str) {
+        if (base64Str == null || base64Str.isEmpty()){
+            return null;
+        }
+
         byte[] asBytes = Base64.getDecoder().decode(base64Str);
 
         return new String(asBytes, Charset.defaultCharset());
@@ -53,6 +65,10 @@ public final class Base64Encryptor {
      * @return bytearray
      */
     public static byte[] decode(String base64Encoded) {
+        if (base64Encoded == null || base64Encoded.isEmpty()){
+            return null;
+        }
+
         return Base64.getDecoder().decode(base64Encoded);
     }
 
@@ -63,6 +79,10 @@ public final class Base64Encryptor {
      * @return url encoded
      */
     public static String encodeUrl(String url) {
+        if (url == null || url.isEmpty()){
+            return null;
+        }
+
         return Base64.getUrlEncoder().encodeToString(url.getBytes(Charset.defaultCharset()));
     }
 
@@ -73,6 +93,10 @@ public final class Base64Encryptor {
      * @return url
      */
     public static String decodeUrl(String urlDecoded) {
+        if (urlDecoded == null || urlDecoded.isEmpty()){
+            return null;
+        }
+
         byte[] asBytes = Base64.getUrlDecoder().decode(urlDecoded);
 
         return new String(asBytes, Charset.defaultCharset());
@@ -85,6 +109,10 @@ public final class Base64Encryptor {
      * @return mime encoded
      */
     public static String encodeMime(String mime) {
+        if (mime == null || mime.isEmpty()){
+            return null;
+        }
+
         return Base64.getMimeEncoder().encodeToString(mime.getBytes(Charset.defaultCharset()));
     }
 
@@ -95,6 +123,10 @@ public final class Base64Encryptor {
      * @return mime
      */
     public static String decodeMime(String mimeEncoded) {
+        if (mimeEncoded == null || mimeEncoded.isEmpty()){
+            return null;
+        }
+
         byte[] asBytes = Base64.getMimeDecoder().decode(mimeEncoded);
 
         return new String(asBytes, Charset.defaultCharset());
@@ -107,6 +139,10 @@ public final class Base64Encryptor {
      * @return base64码
      */
     public static String encode(Object obj) {
+        if (obj == null){
+            return null;
+        }
+
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
             ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -139,9 +175,7 @@ public final class Base64Encryptor {
             bis.close();
 
             return obj;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
