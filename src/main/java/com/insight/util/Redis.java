@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @remark 通用控制器基类
  */
 public final class Redis {
-    private static StringRedisTemplate redis = ApplicationContextHolder.getContext().getBean(StringRedisTemplate.class);
+    private static final StringRedisTemplate redis = ApplicationContextHolder.getContext().getBean(StringRedisTemplate.class);
 
     /**
      * Redis中是否存在指定键

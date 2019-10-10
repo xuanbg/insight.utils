@@ -13,14 +13,14 @@ import java.util.*;
  * @remark 常用Generator
  */
 public final class Generator {
-    private LockHandler lock;
-    private Map<String, Object> set;
+    private static LockHandler lock;
+    private static Map<String, Object> set;
 
     /**
      * 构造函数
      */
     public Generator() {
-        this.lock = ApplicationContextHolder.getContext().getBean(LockHandler.class);
+        lock = ApplicationContextHolder.getContext().getBean(LockHandler.class);
 
         String val = Redis.get("Config:GarbleSet");
         if (val == null || val.isEmpty()) {
@@ -89,7 +89,7 @@ public final class Generator {
      * @param group  分组格式
      * @return 编码
      */
-    public String newCode(String format, String group) {
+    public static String newCode(String format, String group) {
         return newCode(format, group, true);
     }
 
@@ -101,7 +101,7 @@ public final class Generator {
      * @param isEncrypt 是否加密流水号
      * @return 编码
      */
-    public String newCode(String format, String group, Boolean isEncrypt) {
+    public static String newCode(String format, String group, Boolean isEncrypt) {
         int index = format.indexOf("#");
         if (index < 0) {
             return "编码格式不正确！需要有流水号段，例如：#4";
@@ -166,7 +166,7 @@ public final class Generator {
      * @param str 输入字符串
      * @return 混淆后字符串
      */
-    private String garble(String str) {
+    private static String garble(String str) {
         int len = str.length();
         String first = len > 2 ? str.substring(0, 1) : "";
         String high = len > 3 ? str.substring(1, len - 2) : "";
@@ -181,7 +181,7 @@ public final class Generator {
      * @param str 原始字符串
      * @return 替换后的字符串
      */
-    private String replace(String str) {
+    private static String replace(String str) {
         String[] array = {"yyyy", "yy", "MM", "dd"};
         for (String format : array) {
             String date = DateHelper.getDateTime(format);
