@@ -17,12 +17,6 @@ public class CustomMessage implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
-     * 应用ID
-     */
-    @NotEmpty(message = "应用ID不能为空")
-    private String appId;
-
-    /**
      * 消息标签
      */
     @NotEmpty(message = "消息标签不能为空")
@@ -67,14 +61,6 @@ public class CustomMessage implements Serializable {
      * 消息失效日期
      */
     private LocalDate expireDate;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
 
     public String getTag() {
         return tag;

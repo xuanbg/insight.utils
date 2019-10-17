@@ -22,12 +22,6 @@ public class NormalMessage implements Serializable {
     private String sceneCode;
 
     /**
-     * 应用ID
-     */
-    @NotEmpty(message = "应用ID不能为空")
-    private String appId;
-
-    /**
      * 渠道编码
      */
     private String channelCode;
@@ -55,14 +49,6 @@ public class NormalMessage implements Serializable {
 
     public void setSceneCode(String sceneCode) {
         this.sceneCode = sceneCode;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
     }
 
     public String getChannelCode() {

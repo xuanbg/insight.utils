@@ -296,6 +296,21 @@ public final class ReplyHelper {
     /**
      * 用户不存在
      *
+     * @return Reply
+     */
+    public static Reply notExist(Object data) {
+        Reply reply = new Reply();
+        reply.setCode(414);
+        reply.setSuccess(false);
+        reply.setData(data);
+        reply.setMessage("用户不存在");
+
+        return reply;
+    }
+
+    /**
+     * 用户不存在
+     *
      * @param msg 消息
      * @return Reply
      */
