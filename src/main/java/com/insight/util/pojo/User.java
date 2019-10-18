@@ -4,6 +4,7 @@ import com.insight.util.Json;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @author 宣炳刚
@@ -49,6 +50,11 @@ public class User implements Serializable {
     private String unionId;
 
     /**
+     * 微信OpenID集合
+     */
+    private Map<String, String> openId;
+
+    /**
      * 登录密码
      */
     private String password;
@@ -71,12 +77,12 @@ public class User implements Serializable {
     /**
      * 用户是否内置
      */
-    private Boolean builtin;
+    private Boolean isBuiltin;
 
     /**
      * 用户是否失效
      */
-    private Boolean invalid;
+    private Boolean isInvalid;
 
     /**
      * 创建人
@@ -149,6 +155,14 @@ public class User implements Serializable {
         this.unionId = unionId;
     }
 
+    public Map<String, String> getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(Map<String, String> openId) {
+        this.openId = openId;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -182,19 +196,19 @@ public class User implements Serializable {
     }
 
     public Boolean getBuiltin() {
-        return builtin;
+        return isBuiltin;
     }
 
     public void setBuiltin(Boolean builtin) {
-        this.builtin = builtin;
+        isBuiltin = builtin;
     }
 
     public Boolean getInvalid() {
-        return invalid;
+        return isInvalid;
     }
 
     public void setInvalid(Boolean invalid) {
-        this.invalid = invalid;
+        isInvalid = invalid;
     }
 
     public String getCreator() {
