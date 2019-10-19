@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @remark 通用控制器基类
  */
 public final class Redis {
-    private static final StringRedisTemplate redis = ApplicationContextHolder.getContext().getBean(StringRedisTemplate.class);
+    private static final StringRedisTemplate REDIS = ApplicationContextHolder.getContext().getBean(StringRedisTemplate.class);
 
     /**
      * Redis中是否存在指定键
@@ -21,7 +21,7 @@ public final class Redis {
      * @return 是否存在指定键
      */
     public static Boolean hasKey(String key) {
-        return redis.hasKey(key);
+        return REDIS.hasKey(key);
     }
 
     /**
@@ -32,7 +32,7 @@ public final class Redis {
      * @return 过期时间
      */
     public static long getExpire(String key, TimeUnit unit) {
-        Long expire = redis.getExpire(key, unit);
+        Long expire = REDIS.getExpire(key, unit);
 
         return expire == null ? 0 : expire;
     }
@@ -49,7 +49,7 @@ public final class Redis {
             return;
         }
 
-        redis.expire(key, time, unit);
+        REDIS.expire(key, time, unit);
     }
 
     /**
@@ -58,7 +58,7 @@ public final class Redis {
      * @param key 键
      */
     public static void deleteKey(String key) {
-        redis.delete(key);
+        REDIS.delete(key);
     }
 
     /**
@@ -68,7 +68,7 @@ public final class Redis {
      * @return Value
      */
     public static String get(String key) {
-        return redis.opsForValue().get(key);
+        return REDIS.opsForValue().get(key);
     }
 
     /**
@@ -78,7 +78,7 @@ public final class Redis {
      * @param value 值
      */
     public static void set(String key, String value) {
-        redis.opsForValue().set(key, value);
+        REDIS.opsForValue().set(key, value);
     }
 
     /**
@@ -90,7 +90,7 @@ public final class Redis {
      * @param unit  时间单位
      */
     public static void set(String key, String value, long time, TimeUnit unit) {
-        redis.opsForValue().set(key, value, time, unit);
+        REDIS.opsForValue().set(key, value, time, unit);
     }
 
     /**
@@ -101,7 +101,7 @@ public final class Redis {
      * @return 是否保存
      */
     public static boolean setIfAbsent(String key, String value) {
-        Boolean absent = redis.opsForValue().setIfAbsent(key, value);
+        Boolean absent = REDIS.opsForValue().setIfAbsent(key, value);
 
         return absent == null ? false : absent;
     }
@@ -114,7 +114,7 @@ public final class Redis {
      * @return 是否存在指定键
      */
     public static Boolean hasKey(String key, String field) {
-        return redis.opsForHash().hasKey(key, field);
+        return REDIS.opsForHash().hasKey(key, field);
     }
 
     /**
@@ -125,7 +125,7 @@ public final class Redis {
      * @return Value
      */
     public static String get(String key, String field) {
-        Object val = redis.opsForHash().get(key, field);
+        Object val = REDIS.opsForHash().get(key, field);
 
         return val == null ? null : val.toString();
     }
@@ -137,7 +137,7 @@ public final class Redis {
      * @return Value
      */
     public static <T> T get(String key, Class<T> type) {
-        Map val = redis.opsForHash().entries(key);
+        Map val = REDIS.opsForHash().entries(key);
 
         return Json.clone(val, type);
     }
@@ -149,7 +149,7 @@ public final class Redis {
      * @return Value
      */
     public static List<Object> getHashKeys(String key) {
-        Set<Object> val = redis.opsForHash().keys(key);
+        Set<Object> val = REDIS.opsForHash().keys(key);
 
         return new ArrayList<>(val);
     }
@@ -162,7 +162,7 @@ public final class Redis {
      * @param value 值
      */
     public static void set(String key, String field, Object value) {
-        redis.opsForHash().put(key, field, value.toString());
+        REDIS.opsForHash().put(key, field, value.toString());
     }
 
     /**
@@ -178,7 +178,7 @@ public final class Redis {
             hashMap.put(k.toString(), v == null ? null : v.toString());
         }
 
-        redis.opsForHash().putAll(key, hashMap);
+        REDIS.opsForHash().putAll(key, hashMap);
     }
 
     /**
@@ -189,7 +189,7 @@ public final class Redis {
      */
     public static void deleteKey(String key, String field) {
 
-        redis.opsForHash().delete(key, field);
+        REDIS.opsForHash().delete(key, field);
     }
 
     /**
@@ -200,7 +200,7 @@ public final class Redis {
      * @return 是否成员
      */
     public static Boolean isMember(String key, String member) {
-        return redis.opsForSet().isMember(key, member);
+        return REDIS.opsForSet().isMember(key, member);
     }
 
     /**
@@ -210,7 +210,7 @@ public final class Redis {
      * @return Value
      */
     public static List<String> getMembers(String key) {
-        Set<String> val = redis.opsForSet().members(key);
+        Set<String> val = REDIS.opsForSet().members(key);
 
         return val == null ? null : new ArrayList<>(val);
     }
@@ -222,7 +222,7 @@ public final class Redis {
      * @param value 值
      */
     public static void add(String key, String value) {
-        redis.opsForSet().add(key, value);
+        REDIS.opsForSet().add(key, value);
     }
 
     /**
@@ -233,6 +233,6 @@ public final class Redis {
      * @return Set成员数
      */
     public static Long remove(String key, String value) {
-        return redis.opsForSet().remove(key, value);
+        return REDIS.opsForSet().remove(key, value);
     }
 }

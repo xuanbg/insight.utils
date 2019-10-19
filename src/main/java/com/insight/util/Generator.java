@@ -13,15 +13,10 @@ import java.util.*;
  * @remark 常用Generator
  */
 public final class Generator {
-    private static LockHandler lock;
+    private static final LockHandler LOCK = ApplicationContextHolder.getContext().getBean(LockHandler.class);
     private static Map<String, Object> set;
 
-    /**
-     * 构造函数
-     */
-    public Generator() {
-        lock = ApplicationContextHolder.getContext().getBean(LockHandler.class);
-
+    static  {
         String val = Redis.get("Config:GarbleSet");
         if (val == null || val.isEmpty()) {
             List<String> list = new ArrayList<>();
@@ -119,11 +114,11 @@ public final class Generator {
 
         // 获取分布式锁
         LockParam param = new LockParam(group);
-        if (!lock.tryLock(param)) {
+        if (!LOCK.tryLock(param)) {
             return null;
         }
 
-        // 获取流水号
+        // 获取流水号,如流水号不存在,则生成流水号(加密方式初始为随机数,非加密方式初始为1)
         int no;
         String key = "CodeGroup:" + group + "#" + length;
         String val = Redis.get(key);
@@ -141,7 +136,7 @@ public final class Generator {
 
         // 更新流水号并释放锁
         Redis.set(key, String.valueOf(no));
-        lock.releaseLock(param);
+        LOCK.releaseLock(param);
 
         // 格式化流水号
         String code = Util.flushLeft(no, len);
