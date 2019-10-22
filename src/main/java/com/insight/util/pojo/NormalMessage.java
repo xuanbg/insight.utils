@@ -22,9 +22,9 @@ public class NormalMessage implements Serializable {
     private String sceneCode;
 
     /**
-     * 渠道编码
+     * 合作伙伴编码
      */
-    private String channelCode;
+    private String partnerCode;
 
     /**
      * 接收人,多个接收人使用逗号分隔
@@ -51,12 +51,12 @@ public class NormalMessage implements Serializable {
         this.sceneCode = sceneCode;
     }
 
-    public String getChannelCode() {
-        return channelCode;
+    public String getPartnerCode() {
+        return partnerCode;
     }
 
-    public void setChannelCode(String channelCode) {
-        this.channelCode = channelCode;
+    public void setPartnerCode(String partnerCode) {
+        this.partnerCode = partnerCode;
     }
 
     public String getReceivers() {
