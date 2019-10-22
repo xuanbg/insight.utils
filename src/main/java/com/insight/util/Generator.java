@@ -120,7 +120,7 @@ public final class Generator {
 
         // 获取流水号,如流水号不存在,则生成流水号(加密方式初始为随机数,非加密方式初始为1)
         int no;
-        String key = "CodeGroup:" + group + "#" + length;
+        String key = "CodeGroup:" + group;
         String val = Redis.get(key);
         if (val == null || val.isEmpty()) {
             if (isEncrypt) {
