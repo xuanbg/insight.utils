@@ -4,7 +4,6 @@ import com.insight.util.Json;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 /**
  * @author 宣炳刚
@@ -48,11 +47,6 @@ public class User implements Serializable {
      * 微信UnionID
      */
     private String unionId;
-
-    /**
-     * 微信OpenID集合
-     */
-    private Map<String, String> openId;
 
     /**
      * 登录密码
@@ -153,14 +147,6 @@ public class User implements Serializable {
 
     public void setUnionId(String unionId) {
         this.unionId = unionId;
-    }
-
-    public Map<String, String> getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(Map<String, String> openId) {
-        this.openId = openId;
     }
 
     public String getPassword() {

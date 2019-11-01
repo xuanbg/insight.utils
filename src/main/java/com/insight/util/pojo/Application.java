@@ -52,12 +52,12 @@ public class Application implements Serializable {
     /**
      * 是否单点登录
      */
-    private Boolean signinOne;
+    private Boolean isSigninOne;
 
     /**
      * 是否自动刷新令牌
      */
-    private Boolean autoRefresh;
+    private Boolean isAutoRefresh;
 
     /**
      * 创建人
@@ -131,19 +131,19 @@ public class Application implements Serializable {
     }
 
     public Boolean getSigninOne() {
-        return signinOne;
+        return isSigninOne;
     }
 
     public void setSigninOne(Boolean signinOne) {
-        this.signinOne = signinOne;
+        isSigninOne = signinOne;
     }
 
     public Boolean getAutoRefresh() {
-        return autoRefresh;
+        return isAutoRefresh;
     }
 
     public void setAutoRefresh(Boolean autoRefresh) {
-        this.autoRefresh = autoRefresh;
+        isAutoRefresh = autoRefresh;
     }
 
     public String getCreator() {

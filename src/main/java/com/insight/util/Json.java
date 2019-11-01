@@ -111,7 +111,7 @@ public final class Json {
         try {
             return mapper.readValue(json, type);
         } catch (IOException e) {
-            log(json);
+            log(json, e.getMessage());
             return null;
         }
     }
@@ -132,7 +132,7 @@ public final class Json {
         try {
             return mapper.readValue(json, mapper.getTypeFactory().constructParametricType(List.class, elementClasses));
         } catch (IOException e) {
-            log(json);
+            log(json, e.getMessage());
             return null;
         }
     }
@@ -152,7 +152,7 @@ public final class Json {
             //noinspection unchecked
             return mapper.readValue(json, HashMap.class);
         } catch (IOException e) {
-            log(json);
+            log(json, e.getMessage());
             return null;
         }
     }
@@ -165,16 +165,8 @@ public final class Json {
      */
     public static Map toMap(Object obj) {
         String json = toJson(obj);
-        if (json == null || json.isEmpty()) {
-            return null;
-        }
 
-        try {
-            return mapper.readValue(json, Map.class);
-        } catch (IOException e) {
-            log(json);
-            return null;
-        }
+        return toMap(json);
     }
 
     /**
@@ -244,7 +236,7 @@ public final class Json {
      *
      * @param str JSON字符串
      */
-    private static void log(String str) {
-        LogFactory.getLog(Json.class).error("非法的JSON字符串：" + str);
+    private static void log(String str, String msg) {
+        LogFactory.getLog(Json.class).error("反序列化失败:" + msg + "\r\nJSON字符串：" + str);
     }
 }
