@@ -77,6 +77,25 @@ public final class Json {
     }
 
     /**
+     * 将json转换成指定类型的集合
+     *
+     * @param obj            bean类型
+     * @param elementClasses 集合元素类型
+     * @param <T>            泛型
+     * @return List
+     */
+    public static <T> T cloneList(Object obj, Class<?>... elementClasses) {
+        String json = toJson(obj);
+
+        try {
+            return mapper.readValue(json, mapper.getTypeFactory().constructParametricType(List.class, elementClasses));
+        } catch (IOException e) {
+            log(json, e.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * 将bean转换成json
      *
      * @param obj bean对象

@@ -43,7 +43,12 @@ public class TokenInfo implements Serializable {
     private String appId;
 
     /**
-     * 令牌生命周期(秒)
+     * 授权码生命周期(毫秒)
+     */
+    private Long permitLife;
+
+    /**
+     * 令牌生命周期(毫秒)
      */
     private Long life;
 
@@ -130,6 +135,14 @@ public class TokenInfo implements Serializable {
 
     public void setAppId(String appId) {
         this.appId = appId;
+    }
+
+    public Long getPermitLife() {
+        return permitLife;
+    }
+
+    public void setPermitLife(Long permitLife) {
+        this.permitLife = permitLife;
     }
 
     public Long getLife() {

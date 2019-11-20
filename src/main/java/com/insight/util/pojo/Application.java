@@ -5,7 +5,6 @@ import com.insight.util.Json;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-
 /**
  * @author 宣炳刚
  * @date 2017/9/30
@@ -45,7 +44,12 @@ public class Application implements Serializable {
     private String domain;
 
     /**
-     * 令牌生命周期(小时)
+     * 授权码生命周期(毫秒)
+     */
+    private Long permitLife;
+
+    /**
+     * 令牌生命周期(毫秒)
      */
     private Long tokenLife;
 
@@ -120,6 +124,14 @@ public class Application implements Serializable {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public Long getPermitLife() {
+        return permitLife;
+    }
+
+    public void setPermitLife(Long permitLife) {
+        this.permitLife = permitLife;
     }
 
     public Long getTokenLife() {
