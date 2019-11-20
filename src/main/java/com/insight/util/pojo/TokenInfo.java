@@ -63,6 +63,11 @@ public class TokenInfo implements Serializable {
     private LocalDate expireDate;
 
     /**
+     * 授权码获取时间
+     */
+    private LocalDateTime permitTime;
+
+    /**
      * Token过期时间
      */
     private LocalDateTime expiryTime;
@@ -159,6 +164,14 @@ public class TokenInfo implements Serializable {
         this.expireDate = expireDate;
     }
 
+    public LocalDateTime getPermitTime() {
+        return permitTime;
+    }
+
+    public void setPermitTime(LocalDateTime permitTime) {
+        this.permitTime = permitTime;
+    }
+
     public LocalDateTime getExpiryTime() {
         return expiryTime;
     }
@@ -213,12 +226,11 @@ public class TokenInfo implements Serializable {
     /**
      * Token是否过期
      *
-     * @param isReal 是否实际过期时间
      * @return Token是否过期
      */
     @JsonIgnore
-    public Boolean isExpiry(Boolean isReal) {
-        LocalDateTime expiry = expiryTime.plusSeconds(isReal ? 0 : TIME_OUT);
+    public Boolean isExpiry() {
+        LocalDateTime expiry = expiryTime.plusSeconds(TIME_OUT);
 
         return LocalDateTime.now().isAfter(expiry);
     }
@@ -230,7 +242,9 @@ public class TokenInfo implements Serializable {
      */
     @JsonIgnore
     public Boolean isFailure() {
-        return LocalDateTime.now().isAfter(failureTime);
+        LocalDateTime expiry = failureTime.plusSeconds(TIME_OUT);
+
+        return LocalDateTime.now().isAfter(expiry);
     }
 
     @Override
