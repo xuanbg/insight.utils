@@ -14,8 +14,8 @@ import java.util.List;
  * @remark 令牌信息实体类
  */
 public class TokenInfo implements Serializable {
+    protected static final int TIME_OUT = 300;
     private static final long serialVersionUID = -1L;
-    private static final int TIME_OUT = 300;
 
     /**
      * 访问令牌MD5摘要
