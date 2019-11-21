@@ -14,7 +14,7 @@ import java.util.List;
  * @remark 令牌信息实体类
  */
 public class TokenInfo implements Serializable {
-    protected static final int TIME_OUT = 300;
+    public static final int TIME_OUT = 300;
     private static final long serialVersionUID = -1L;
 
     /**
