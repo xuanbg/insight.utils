@@ -574,7 +574,7 @@ public class ExcelHelper {
             return null;
         }
 
-        switch (cell.getCellTypeEnum()) {
+        switch (cell.getCellType()) {
             case STRING:
                 String value = cell.getStringCellValue();
                 switch (type) {
@@ -586,9 +586,9 @@ public class ExcelHelper {
                     case "String":
                         return cell.getStringCellValue();
                     default:
-                        Double val;
+                        double val;
                         try {
-                            val = Double.valueOf(value);
+                            val = Double.parseDouble(value);
                         } catch (Exception ex) {
                             return null;
                         }
