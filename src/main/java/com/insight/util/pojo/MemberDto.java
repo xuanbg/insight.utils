@@ -18,6 +18,11 @@ public class MemberDto implements Serializable {
     private String id;
 
     /**
+     * 父ID
+     */
+    private String parentId;
+
+    /**
      * 成员类型:0.未定义;1.用户;2.用户组;3.职位
      */
     private Integer type;
@@ -33,6 +38,14 @@ public class MemberDto implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 
     public Integer getType() {
