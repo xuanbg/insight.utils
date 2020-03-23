@@ -28,14 +28,10 @@ public final class Util {
      */
     public static Map<String, String> objectToMap(Object obj) {
         Map<String, String> map = new HashMap<>(32);
-        Class<?> clazz = obj.getClass();
-        for (Field field : clazz.getDeclaredFields()) {
-            if (!field.isAccessible()) {
-                continue;
-            }
-
+        for (Field field : obj.getClass().getDeclaredFields()) {
             String fieldName = field.getName();
             try {
+                field.setAccessible(true);
                 Object val = field.get(obj);
                 if (val == null) {
                     continue;
