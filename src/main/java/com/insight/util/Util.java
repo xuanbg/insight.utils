@@ -1,8 +1,11 @@
 package com.insight.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +18,37 @@ import java.util.Map;
  * @remark 基础帮助类
  */
 public final class Util {
+    private static Logger logger = LoggerFactory.getLogger(Util.class);
+
+    /**
+     * 将对象转换成HashMap
+     *
+     * @param obj 源对象
+     * @return HashMap
+     */
+    public static Map<String, String> objectToMap(Object obj) {
+        Map<String, String> map = new HashMap<>(32);
+        Class<?> clazz = obj.getClass();
+        for (Field field : clazz.getDeclaredFields()) {
+            if (!field.isAccessible()) {
+                continue;
+            }
+
+            String fieldName = field.getName();
+            try {
+                Object val = field.get(obj);
+                if (val == null) {
+                    continue;
+                }
+
+                map.put(fieldName, Json.toJson(val));
+            } catch (IllegalAccessException ex) {
+                logger.error("字段读取失败: {}", ex.getMessage());
+            }
+        }
+
+        return map;
+    }
 
     /**
      * 数值金额转换为中文大写金额
@@ -74,7 +108,7 @@ public final class Util {
             return "零元整";
         }
 
-        if (amount > Long.valueOf("99999999999999")) {
+        if (amount > Long.parseLong("99999999999999")) {
             return "不支持万亿及更高金额";
         }
 
