@@ -37,7 +37,9 @@ public final class Util {
                     continue;
                 }
 
-                map.put(fieldName, Json.toJson(val));
+                String typeName = field.getType().getSimpleName();
+                String value = "String".equals(typeName) ? (String) val : Json.toJson(val);
+                map.put(fieldName, value);
             } catch (IllegalAccessException ex) {
                 logger.error("字段读取失败: {}", ex.getMessage());
             }
