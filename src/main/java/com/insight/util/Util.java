@@ -182,6 +182,15 @@ public final class Util {
         return DigestUtils.sha256Hex(key);
     }
 
+    /**
+     * sha 散列
+     *
+     * @param key 字符串
+     * @return hash散列
+     */
+    public static String sha1(String key) {
+        return DigestUtils.sha1Hex(key);
+    }
 
     /**
      * 获取客户端IP

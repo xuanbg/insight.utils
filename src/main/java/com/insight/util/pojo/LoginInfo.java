@@ -37,6 +37,16 @@ public class LoginInfo implements Serializable {
      */
     private String userName;
 
+    /**
+     * 用户手机号
+     */
+    private String mobile;
+
+    /**
+     * 用户头像
+     */
+    private String headImg;
+
     public String getAppId() {
         return appId;
     }
@@ -75,6 +85,22 @@ public class LoginInfo implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg;
     }
 
     @Override
