@@ -44,11 +44,6 @@ public class Log implements Serializable {
     private Object content;
 
     /**
-     * 创建人登录部门ID
-     */
-    private String deptId;
-
-    /**
      * 创建人
      */
     private String creator;
@@ -109,14 +104,6 @@ public class Log implements Serializable {
 
     public void setContent(Object content) {
         this.content = content;
-    }
-
-    public String getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
     }
 
     public String getCreator() {
