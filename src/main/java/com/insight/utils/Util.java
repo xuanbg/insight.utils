@@ -32,7 +32,7 @@ public final class Util {
      * @param length 生成字符串长度(1-8)
      * @return 随机字符串
      */
-    public String randomString(Integer length) {
+    public static String randomString(Integer length) {
         Random random = new Random();
         String base = "00000000";
 
