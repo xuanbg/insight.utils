@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author duxl
@@ -19,6 +16,15 @@ import java.util.Map;
  */
 public final class Util {
     private static Logger logger = LoggerFactory.getLogger(Util.class);
+
+    /**
+     * 生成uuid
+     *
+     * @return uuid
+     */
+    public static String uuid() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 
     /**
      * 将对象转换成HashMap
