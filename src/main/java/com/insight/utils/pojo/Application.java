@@ -64,11 +64,6 @@ public class Application implements Serializable {
     private Boolean isAutoRefresh;
 
     /**
-     * 是否自动加载租户
-     */
-    private Boolean isAutoTenant;
-
-    /**
      * 创建人
      */
     private String creator;
@@ -161,14 +156,6 @@ public class Application implements Serializable {
 
     public void setAutoRefresh(Boolean autoRefresh) {
         isAutoRefresh = autoRefresh;
-    }
-
-    public Boolean getAutoTenant() {
-        return isAutoTenant;
-    }
-
-    public void setAutoTenant(Boolean autoTenant) {
-        isAutoTenant = autoTenant;
     }
 
     public String getCreator() {
