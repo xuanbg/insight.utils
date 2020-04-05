@@ -182,7 +182,7 @@ public final class Json {
      * @param obj 对象
      * @return hashmap
      */
-    public static Map toMap(Object obj) {
+    public static Map<String, Object> toMap(Object obj) {
         String json = toJson(obj);
 
         return toMap(json);
