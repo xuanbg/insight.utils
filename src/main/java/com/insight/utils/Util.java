@@ -27,6 +27,23 @@ public final class Util {
     }
 
     /**
+     * 生成一个指定长度的纯数字组成的随机字符串
+     *
+     * @param length 生成字符串长度(1-8)
+     * @return 随机字符串
+     */
+    public String randomString(Integer length) {
+        Random random = new Random();
+        String base = "00000000";
+
+        double max = Math.pow(Double.parseDouble("10"), length.doubleValue());
+        String r = String.valueOf(random.nextInt((int) max));
+
+        int len = r.length();
+        return length.equals(len) ? r : base.substring(0, length - len) + r;
+    }
+
+    /**
      * 将对象转换成HashMap
      *
      * @param obj 源对象
