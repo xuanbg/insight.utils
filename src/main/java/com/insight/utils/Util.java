@@ -1,8 +1,8 @@
 package com.insight.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
@@ -15,7 +15,7 @@ import java.util.*;
  * @remark 基础帮助类
  */
 public final class Util {
-    private static Logger logger = LoggerFactory.getLogger(Util.class);
+    private static Log logger = LogFactory.getLog(Util.class);
 
     /**
      * 生成uuid
@@ -47,7 +47,7 @@ public final class Util {
                 String value = "String".equals(typeName) ? (String) val : Json.toJson(val);
                 map.put(fieldName, value);
             } catch (IllegalAccessException ex) {
-                logger.error("字段读取失败: {}", ex.getMessage());
+                logger.error("字段读取失败: " + ex.getMessage());
             }
         }
 

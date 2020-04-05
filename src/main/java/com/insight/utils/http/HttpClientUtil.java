@@ -1,6 +1,8 @@
 package com.insight.utils.http;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -21,8 +23,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ import java.util.*;
  * @remark
  */
 public class HttpClientUtil {
-    private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
+    private static Log logger = LogFactory.getLog(HttpClientUtil.class);
 
     /**
      * 每个路由最大连接数

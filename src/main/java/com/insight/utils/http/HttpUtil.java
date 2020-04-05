@@ -1,6 +1,8 @@
 package com.insight.utils.http;
 
 import com.insight.utils.Json;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
@@ -8,8 +10,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @remark HttpClient工具类
  */
 public class HttpUtil {
-    private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
+    private static Log logger = LogFactory.getLog(HttpUtil.class);
     private static final CloseableHttpClient HTTPCLIENT = HttpClients.createDefault();
 
     /**

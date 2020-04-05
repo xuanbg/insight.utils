@@ -1,7 +1,7 @@
 package com.insight.utils.http;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,7 +15,7 @@ import java.net.URL;
  * @remark
  */
 public class HttpUtils {
-    private static final Logger logger = LoggerFactory.getLogger(HttpUtils.class);
+    private static Log logger = LogFactory.getLog(HttpUtils.class);
 
     /**
      * 根据url获取远程文件资源
