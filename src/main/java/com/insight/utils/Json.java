@@ -33,28 +33,24 @@ import java.util.Map;
  * @remark Json工具类
  */
 public final class Json {
-    private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-    /**
-     * jackson map
-     */
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     static {
-        JavaTimeModule module = new JavaTimeModule();
-        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
-        module.addSerializer(LocalDate.class, new LocalDateSerializer(dateFormatter));
-        module.addSerializer(LocalTime.class, new LocalTimeSerializer(timeFormatter));
-        module.addSerializer(Date.class, new DateSerializer());
+        JavaTimeModule MODULE = new JavaTimeModule();
+        MODULE.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
+        MODULE.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
+        MODULE.addSerializer(LocalTime.class, new LocalTimeSerializer(TIME_FORMATTER));
+        MODULE.addSerializer(Date.class, new DateSerializer());
 
-        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
-        module.addDeserializer(LocalDate.class, new LocalDateDeserializer(dateFormatter));
-        module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(timeFormatter));
-        module.addDeserializer(Date.class, new DateDeserializer());
+        MODULE.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
+        MODULE.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+        MODULE.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
+        MODULE.addDeserializer(Date.class, new DateDeserializer());
 
-        mapper.registerModule(module);
+        mapper.registerModule(MODULE);
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -186,6 +182,43 @@ public final class Json {
         String json = toJson(obj);
 
         return toMap(json);
+    }
+
+    /**
+     * 将对象转换为值为String类型的HashMap
+     *
+     * @param obj 对象
+     * @return hashmap
+     */
+    public static Map<String, String> toStringValueMap(Object obj) {
+        String json = toJson(obj);
+
+        return toStringValueMap(json);
+    }
+
+    /**
+     * 将Json字符串转换为值为String类型的HashMap
+     *
+     * @param json json字符串
+     * @return hashmap
+     */
+    public static Map<String, String> toStringValueMap(String json) {
+        Map<String, Object> obj = toMap(json);
+        if (obj == null){
+            return null;
+        }
+
+        Map<String, String> map = new HashMap<>(16);
+        for (Map.Entry<String, Object> set : obj.entrySet()) {
+            if (set.getValue() == null) {
+                continue;
+            }
+
+            String value = toJson(set.getValue());
+            map.put(set.getKey(), value);
+        }
+
+        return map;
     }
 
     /**

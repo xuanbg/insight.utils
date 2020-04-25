@@ -21,7 +21,7 @@ public final class DateHelper {
     /**
      * 日期格式字典
      */
-    private static Map<String, String> formatMap = new HashMap<>(16);
+    private static final Map<String, String> formatMap = new HashMap<>(16);
 
     /**
      * 日期常用格式

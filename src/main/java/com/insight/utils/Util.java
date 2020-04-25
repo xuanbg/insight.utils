@@ -15,7 +15,7 @@ import java.util.*;
  * @remark 基础帮助类
  */
 public final class Util {
-    private static Log logger = LogFactory.getLog(Util.class);
+    private static final Log logger = LogFactory.getLog(Util.class);
 
     /**
      * 生成uuid
