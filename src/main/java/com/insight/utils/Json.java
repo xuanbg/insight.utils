@@ -36,7 +36,7 @@ public final class Json {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     static {
         JavaTimeModule module = new JavaTimeModule();
@@ -50,10 +50,10 @@ public final class Json {
         module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
         module.addDeserializer(Date.class, new DateDeserializer());
 
-        mapper.registerModule(module);
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        MAPPER.registerModule(module);
+        MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        MAPPER.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
+        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     private Json() {
@@ -84,7 +84,7 @@ public final class Json {
         String json = toJson(obj);
 
         try {
-            return mapper.readValue(json, mapper.getTypeFactory().constructParametricType(List.class, elementClasses));
+            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementClasses));
         } catch (IOException e) {
             log(json, e.getMessage());
             return null;
@@ -106,7 +106,7 @@ public final class Json {
         }
 
         try {
-            return mapper.writeValueAsString(obj);
+            return MAPPER.writeValueAsString(obj);
         } catch (IOException e) {
             LogFactory.getLog(Json.class).error("序列化对象失败!");
             return null;
@@ -127,7 +127,7 @@ public final class Json {
         }
 
         try {
-            return mapper.readValue(json, type);
+            return MAPPER.readValue(json, type);
         } catch (IOException e) {
             log(json, e.getMessage());
             return null;
@@ -148,7 +148,7 @@ public final class Json {
         }
 
         try {
-            return mapper.readValue(json, mapper.getTypeFactory().constructParametricType(List.class, elementClasses));
+            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementClasses));
         } catch (IOException e) {
             log(json, e.getMessage());
             return null;
@@ -168,7 +168,7 @@ public final class Json {
 
         try {
             //noinspection unchecked
-            return mapper.readValue(json, HashMap.class);
+            return MAPPER.readValue(json, HashMap.class);
         } catch (IOException e) {
             log(json, e.getMessage());
             return null;
@@ -214,10 +214,6 @@ public final class Json {
         Map<String, String> map = new HashMap<>(16);
         for (Map.Entry<String, Object> set : obj.entrySet()) {
             Object value = set.getValue();
-            if (value == null) {
-                continue;
-            }
-
             map.put(set.getKey(), toJson(value));
         }
 
@@ -283,7 +279,7 @@ public final class Json {
      * @since 1.0
      */
     public static JavaType getJavaType(Class<?> collectionClass, Class<?>... elementClasses) {
-        return mapper.getTypeFactory().constructParametricType(collectionClass, elementClasses);
+        return MAPPER.getTypeFactory().constructParametricType(collectionClass, elementClasses);
     }
 
     /**
