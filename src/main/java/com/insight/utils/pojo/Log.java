@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @date 2019-09-13
  * @remark 操作日志记录类
  */
-public class Log<T> implements Serializable {
+public class Log implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
@@ -43,7 +43,7 @@ public class Log<T> implements Serializable {
     /**
      * 记录内容
      */
-    private T content;
+    private Object content;
 
     /**
      * 创建人
@@ -102,11 +102,11 @@ public class Log<T> implements Serializable {
         this.businessId = businessId;
     }
 
-    public T getContent() {
+    public Object getContent() {
         return content;
     }
 
-    public void setContent(T content) {
+    public void setContent(Object content) {
         this.content = content;
     }
 
