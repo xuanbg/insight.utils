@@ -1,6 +1,8 @@
 package com.insight.utils.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.insight.utils.Json;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
  * @date 2019-09-13
  * @remark 操作日志记录类
  */
-public class Log implements Serializable {
+public class Log<T> implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
@@ -41,7 +43,7 @@ public class Log implements Serializable {
     /**
      * 记录内容
      */
-    private Object content;
+    private T content;
 
     /**
      * 创建人
@@ -56,6 +58,8 @@ public class Log implements Serializable {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
     public String getId() {
@@ -98,11 +102,11 @@ public class Log implements Serializable {
         this.businessId = businessId;
     }
 
-    public Object getContent() {
+    public T getContent() {
         return content;
     }
 
-    public void setContent(Object content) {
+    public void setContent(T content) {
         this.content = content;
     }
 
