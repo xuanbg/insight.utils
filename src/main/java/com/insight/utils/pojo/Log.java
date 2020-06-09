@@ -21,6 +21,11 @@ public class Log implements Serializable {
     private String id;
 
     /**
+     * 应用ID
+     */
+    private String appId;
+
+    /**
      * 租户ID
      */
     private String tenantId;
@@ -68,6 +73,14 @@ public class Log implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getTenantId() {
