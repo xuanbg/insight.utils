@@ -11,13 +11,28 @@ import java.time.LocalDate;
  * @date 2019/05/20
  * @remark 分页类
  */
-public class Search implements Serializable {
+public class SearchDto implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
      * 查询关键词
      */
-    private String key;
+    private String keyword;
+
+    /**
+     * 第几页
+     */
+    private Integer page;
+
+    /**
+     * 每页数量
+     */
+    private Integer size;
+
+    /**
+     * 偏移量
+     */
+    private Integer offset;
 
     /**
      * 状态
@@ -36,12 +51,36 @@ public class Search implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    public String getKey() {
-        return key;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public Integer getPage() {
+        return page == null ? 1 : page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return size == null ? 20 : size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Integer getOffset() {
+        return offset == null ? (getSize() * (getPage() - 1)) : offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
     public Integer getStatus() {
