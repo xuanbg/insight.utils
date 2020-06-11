@@ -39,6 +39,8 @@ public class SearchDto implements Serializable {
      */
     private Integer status;
 
+    private Boolean onlyValid;
+
     /**
      * 开始日期
      */
@@ -89,6 +91,14 @@ public class SearchDto implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Boolean getOnlyValid() {
+        return onlyValid == null ? false : onlyValid;
+    }
+
+    public void setOnlyValid(Boolean onlyValid) {
+        this.onlyValid = onlyValid;
     }
 
     public LocalDate getStartDate() {
