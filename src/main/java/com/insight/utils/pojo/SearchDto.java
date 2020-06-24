@@ -15,6 +15,11 @@ public class SearchDto implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
+     * 租户ID
+     */
+    private String tenantId;
+
+    /**
      * 查询关键词
      */
     private String keyword;
@@ -39,6 +44,9 @@ public class SearchDto implements Serializable {
      */
     private Integer status;
 
+    /**
+     * 仅有效数据
+     */
     private Boolean onlyValid;
 
     /**
@@ -52,6 +60,14 @@ public class SearchDto implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
     public String getKeyword() {
         return keyword;
