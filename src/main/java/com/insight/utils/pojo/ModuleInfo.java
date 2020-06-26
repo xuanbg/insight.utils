@@ -32,11 +32,6 @@ public class ModuleInfo implements Serializable {
      */
     private Boolean isAutoLoad;
 
-    /**
-     * 是否具有选项
-     */
-    private Boolean hasParams;
-
     public String getIconUrl() {
         return iconUrl;
     }
@@ -67,14 +62,6 @@ public class ModuleInfo implements Serializable {
 
     public void setAutoLoad(Boolean autoLoad) {
         isAutoLoad = autoLoad;
-    }
-
-    public Boolean getHasParams() {
-        return hasParams;
-    }
-
-    public void setHasParams(Boolean hasParams) {
-        this.hasParams = hasParams;
     }
 
     @Override
