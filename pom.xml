@@ -136,7 +136,7 @@
     <repositories>
         <repository>
             <id>local_release</id>
-            <url>http://192.168.236.8:8081/repository/maven-releases/</url>
+            <url>http://192.168.160.8:8081/repository/maven-releases/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -149,11 +149,11 @@
     <distributionManagement>
         <repository>
             <id>release</id>
-            <url>http://192.168.236.8:8081/repository/maven-releases/</url>
+            <url>http://192.168.160.8:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshot</id>
-            <url>http://192.168.236.8:8081/repository/maven-snapshots/</url>
+            <url>http://192.168.160.8:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
