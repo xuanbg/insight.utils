@@ -48,6 +48,11 @@ public class TokenInfo implements Serializable {
     private Long life;
 
     /**
+     * 验证来源
+     */
+    private Boolean verifySource;
+
+    /**
      * 单点登录
      */
     private Boolean signInOne;
@@ -138,6 +143,14 @@ public class TokenInfo implements Serializable {
 
     public void setLife(Long life) {
         this.life = life;
+    }
+
+    public Boolean getVerifySource() {
+        return verifySource;
+    }
+
+    public void setVerifySource(Boolean verifySource) {
+        this.verifySource = verifySource;
     }
 
     public Boolean getSignInOne() {
