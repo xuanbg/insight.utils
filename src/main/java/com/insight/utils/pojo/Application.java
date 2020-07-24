@@ -54,6 +54,11 @@ public class Application implements Serializable {
     private Long tokenLife;
 
     /**
+     * 验证来源
+     */
+    private Boolean verifySource;
+
+    /**
      * 是否单点登录
      */
     private Boolean isSigninOne;
@@ -140,6 +145,14 @@ public class Application implements Serializable {
 
     public void setTokenLife(Long tokenLife) {
         this.tokenLife = tokenLife;
+    }
+
+    public Boolean getVerifySource() {
+        return verifySource;
+    }
+
+    public void setVerifySource(Boolean verifySource) {
+        this.verifySource = verifySource;
     }
 
     public Boolean getSigninOne() {
