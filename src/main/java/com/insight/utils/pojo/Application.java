@@ -56,7 +56,7 @@ public class Application implements Serializable {
     /**
      * 验证来源
      */
-    private Boolean verifySource;
+    private Boolean isVerifySource;
 
     /**
      * 是否单点登录
@@ -148,11 +148,11 @@ public class Application implements Serializable {
     }
 
     public Boolean getVerifySource() {
-        return verifySource;
+        return isVerifySource;
     }
 
     public void setVerifySource(Boolean verifySource) {
-        this.verifySource = verifySource;
+        isVerifySource = verifySource;
     }
 
     public Boolean getSigninOne() {
