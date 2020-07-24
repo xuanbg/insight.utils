@@ -232,8 +232,19 @@ public class TokenInfo implements Serializable {
      * @return Token是否合法
      */
     @JsonIgnore
-    public Boolean verifyToken(String hash) {
+    public Boolean verifyTokenHash(String hash) {
         return this.hash.equals(hash);
+    }
+
+    /**
+     * 验证Token是否合法
+     *
+     * @param secretKey 令牌安全码
+     * @return Token是否合法
+     */
+    @JsonIgnore
+    public Boolean verifySecretKey(String secretKey) {
+        return this.secretKey.equals(secretKey);
     }
 
     /**
