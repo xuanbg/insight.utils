@@ -110,7 +110,7 @@ public class SearchDto implements Serializable {
     }
 
     public Boolean getOnlyValid() {
-        return onlyValid == null ? false : onlyValid;
+        return onlyValid != null && onlyValid;
     }
 
     public void setOnlyValid(Boolean onlyValid) {
@@ -126,7 +126,7 @@ public class SearchDto implements Serializable {
     }
 
     public LocalDate getEndDate() {
-        return endDate;
+        return endDate.minusDays(1);
     }
 
     public void setEndDate(LocalDate endDate) {
