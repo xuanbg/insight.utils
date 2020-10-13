@@ -1,7 +1,6 @@
 package com.insight.utils;
 
 import com.insight.utils.pojo.Reply;
-import org.apache.commons.beanutils.BeanUtils;
 
 /**
  * @author 作者
@@ -476,25 +475,6 @@ public final class ReplyHelper {
         return TOO_OFTEN_REPLY;
     }
 
-    /**
-     * 请求过于频繁
-     *
-     * @param obj 数据对象
-     * @return Reply
-     */
-    public static Reply tooOften(Object obj) {
-        try {
-            Reply reply = (Reply) BeanUtils.cloneBean(TOO_OFTEN_REPLY);
-            reply.setData(obj);
-
-            return reply;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    
     /**
      * 服务端错误
      *

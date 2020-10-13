@@ -1,6 +1,6 @@
 package com.insight.utils.http;
 
-import org.apache.commons.lang3.StringUtils;
+import com.insight.utils.Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
@@ -35,7 +35,7 @@ import java.util.*;
  * @remark
  */
 public class HttpClientUtil {
-    private static Log logger = LogFactory.getLog(HttpClientUtil.class);
+    private static final Log logger = LogFactory.getLog(HttpClientUtil.class);
 
     /**
      * 每个路由最大连接数
@@ -271,7 +271,7 @@ public class HttpClientUtil {
     public static String httpClientPostFormData(String requestUri, Map<String, String> headerParam, Map<String, String> requestParam, String fileName, File file, String requestEncode, String resultEncode) {
         try {
             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-            if (file != null && StringUtils.isNotBlank(fileName)) {
+            if (file != null && !Util.isEmpty(fileName)) {
                 multipartEntityBuilder.addBinaryBody(fileName, file).setMode(HttpMultipartMode.RFC6532);
             }
 

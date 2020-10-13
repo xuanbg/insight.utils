@@ -1,13 +1,14 @@
 package com.insight.utils.file;
 
 
+import com.insight.utils.Util;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author duxl
@@ -22,16 +23,17 @@ public final class FileHelper {
      * @return
      */
     public static String getUrlContent(String url) {
-        if (StringUtils.isNotBlank(url)) {
-            try {
-                URL u = new URL(url);
-                return IOUtils.toString(u, "UTF-8");
-            } catch (IOException e) {
-                return null;
-            }
+        if (url == null || url.isEmpty()) {
+            return null;
         }
 
-        return null;
+        try {
+            URL u = new URL(url);
+            return IOUtils.toString(u, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            return null;
+        }
+
     }
 
     /**
@@ -68,7 +70,7 @@ public final class FileHelper {
      * @return
      */
     public static Boolean compare(String f1, String f2) {
-        if (StringUtils.isNotBlank(f1) && StringUtils.isNotBlank(f2)) {
+        if (!Util.isEmpty(f1) && !Util.isEmpty(f2)) {
             File fa = new File(f1);
             File fb = new File(f2);
             try {

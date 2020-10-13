@@ -4,7 +4,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
@@ -218,6 +217,16 @@ public final class Util {
     }
 
     /**
+     * 字符串是否为空
+     *
+     * @param str 字符串
+     * @return 是否为空
+     */
+    public static boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+    /**
      * md5 加密
      *
      * @param key 字符串
@@ -245,54 +254,5 @@ public final class Util {
      */
     public static String sha1(String key) {
         return DigestUtils.sha1Hex(key);
-    }
-
-    /**
-     * 获取客户端IP
-     *
-     * @param request 请求对象
-     * @return 客户端IP
-     */
-    public static String getIp(HttpServletRequest request) {
-        String ip = request.getHeader("X-Real-IP");
-        if (isEmpty(ip)) {
-            ip = request.getHeader("X-Forwarded-For");
-        }
-
-        if (isEmpty(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
-        }
-
-        if (isEmpty(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-
-        if (isEmpty(ip)) {
-            ip = request.getRemoteAddr();
-        }
-
-        return ip;
-    }
-
-    /**
-     * 获取客户端指纹
-     * (限流)
-     *
-     * @param request 请求对象
-     * @return 客户端指纹
-     */
-    public static String getFingerprint(HttpServletRequest request) {
-        String info = getIp(request) + request.getHeader("user-agent");
-        return md5(info);
-    }
-
-    /**
-     * IP是否为空
-     *
-     * @param str IP字符串
-     * @return 是否为空
-     */
-    private static Boolean isEmpty(String str) {
-        return str == null || str.isEmpty() || "unknown".equalsIgnoreCase(str);
     }
 }

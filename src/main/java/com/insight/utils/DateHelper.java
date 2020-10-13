@@ -1,10 +1,5 @@
 package com.insight.utils;
 
-
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
-
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -75,77 +70,6 @@ public final class DateHelper {
     }
 
     /**
-     * 转换Str为Date
-     *
-     * @param dateStr 日期字符串
-     * @return 日期
-     */
-    public static Date parseDate(String dateStr) {
-        try {
-            return DateUtils.parseDate(dateStr, datePatterns);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * 转换Str为DateTme
-     *
-     * @param datetimeStr 日期时间字符串
-     * @return 日期
-     */
-    public static Date parseDateTime(String datetimeStr) {
-        try {
-            return DateUtils.parseDate(datetimeStr, dateTimePatterns);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * 格式化指定日期
-     *
-     * @param date 日期
-     * @return yyyy-MM-dd
-     */
-    public static String formatDate(Date date) {
-        return formatDate(date, datePatterns[0]);
-    }
-
-    /**
-     * 格式化指定日期
-     *
-     * @param date    日期
-     * @param pattern 格式
-     * @return yyyy-MM-dd
-     */
-    public static String formatDate(Date date, String pattern) {
-        return DateFormatUtils.format(date, pattern);
-    }
-
-    /**
-     * 判断给定的字符串是否是给定格式
-     *
-     * @param dateStr 日期字符串
-     * @param pattern 日期格式
-     * @return 是否是给定格式
-     */
-    public static Boolean validateFormat(String dateStr, String pattern) {
-        try {
-            DateUtils.parseDate(dateStr, pattern);
-
-            return true;
-        } catch (Exception ignored) {
-        }
-
-        return false;
-    }
-
-    /**
      * 获取当前日期是星期几
      *
      * @return String - 返回星期几
@@ -154,24 +78,6 @@ public final class DateHelper {
         Date date = new Date();
 
         return calcWeek(date);
-    }
-
-    /**
-     * 获取指定日期是星期几
-     *
-     * @param dateStr 日期字符串
-     * @return - 返回当前星期几
-     */
-    public static Integer getWeek(String dateStr) {
-        try {
-            Date date = DateUtils.parseDate(dateStr, datePatterns);
-
-            return calcWeek(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return -1;
     }
 
     /**
@@ -188,34 +94,6 @@ public final class DateHelper {
         posOfWeek--;
 
         return posOfWeek;
-    }
-
-    /**
-     * 获取当月第一天
-     *
-     * @return 日期
-     */
-    public static String getMonthFirstDay() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DATE, 1);
-
-        return DateFormatUtils.format(cal, datePatterns[0]);
-    }
-
-    /**
-     * 获取当月最后一天
-     *
-     * @return 日期
-     */
-    public static String getMonthLastDay() {
-        Calendar cal = Calendar.getInstance();
-        Calendar f = (Calendar) cal.clone();
-        f.clear();
-        cal.set(Calendar.DATE, 1);
-        cal.add(Calendar.MONTH, 1);
-        cal.add(Calendar.DATE, -1);
-
-        return DateFormatUtils.format(cal, datePatterns[0]);
     }
 
     /**
