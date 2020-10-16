@@ -126,7 +126,7 @@ public class SearchDto implements Serializable {
     }
 
     public LocalDate getEndDate() {
-        return endDate == null ? null : endDate.minusDays(1);
+        return endDate == null ? null : endDate.plusDays(1);
     }
 
     public void setEndDate(LocalDate endDate) {
