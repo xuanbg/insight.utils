@@ -70,7 +70,7 @@ public final class FileHelper {
      * @return
      */
     public static Boolean compare(String f1, String f2) {
-        if (!Util.isEmpty(f1) && !Util.isEmpty(f2)) {
+        if (Util.isNotEmpty(f1) && Util.isNotEmpty(f2)) {
             File fa = new File(f1);
             File fb = new File(f2);
             try {

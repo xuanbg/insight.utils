@@ -222,8 +222,22 @@ public final class Util {
      * @param str 字符串
      * @return 是否为空
      */
-    public static boolean isEmpty(String str) {
-        return str == null || str.isEmpty();
+    public static boolean isNotEmpty(String str) {
+        return str != null && !str.isEmpty();
+    }
+
+    /**
+     * 生成Map
+     *
+     * @param key   键
+     * @param value 值
+     * @return Map
+     */
+    public static Map generateMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(key, value);
+
+        return map;
     }
 
     /**

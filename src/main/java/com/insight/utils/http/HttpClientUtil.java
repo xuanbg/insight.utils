@@ -271,7 +271,7 @@ public class HttpClientUtil {
     public static String httpClientPostFormData(String requestUri, Map<String, String> headerParam, Map<String, String> requestParam, String fileName, File file, String requestEncode, String resultEncode) {
         try {
             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-            if (file != null && !Util.isEmpty(fileName)) {
+            if (file != null && Util.isNotEmpty(fileName)) {
                 multipartEntityBuilder.addBinaryBody(fileName, file).setMode(HttpMultipartMode.RFC6532);
             }
 
