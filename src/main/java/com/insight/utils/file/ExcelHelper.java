@@ -227,15 +227,17 @@ public class ExcelHelper {
     /**
      * 导出工作簿到Excel文件
      *
-     * @param file 输出Excel文件(.xls|.xlsx)的路径及文件名
+     * @param path 文件路径
+     * @param file 输出Excel文件(.xls|.xlsx)的文件名
      * @return 文件名
      */
-    public String exportFile(String file) throws IOException {
+    public String exportFile(String path, String file) throws IOException {
         if (workbook == null) {
             throw new IOException();
         }
 
-        String fileName = file + suffix;
+        FileHelper.testDir(path);
+        String fileName = path + file + suffix;
         OutputStream stream = new FileOutputStream(fileName);
         workbook.write(stream);
 
@@ -245,28 +247,30 @@ public class ExcelHelper {
     /**
      * 使用指定的数据集生成Sheet并导出工作簿到Excel文件
      *
+     * @param path 文件路径
+     * @param file 输出Excel文件(.xls|.xlsx)的文件名
      * @param list 输入数据集合
-     * @param file 输出Excel文件(.xls|.xlsx)的路径及文件名
      * @param <T>  泛型参数
      * @return 文件名
      */
-    public <T> String exportFile(String file, List<T> list) throws IOException, NoSuchFieldException, IllegalAccessException {
-        return exportFile(file, list, null);
+    public <T> String exportFile(String path, String file, List<T> list) throws IOException, NoSuchFieldException, IllegalAccessException {
+        return exportFile(path, file, list, null);
     }
 
     /**
      * 使用指定的数据集生成指定名称的Sheet并导出工作簿到Excel文件
      *
+     * @param path      文件路径
+     * @param file      输出Excel文件(.xls|.xlsx)的文件名
      * @param list      输入数据集合
-     * @param file      输出Excel文件(.xls|.xlsx)的路径及文件名
-     * @param <T>       泛型参数
      * @param sheetName Sheet名称
+     * @param <T>       泛型参数
      * @return 文件名
      */
-    public <T> String exportFile(String file, List<T> list, String sheetName) throws IOException, NoSuchFieldException, IllegalAccessException {
+    public <T> String exportFile(String path, String file, List<T> list, String sheetName) throws IOException, NoSuchFieldException, IllegalAccessException {
         createSheet(list, sheetName);
 
-        return exportFile(file);
+        return exportFile(path, file);
     }
 
     /**

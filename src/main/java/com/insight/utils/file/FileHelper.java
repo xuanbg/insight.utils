@@ -1,6 +1,5 @@
 package com.insight.utils.file;
 
-
 import com.insight.utils.Util;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -16,11 +15,21 @@ import java.nio.charset.StandardCharsets;
  * @remark 文件和io操作工具，作为apache commons 的补充
  */
 public final class FileHelper {
+
+    public static boolean testDir(String path) {
+        File file = new File(path);
+        if (!file.exists() && !file.isDirectory()) {
+            return file.mkdir();
+        }
+
+        return true;
+    }
+
     /**
      * 获取
      *
      * @param url url地址
-     * @return
+     * @return url
      */
     public static String getUrlContent(String url) {
         if (url == null || url.isEmpty()) {
@@ -33,7 +42,6 @@ public final class FileHelper {
         } catch (IOException e) {
             return null;
         }
-
     }
 
     /**
@@ -57,9 +65,9 @@ public final class FileHelper {
      *
      * @param path 要删除的文件path
      */
-    public static void delete(String path) {
+    public static boolean delete(String path) {
         File f = new File(path);
-        FileUtils.deleteQuietly(f);
+        return FileUtils.deleteQuietly(f);
     }
 
     /**
@@ -67,7 +75,7 @@ public final class FileHelper {
      *
      * @param f1 文件1
      * @param f2 文件2
-     * @return
+     * @return 文件是否相同
      */
     public static Boolean compare(String f1, String f2) {
         if (Util.isNotEmpty(f1) && Util.isNotEmpty(f2)) {
