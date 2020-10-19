@@ -31,7 +31,9 @@ public class ExcelHelper {
     /**
      * 日期格式
      */
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    private String suffix;
 
     /**
      * 工作簿
@@ -69,9 +71,11 @@ public class ExcelHelper {
         switch (ver) {
             case XLS:
                 workbook = new HSSFWorkbook();
+                suffix = ".xls";
                 break;
             case XLSX:
                 workbook = new XSSFWorkbook();
+                suffix = ".xlsx";
                 break;
             default:
                 workbook = null;
@@ -224,14 +228,18 @@ public class ExcelHelper {
      * 导出工作簿到Excel文件
      *
      * @param file 输出Excel文件(.xls|.xlsx)的路径及文件名
+     * @return 文件名
      */
-    public void exportFile(String file) throws IOException {
+    public String exportFile(String file) throws IOException {
         if (workbook == null) {
-            return;
+            throw new IOException();
         }
 
-        OutputStream stream = new FileOutputStream(file);
+        String fileName = file + suffix;
+        OutputStream stream = new FileOutputStream(fileName);
         workbook.write(stream);
+
+        return fileName;
     }
 
     /**
@@ -240,9 +248,10 @@ public class ExcelHelper {
      * @param list 输入数据集合
      * @param file 输出Excel文件(.xls|.xlsx)的路径及文件名
      * @param <T>  泛型参数
+     * @return 文件名
      */
-    public <T> void exportFile(String file, List<T> list) throws IOException, NoSuchFieldException, IllegalAccessException {
-        exportFile(file, list, null);
+    public <T> String exportFile(String file, List<T> list) throws IOException, NoSuchFieldException, IllegalAccessException {
+        return exportFile(file, list, null);
     }
 
     /**
@@ -252,10 +261,12 @@ public class ExcelHelper {
      * @param file      输出Excel文件(.xls|.xlsx)的路径及文件名
      * @param <T>       泛型参数
      * @param sheetName Sheet名称
+     * @return 文件名
      */
-    public <T> void exportFile(String file, List<T> list, String sheetName) throws IOException, NoSuchFieldException, IllegalAccessException {
+    public <T> String exportFile(String file, List<T> list, String sheetName) throws IOException, NoSuchFieldException, IllegalAccessException {
         createSheet(list, sheetName);
-        exportFile(file);
+
+        return exportFile(file);
     }
 
     /**
