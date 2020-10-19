@@ -16,7 +16,17 @@ import java.nio.charset.StandardCharsets;
  */
 public final class FileHelper {
 
+    /**
+     * 测试文件路径
+     *
+     * @param path 文件路径
+     * @return 路径是否存在
+     */
     public static boolean testDir(String path) {
+        if (!Util.isNotEmpty(path)){
+            return true;
+        }
+
         File file = new File(path);
         if (!file.exists() && !file.isDirectory()) {
             return file.mkdir();

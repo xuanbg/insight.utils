@@ -13,6 +13,10 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -232,12 +236,11 @@ public class ExcelHelper {
      * @return 文件名
      */
     public String exportFile(String path, String file) throws IOException {
-        if (workbook == null) {
+        if (workbook == null || !FileHelper.testDir(path)) {
             throw new IOException();
         }
 
-        FileHelper.testDir(path);
-        String fileName = path + file + suffix;
+        String fileName = (path == null || path.isEmpty() ? "" : path + "/") + file + suffix;
         OutputStream stream = new FileOutputStream(fileName);
         workbook.write(stream);
 
@@ -461,11 +464,34 @@ public class ExcelHelper {
                 continue;
             }
 
-            if ("Date".equals(info.getTypeName())) {
-                SimpleDateFormat format = new SimpleDateFormat(info.getDateFormat());
-                cell.setCellValue(format.format(value));
-            } else {
-                cell.setCellValue(value.toString());
+            String val = value.toString();
+            switch (cellType) {
+                case NUMERIC:
+                    cell.setCellValue(Double.parseDouble(val));
+                    break;
+                case BOOLEAN:
+                    cell.setCellValue(Boolean.parseBoolean(val));
+                    break;
+                default:
+                    switch (info.getTypeName()) {
+                        case "Date":
+                            SimpleDateFormat format = new SimpleDateFormat(info.getDateFormat());
+                            cell.setCellValue(format.format(value));
+                        case "LocalDate":
+                            DateTimeFormatter f1 = DateTimeFormatter.ofPattern(info.getDateFormat());
+                            LocalDate date = (LocalDate) value;
+                            cell.setCellValue(date.format(f1));
+                            break;
+                        case "LocalDateTime":
+                            DateTimeFormatter f2 = DateTimeFormatter.ofPattern(info.getDateFormat());
+                            LocalDateTime time = (LocalDateTime) value;
+                            cell.setCellValue(time.format(f2));
+                            break;
+                        default:
+                            cell.setCellValue(val);
+                            break;
+                    }
+                    break;
             }
         }
     }
@@ -611,10 +637,22 @@ public class ExcelHelper {
                         return numberFormat(val, type);
                 }
             case NUMERIC:
-                if ("Date".equals(type)) {
+                if (type.matches("Date")) {
                     Date date = cell.getDateCellValue();
+                    if (date == null) {
+                        return null;
+                    }
 
-                    return date == null ? null : formatter.format(date.toInstant());
+                    if ("Date".equals(type)) {
+                        return formatter.format(date.toInstant());
+                    }
+
+                    ZonedDateTime zone = date.toInstant().atZone(ZoneId.systemDefault());
+                    if ("LocalDate".equals(type)) {
+                        return zone.toLocalDate();
+                    }
+
+                    return zone.toLocalDateTime();
                 }
 
                 return numberFormat(cell.getNumericCellValue(), type);
@@ -624,6 +662,8 @@ public class ExcelHelper {
                     case "Boolean":
                         return cell.getBooleanCellValue();
                     case "Date":
+                    case "LocalDate":
+                    case "LocalDateTime":
                         return cell.getDateCellValue();
                     case "String":
                         return cell.getStringCellValue();
@@ -696,6 +736,12 @@ public class ExcelHelper {
                 break;
             case "Date":
                 field.set(item, formatter.parse(val));
+                break;
+            case "LocalDate":
+                field.set(item, LocalDate.parse(val));
+                break;
+            case "LocalDateTime":
+                field.set(item, LocalDateTime.parse(val));
                 break;
             case "String":
                 field.set(item, val);
@@ -782,7 +828,7 @@ public class ExcelHelper {
             if (i.isAnnotationPresent(ColumnName.class)) {
                 ColumnName annotation = i.getAnnotation(ColumnName.class);
                 info.setColumnName(annotation.value());
-                info.setDateFormat("Date".equals(typeName) ? annotation.dateFormat() : null);
+                info.setDateFormat(typeName.matches("Date|LocalDate|LocalDateTime") ? annotation.dateFormat() : null);
                 info.setColumnPolicy(annotation.polic());
             }
 
