@@ -233,8 +233,8 @@ public final class Util {
      * @param value 值
      * @return Map
      */
-    public static Map generateMap(String key, Object value) {
-        Map<String, Object> map = new HashMap<>();
+    public static Map<String, Object> generateMap(String key, Object value) {
+        Map<String, Object> map = new HashMap<>(16);
         map.put(key, value);
 
         return map;
