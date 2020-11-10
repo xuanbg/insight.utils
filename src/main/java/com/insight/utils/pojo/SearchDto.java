@@ -20,6 +20,16 @@ public class SearchDto implements Serializable {
     private String tenantId;
 
     /**
+     * 所有者ID
+     */
+    private String ownerId;
+
+    /**
+     * 类型
+     */
+    private Integer type;
+
+    /**
      * 查询关键词
      */
     private String keyword;
@@ -67,6 +77,22 @@ public class SearchDto implements Serializable {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getKeyword() {
