@@ -15,6 +15,11 @@ public class SearchDto implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
+     * 主键
+     */
+    private Long id;
+
+    /**
      * 租户ID
      */
     private String tenantId;
@@ -70,6 +75,14 @@ public class SearchDto implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTenantId() {
         return tenantId;

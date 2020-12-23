@@ -26,6 +26,36 @@ public final class Util {
     }
 
     /**
+     * 数值是否为0
+     *
+     * @param decimal 数值
+     * @return 是否为0
+     */
+    public static boolean isZero(BigDecimal decimal) {
+        return decimal == null || BigDecimal.ZERO.compareTo(decimal) == 0;
+    }
+
+    /**
+     * 数值是否为正数
+     *
+     * @param decimal 数值
+     * @return 是否为正数
+     */
+    public static boolean isPositive(BigDecimal decimal) {
+        return decimal != null && BigDecimal.ZERO.compareTo(decimal) < 0;
+    }
+
+    /**
+     * 数值是否为负数
+     *
+     * @param decimal 数值
+     * @return 是否为负数
+     */
+    public static boolean isNegative(BigDecimal decimal) {
+        return decimal != null && BigDecimal.ZERO.compareTo(decimal) > 0;
+    }
+
+    /**
      * 生成一个指定长度的纯数字组成的随机字符串
      *
      * @param length 生成字符串长度(1-8)
