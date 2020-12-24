@@ -8,6 +8,11 @@ package com.insight.utils;
 public class SnowflakeCreator {
 
     /**
+     * 起始的时间戳:2020-01-01 00:00:00
+     */
+    private final static long START_STMP = 1577808000000L;
+
+    /**
      * 每一部分占用的位数
      */
     private final static long MACHINE_BIT = 6;
@@ -66,6 +71,6 @@ public class SnowflakeCreator {
         lastStmp = currStmp;
 
         // 返回ID:\0\timestmp(41)|machine(6)|sequence(12)|sub_id(4)|
-        return currStmp << TIMESTMP_LEFT | machineId << MACHINE_LEFT | sequence << SEQUENCE_LEFT | subId;
+        return (currStmp - START_STMP) << TIMESTMP_LEFT | machineId << MACHINE_LEFT | sequence << SEQUENCE_LEFT | subId;
     }
 }
