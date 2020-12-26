@@ -60,9 +60,9 @@ public class SearchDto implements Serializable {
     private Integer status;
 
     /**
-     * 仅有效数据
+     * 是否仅有效数据:null.全部数据,true.仅失效数据,false.仅有效数据
      */
-    private Boolean onlyValid;
+    private Boolean invalid;
 
     /**
      * 开始日期
@@ -148,12 +148,12 @@ public class SearchDto implements Serializable {
         this.status = status;
     }
 
-    public Boolean getOnlyValid() {
-        return onlyValid != null && onlyValid;
+    public Boolean getInvalid() {
+        return invalid;
     }
 
-    public void setOnlyValid(Boolean onlyValid) {
-        this.onlyValid = onlyValid;
+    public void setInvalid(Boolean invalid) {
+        this.invalid = invalid;
     }
 
     public LocalDate getStartDate() {
