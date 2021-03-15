@@ -76,6 +76,16 @@ public class SearchDto implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
+    /**
+     * 排序字段
+     */
+    private String orderBy;
+
+    /**
+     * 排序类型
+     */
+    private String orderType;
+
     public Long getId() {
         return id;
     }
@@ -109,7 +119,7 @@ public class SearchDto implements Serializable {
     }
 
     public String getKeyword() {
-        return keyword;
+        return keyword == null || keyword.isEmpty() ? null : keyword.replace("%", "\\%");
     }
 
     public void setKeyword(String keyword) {
@@ -170,6 +180,22 @@ public class SearchDto implements Serializable {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getOrderBy() {
+        return orderBy == null || orderBy.contains(";") ? "id" : orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public String getOrderType() {
+        return orderType == null || !orderType.matches("asc|desc") ? "desc" : orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
     }
 
     @Override
