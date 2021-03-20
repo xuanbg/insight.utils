@@ -42,7 +42,7 @@ public class SearchDto implements Serializable {
     /**
      * 关键值
      */
-    private String valve;
+    private String value;
 
     /**
      * 第几页
@@ -132,11 +132,11 @@ public class SearchDto implements Serializable {
     }
 
     public String getValve() {
-        return valve;
+        return value;
     }
 
     public void setValve(String valve) {
-        this.valve = valve;
+        this.value = valve;
     }
 
     public Integer getPage() {
