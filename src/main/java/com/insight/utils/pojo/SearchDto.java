@@ -131,12 +131,12 @@ public class SearchDto implements Serializable {
         this.keyword = keyword;
     }
 
-    public String getValve() {
+    public String getValue() {
         return value;
     }
 
-    public void setValve(String valve) {
-        this.value = valve;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Integer getPage() {
