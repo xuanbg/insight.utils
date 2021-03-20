@@ -40,6 +40,11 @@ public class SearchDto implements Serializable {
     private String keyword;
 
     /**
+     * 关键值
+     */
+    private String valve;
+
+    /**
      * 第几页
      */
     private Integer page;
@@ -124,6 +129,14 @@ public class SearchDto implements Serializable {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    public String getValve() {
+        return valve;
+    }
+
+    public void setValve(String valve) {
+        this.valve = valve;
     }
 
     public Integer getPage() {
