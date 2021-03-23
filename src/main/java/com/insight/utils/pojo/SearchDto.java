@@ -202,6 +202,10 @@ public class SearchDto implements Serializable {
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < orderBy.length(); i++) {
                 String c = orderBy.substring(i, i + 1);
+                if (c.matches("[_\\-]")){
+                    continue;
+                }
+
                 if (i > 0 && c.matches("[A-Z]")) {
                     result.append("_");
                 }
