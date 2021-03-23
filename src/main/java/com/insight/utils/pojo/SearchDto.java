@@ -196,7 +196,21 @@ public class SearchDto implements Serializable {
     }
 
     public String getOrderBy() {
-        return orderBy == null || orderBy.contains(";") ? "id" : orderBy;
+        if (orderBy == null || orderBy.isEmpty() || orderBy.contains(";")) {
+            return "id";
+        } else {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < orderBy.length(); i++) {
+                String c = orderBy.substring(i, i + 1);
+                if (i > 0 && c.matches("[A-Z]")) {
+                    result.append("_");
+                }
+
+                result.append(c.toLowerCase());
+            }
+
+            return result.toString();
+        }
     }
 
     public void setOrderBy(String orderBy) {
