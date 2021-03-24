@@ -218,7 +218,7 @@ public class SearchDto implements Serializable {
     }
 
     public String getOrderType() {
-        return orderType == null || !orderType.matches("asc|desc") ? "desc" : orderType;
+        return orderType == null || orderType.isEmpty() || !orderType.matches("asc|desc") ? "desc" : orderType;
     }
 
     public void setOrderType(String orderType) {
