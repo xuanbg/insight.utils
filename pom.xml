@@ -95,13 +95,13 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>RELEASE</version>
+            <version>3.5.6</version>
         </dependency>
     </dependencies>
 
     <repositories>
         <repository>
-            <id>dev</id>
+            <id>release</id>
             <url>https://nexus.i-facture.com/repository/maven-public/</url>
             <releases>
                 <enabled>true</enabled>
