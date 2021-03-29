@@ -1,6 +1,7 @@
 package com.insight.utils.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.insight.utils.DateHelper;
 import com.insight.utils.Json;
 
 import java.io.Serializable;
@@ -233,7 +234,7 @@ public class TokenInfo implements Serializable {
      * @return Token是否合法
      */
     @JsonIgnore
-    public Boolean verifyTokenHash(String hash) {
+    public boolean verifyTokenHash(String hash) {
         return this.hash.equals(hash);
     }
 
@@ -244,8 +245,18 @@ public class TokenInfo implements Serializable {
      * @return Token是否合法
      */
     @JsonIgnore
-    public Boolean verifySecretKey(String secretKey) {
+    public boolean verifySecretKey(String secretKey) {
         return this.secretKey.equals(secretKey);
+    }
+
+    /**
+     * Token有效期是否过半
+     *
+     * @return 有效期是否过半
+     */
+    @JsonIgnore
+    public boolean isHalfLife() {
+        return getLife() > 0 && DateHelper.getRemainSeconds(expiryTime) < life / 2000;
     }
 
     /**
@@ -254,7 +265,7 @@ public class TokenInfo implements Serializable {
      * @return 授权是否过期
      */
     @JsonIgnore
-    public Boolean isPermitExpiry() {
+    public boolean isPermitExpiry() {
         if (getPermitLife() <= 0) {
             return false;
         }
@@ -269,10 +280,8 @@ public class TokenInfo implements Serializable {
      * @return Token是否过期
      */
     @JsonIgnore
-    public Boolean isExpiry() {
-        LocalDateTime time = expiryTime.plusSeconds(TIME_OUT);
-
-        return LocalDateTime.now().isAfter(time);
+    public boolean isExpiry() {
+        return getLife() > 0 && LocalDateTime.now().isAfter(expiryTime.plusSeconds(TIME_OUT));
     }
 
     /**
@@ -281,10 +290,8 @@ public class TokenInfo implements Serializable {
      * @return Token是否失效
      */
     @JsonIgnore
-    public Boolean isFailure() {
-        LocalDateTime time = failureTime.plusSeconds(TIME_OUT);
-
-        return LocalDateTime.now().isAfter(time);
+    public boolean isFailure() {
+        return getLife() > 0 && LocalDateTime.now().isAfter(failureTime.plusSeconds(TIME_OUT));
     }
 
     @Override
