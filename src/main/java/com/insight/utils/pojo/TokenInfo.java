@@ -164,7 +164,7 @@ public class TokenInfo implements Serializable {
     }
 
     public Boolean getAutoRefresh() {
-        return autoRefresh != null && autoRefresh;
+        return getLife() > 0 && autoRefresh != null && autoRefresh;
     }
 
     public void setAutoRefresh(Boolean autoRefresh) {
