@@ -2,6 +2,7 @@ package com.insight.utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -16,7 +17,7 @@ public final class DateHelper {
     /**
      * 日期格式字典
      */
-    private static final Map<String, String> formatMap = new HashMap<>(16);
+    private static final Map<String, String> FORMAT_MAP = new HashMap<>(16);
 
     /**
      * 日期常用格式
@@ -75,25 +76,17 @@ public final class DateHelper {
      * @return String - 返回星期几
      */
     public static Integer getWeek() {
-        Date date = new Date();
-
-        return calcWeek(date);
+        return LocalDate.now().getDayOfWeek().getValue();
     }
 
     /**
      * 计算某个日期是星期几
      *
      * @param date 日期
-     * @return 0-6，0为星期天
+     * @return 1-7，7为星期天
      */
-    public static Integer calcWeek(Date date) {
-        int posOfWeek;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        posOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-        posOfWeek--;
-
-        return posOfWeek;
+    public static Integer calcWeek(LocalDate date) {
+        return date.getDayOfWeek().getValue();
     }
 
     /**
@@ -101,10 +94,10 @@ public final class DateHelper {
      *
      * @return 天数
      */
-    public static int getCurrentMonthDays() {
-        Calendar cal = new GregorianCalendar();
+    public static long getCurrentMonthDays() {
+        LocalDate one = LocalDate.now().withDayOfMonth(1);
 
-        return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        return one.plusMonths(1).toEpochDay() - one.toEpochDay();
     }
 
     /**
@@ -114,29 +107,19 @@ public final class DateHelper {
      * @param endDate   截止日期
      * @return 天数
      */
-    public static Integer getDiffDays(Date startDate, Date endDate) {
-        long ei = getDiffSeconds(startDate, endDate);
-
-        return (int) (ei / (1000 * 60 * 60 * 24));
+    public static long getDiffDays(LocalDate startDate, LocalDate endDate) {
+        return endDate.toEpochDay() - startDate.toEpochDay();
     }
 
     /**
-     * 获取时间差秒
+     * 计算时间差(秒)
      *
-     * @param startDate 开始时间
-     * @param endDate   截止数据
+     * @param start 开始时间
+     * @param end   结束时间
      * @return 秒数
      */
-    public static Long getDiffSeconds(Date startDate, Date endDate) {
-        if (startDate.after(endDate)) {
-            Date cal = startDate;
-            startDate = endDate;
-            endDate = cal;
-        }
-        long sl = startDate.getTime();
-        long el = endDate.getTime();
-
-        return el - sl;
+    public static long getDifference(LocalDateTime start, LocalDateTime end) {
+        return end.toEpochSecond(ZoneOffset.UTC) - start.toEpochSecond(ZoneOffset.UTC);
     }
 
     /**
@@ -145,43 +128,8 @@ public final class DateHelper {
      * @param endDate 截止时间
      * @return 秒数
      */
-    public static Long getRemainSeconds(Date endDate) {
-        return getRemainSeconds(endDate.getTime());
-    }
-
-    /**
-     * 计算当前时间到某一时间的秒数
-     *
-     * @param endTime 截止时间戳
-     * @return 秒数
-     */
-    public static Long getRemainSeconds(Long endTime) {
-        return getRemainMilliSeconds(endTime) / 1000;
-    }
-
-    /**
-     * 计算当前时间到某一时间的毫秒数
-     *
-     * @param endDate 截止时间
-     * @return 毫秒数
-     */
-    public static Long getRemainMilliSeconds(Date endDate) {
-        return getRemainMilliSeconds(endDate.getTime());
-    }
-
-    /**
-     * 计算当前时间到某一时间的毫秒数
-     *
-     * @param endTime 截止时间戳
-     * @return 毫秒数
-     */
-    public static Long getRemainMilliSeconds(Long endTime) {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime >= endTime) {
-            return 0L;
-        }
-
-        return endTime - currentTime;
+    public static Long getRemainSeconds(LocalDateTime endDate) {
+        return getDifference(LocalDateTime.now(), endDate);
     }
 
     /**
@@ -191,26 +139,26 @@ public final class DateHelper {
      * @return 格式化为yyyy-MM-dd HH-mm-ss格式的字符串
      */
     public static String dateFormat(String date) {
-        if (formatMap.isEmpty()) {
-            formatMap.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$", "yyyy-MM-dd-HH-mm-ss");
-            formatMap.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "yyyy-MM-dd-HH-mm");
-            formatMap.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "yyyy-MM-dd-HH");
-            formatMap.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}$", "yyyy-MM-dd");
-            formatMap.put("^\\d{4}\\D+\\d{1,2}$", "yyyy-MM");
-            formatMap.put("^\\d{4}$", "yyyy");
-            formatMap.put("^\\d{14}$", "yyyyMMddHHmmss");
-            formatMap.put("^\\d{12}$", "yyyyMMddHHmm");
-            formatMap.put("^\\d{10}$", "yyyyMMddHH");
-            formatMap.put("^\\d{8}$", "yyyyMMdd");
-            formatMap.put("^\\d{6}$", "yyyyMM");
-            formatMap.put("^\\d{2}\\D+\\d{1,2}\\D+\\d{1,2}$", "yy-MM-dd");
-            formatMap.put("^\\d{1,2}\\D+\\d{1,2}\\D+\\d{4}$", "dd-MM-yyyy");
+        if (FORMAT_MAP.isEmpty()) {
+            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$", "yyyy-MM-dd-HH-mm-ss");
+            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "yyyy-MM-dd-HH-mm");
+            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "yyyy-MM-dd-HH");
+            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}$", "yyyy-MM-dd");
+            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}$", "yyyy-MM");
+            FORMAT_MAP.put("^\\d{4}$", "yyyy");
+            FORMAT_MAP.put("^\\d{14}$", "yyyyMMddHHmmss");
+            FORMAT_MAP.put("^\\d{12}$", "yyyyMMddHHmm");
+            FORMAT_MAP.put("^\\d{10}$", "yyyyMMddHH");
+            FORMAT_MAP.put("^\\d{8}$", "yyyyMMdd");
+            FORMAT_MAP.put("^\\d{6}$", "yyyyMM");
+            FORMAT_MAP.put("^\\d{2}\\D+\\d{1,2}\\D+\\d{1,2}$", "yy-MM-dd");
+            FORMAT_MAP.put("^\\d{1,2}\\D+\\d{1,2}\\D+\\d{4}$", "dd-MM-yyyy");
         }
 
         DateTimeFormatter formatter = null;
-        for (String key : formatMap.keySet()) {
+        for (String key : FORMAT_MAP.keySet()) {
             if (Pattern.compile(key).matcher(date).matches()) {
-                formatter = DateTimeFormatter.ofPattern(formatMap.get(key));
+                formatter = DateTimeFormatter.ofPattern(FORMAT_MAP.get(key));
                 break;
             }
         }
