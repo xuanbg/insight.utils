@@ -130,7 +130,7 @@ public class TokenInfo implements Serializable {
     }
 
     public Long getPermitLife() {
-        return permitLife;
+        return permitLife == null ? 0L : permitLife;
     }
 
     public void setPermitLife(Long permitLife) {
@@ -138,7 +138,7 @@ public class TokenInfo implements Serializable {
     }
 
     public Long getLife() {
-        return life;
+        return life == null ? 0L : life;
     }
 
     public void setLife(Long life) {
@@ -248,15 +248,30 @@ public class TokenInfo implements Serializable {
     }
 
     /**
+     * 授权是否过期
+     *
+     * @return 授权是否过期
+     */
+    @JsonIgnore
+    public Boolean isPermitExpiry() {
+        if (getPermitLife() <= 0){
+            return false;
+        }
+
+        LocalDateTime time = permitTime.plusSeconds(getPermitLife() / 1000);
+        return LocalDateTime.now().isAfter(time);
+    }
+
+    /**
      * Token是否过期
      *
      * @return Token是否过期
      */
     @JsonIgnore
     public Boolean isExpiry() {
-        LocalDateTime expiry = expiryTime.plusSeconds(TIME_OUT);
+        LocalDateTime time = expiryTime.plusSeconds(TIME_OUT);
 
-        return LocalDateTime.now().isAfter(expiry);
+        return LocalDateTime.now().isAfter(time);
     }
 
     /**
@@ -266,9 +281,9 @@ public class TokenInfo implements Serializable {
      */
     @JsonIgnore
     public Boolean isFailure() {
-        LocalDateTime expiry = failureTime.plusSeconds(TIME_OUT);
+        LocalDateTime time = failureTime.plusSeconds(TIME_OUT);
 
-        return LocalDateTime.now().isAfter(expiry);
+        return LocalDateTime.now().isAfter(time);
     }
 
     @Override
