@@ -6,6 +6,7 @@ import com.insight.utils.Json;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -146,7 +147,7 @@ public class TokenInfo implements Serializable {
     }
 
     public Boolean getVerifySource() {
-        return verifySource;
+        return verifySource != null && verifySource;
     }
 
     public void setVerifySource(Boolean verifySource) {
@@ -154,7 +155,7 @@ public class TokenInfo implements Serializable {
     }
 
     public Boolean getSignInOne() {
-        return signInOne;
+        return signInOne != null && signInOne;
     }
 
     public void setSignInOne(Boolean signInOne) {
@@ -162,7 +163,7 @@ public class TokenInfo implements Serializable {
     }
 
     public Boolean getAutoRefresh() {
-        return autoRefresh;
+        return autoRefresh != null && autoRefresh;
     }
 
     public void setAutoRefresh(Boolean autoRefresh) {
@@ -218,7 +219,7 @@ public class TokenInfo implements Serializable {
     }
 
     public List<String> getPermitFuncs() {
-        return permitFuncs;
+        return permitFuncs == null ? new ArrayList<>() : permitFuncs;
     }
 
     public void setPermitFuncs(List<String> permitFuncs) {
@@ -254,7 +255,7 @@ public class TokenInfo implements Serializable {
      */
     @JsonIgnore
     public Boolean isPermitExpiry() {
-        if (getPermitLife() <= 0){
+        if (getPermitLife() <= 0) {
             return false;
         }
 
