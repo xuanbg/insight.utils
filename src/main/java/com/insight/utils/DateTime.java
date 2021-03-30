@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -23,6 +24,7 @@ public final class DateTime {
      * 日期常用格式
      */
     static String[] datePatterns = {"yyyy-MM-dd", "yyyyMMdd"};
+
     /**
      * 日期时间常用格式
      */
@@ -32,17 +34,6 @@ public final class DateTime {
      * 构造方法
      */
     public DateTime() {
-    }
-
-    /**
-     * 获取当前日期
-     *
-     * @return yyyy-MM-dd
-     */
-    public static String getDate() {
-        LocalDate localDate = LocalDate.now();
-
-        return localDate.toString();
     }
 
     /**
@@ -66,31 +57,43 @@ public final class DateTime {
     }
 
     /**
-     * 获取当前日期时间
+     * 格式化当前日期
      *
-     * @return yyyyMMddHHmmss
+     * @return yyyy-MM-dd
      */
-    public static String getDateTime() {
-        return getDateTime(dateTimePatterns[0]);
+    public static String formatCurrentDate() {
+        return LocalDate.now().toString();
     }
 
     /**
-     * 获取当前日期时间
+     * 格式化日期时间
+     *
+     * @param time 时间
+     * @param pattern - 日期时间格式
+     * @return 指定格式的日期时间
+     */
+    public static String formatDateTime(LocalDateTime time, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return time.format(formatter);
+    }
+
+    /**
+     * 格式化当前日期时间
      *
      * @param pattern - 日期时间格式
      * @return 指定格式的日期时间
      */
-    public static String getDateTime(String pattern) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-            LocalDateTime datetime = LocalDateTime.now();
+    public static String formatCurrentTime(String pattern) {
+        return formatDateTime(LocalDateTime.now(), pattern);
+    }
 
-            return datetime.format(formatter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    /**
+     * 格式化当前日期时间(yyyy-MM-dd HH:mm:ss)
+     *
+     * @return 固定格式的日期时间
+     */
+    public static String formatCurrentTime() {
+        return formatCurrentTime(dateTimePatterns[0]);
     }
 
     /**
@@ -119,7 +122,6 @@ public final class DateTime {
      */
     public static long getCurrentMonthDays() {
         LocalDate one = LocalDate.now().withDayOfMonth(1);
-
         return one.plusMonths(1).toEpochDay() - one.toEpochDay();
     }
 
