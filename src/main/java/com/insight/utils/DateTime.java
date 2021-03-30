@@ -8,11 +8,11 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 /**
- * @author duxl
+ * @author 宣炳刚
  * @date 2017年8月23日
- * @remark 时间日期帮助类，常用方法另参考apache DateUtils。
+ * @remark 时间日期帮助类
  */
-public final class DateHelper {
+public final class DateTime {
 
     /**
      * 日期格式字典
@@ -28,7 +28,10 @@ public final class DateHelper {
      */
     static String[] dateTimePatterns = {"yyyy-MM-dd HH:mm:ss", "yyyyMMddHHmmss"};
 
-    private DateHelper() {
+    /**
+     * 构造方法
+     */
+    public DateTime() {
     }
 
     /**
@@ -40,6 +43,26 @@ public final class DateHelper {
         LocalDate localDate = LocalDate.now();
 
         return localDate.toString();
+    }
+
+    /**
+     * 获取与当天差若干天的日期
+     *
+     * @param days 天数
+     * @return LocalDate
+     */
+    public static LocalDate getDate(long days) {
+        return LocalDate.now().plusDays(days);
+    }
+
+    /**
+     * 获取与当前时间差若干秒的时间
+     *
+     * @param seconds 秒数
+     * @return LocalDateTime
+     */
+    public static LocalDateTime getTime(long seconds) {
+        return LocalDateTime.now().plusSeconds(seconds);
     }
 
     /**

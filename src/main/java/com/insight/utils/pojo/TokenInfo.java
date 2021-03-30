@@ -1,7 +1,7 @@
 package com.insight.utils.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.insight.utils.DateHelper;
+import com.insight.utils.DateTime;
 import com.insight.utils.Json;
 
 import java.io.Serializable;
@@ -40,12 +40,12 @@ public class TokenInfo implements Serializable {
     private String appId;
 
     /**
-     * 授权码生命周期(毫秒)
+     * 授权码生命周期(秒)
      */
     private Long permitLife;
 
     /**
-     * 令牌生命周期(毫秒)
+     * 令牌生命周期(秒)
      */
     private Long life;
 
@@ -256,7 +256,7 @@ public class TokenInfo implements Serializable {
      */
     @JsonIgnore
     public boolean isHalfLife() {
-        return getLife() > 0 && DateHelper.getRemainSeconds(expiryTime) < life / 2000;
+        return getLife() > 0 && DateTime.getRemainSeconds(expiryTime) < life / 2;
     }
 
     /**
@@ -270,8 +270,7 @@ public class TokenInfo implements Serializable {
             return false;
         }
 
-        LocalDateTime time = permitTime.plusSeconds(getPermitLife() / 1000);
-        return LocalDateTime.now().isAfter(time);
+        return LocalDateTime.now().isAfter(permitTime.plusSeconds(getPermitLife()));
     }
 
     /**
