@@ -20,33 +20,95 @@ public final class DateTime {
     /**
      * 日期格式字典
      */
-    private static final Map<String, String> FORMAT_MAP = new HashMap<>(16);
-
-    /**
-     * 日期常用格式
-     */
-    private static final String[] DATE_PATTERNS = {"uuuu-MM-dd", "uuuuMMdd"};
+    private static final Map<String, String> FORMAT_MAP;
 
     /**
      * 日期时间常用格式
      */
-    private static final String[] TIME_PATTERNS = {"uuuu-MM-dd HH:mm:ss", "uuuuMMddHHmmss"};
+    private static final String TIME_PATTERN = "uuuu-MM-dd HH:mm:ss";
 
     /**
      * 默认日期格式化器
      */
-    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERNS[0]);
+    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 
     /**
      * 默认时间格式化器
      */
-    public static final DateTimeFormatter DEFAULT_TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERNS[0]);
+    public static final DateTimeFormatter DEFAULT_TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
+    static {
+        FORMAT_MAP = new HashMap<>(16);
+        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$", "uuuu-MM-dd-HH-mm-ss");
+        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd-HH-mm");
+        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd-HH");
+        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd");
+        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}$", "uuuu-MM");
+        FORMAT_MAP.put("^\\d{4}$", "uuuu");
+        FORMAT_MAP.put("^\\d{14}$", "uuuuMMddHHmmss");
+        FORMAT_MAP.put("^\\d{12}$", "uuuuMMddHHmm");
+        FORMAT_MAP.put("^\\d{10}$", "uuuuMMddHH");
+        FORMAT_MAP.put("^\\d{8}$", "uuuuMMdd");
+        FORMAT_MAP.put("^\\d{6}$", "uuuuMM");
+        FORMAT_MAP.put("^\\d{2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uu-MM-dd");
+        FORMAT_MAP.put("^\\d{1,2}\\D+\\d{1,2}\\D+\\d{4}$", "dd-MM-uuuu");
+    }
 
     /**
      * 构造方法
      */
     public DateTime() {
+    }
+
+    /**
+     * 格式化当前日期
+     *
+     * @return uuuu-MM-dd格式的当前日期字符串
+     */
+    public static String formatCurrentDate() {
+        return LocalDate.now().toString();
+    }
+
+    /**
+     * 格式化当前时间
+     *
+     * @return uuuu-MM-dd HH:mm:ss格式的当前时间字符串
+     */
+    public static String formatCurrentTime() {
+        return formatCurrentTime(TIME_PATTERN);
+    }
+
+    /**
+     * 格式化当前时间
+     *
+     * @param pattern - 日期时间格式
+     * @return 指定格式的当前时间字符串
+     */
+    public static String formatCurrentTime(String pattern) {
+        return formatDateTime(LocalDateTime.now(), pattern);
+    }
+
+    /**
+     * 格式化指定时间
+     *
+     * @param time    时间字符串
+     * @param pattern 日期时间格式
+     * @return 指定格式的时间字符串
+     */
+    public static String formatDateTime(LocalDateTime time, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return time.format(formatter);
+    }
+
+    /**
+     * 格式化指定时间
+     *
+     * @param time 时间字符串
+     * @return uuuu-MM-dd HH:mm:ss格式的时间字符串
+     */
+    public static String formatDateTime(String time) {
+        LocalDateTime value = parseDateTime(time);
+        return DEFAULT_TIME_FORMATTER.format(value);
     }
 
     /**
@@ -60,6 +122,16 @@ public final class DateTime {
     }
 
     /**
+     * 字符串转换LocalDate
+     *
+     * @param time 日期字符串(uuuu-MM-dd)
+     * @return LocalDate
+     */
+    public static LocalDate parseDate(String time) {
+        return parseDateTime(time).toLocalDate();
+    }
+
+    /**
      * 获取与当前时间差若干秒的时间
      *
      * @param seconds 秒数
@@ -70,64 +142,16 @@ public final class DateTime {
     }
 
     /**
-     * 格式化当前日期
-     *
-     * @return uuuu-MM-dd
-     */
-    public static String formatCurrentDate() {
-        return LocalDate.now().toString();
-    }
-
-    /**
-     * 格式化当前时间(uuuu-MM-dd HH:mm:ss)
-     *
-     * @return 固定格式的日期时间
-     */
-    public static String formatCurrentTime() {
-        return formatCurrentTime(TIME_PATTERNS[0]);
-    }
-
-    /**
-     * 格式化当前日期时间
-     *
-     * @param pattern - 日期时间格式
-     * @return 指定格式的日期时间
-     */
-    public static String formatCurrentTime(String pattern) {
-        return formatDateTime(LocalDateTime.now(), pattern);
-    }
-
-    /**
-     * 格式化日期时间
-     *
-     * @param time    时间
-     * @param pattern - 日期时间格式
-     * @return 指定格式的日期时间
-     */
-    public static String formatDateTime(LocalDateTime time, String pattern) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        return time.format(formatter);
-    }
-
-    /**
-     * 字符串转换LocalDate
-     *
-     * @param time 日期字符串(uuuu-MM-dd)
-     * @return LocalDateTime
-     */
-    public static LocalDate parseDate(String time) {
-        return parseDateTime(time).toLocalDate();
-    }
-
-    /**
      * 字符串转换LocalDateTime
      *
-     * @param time 时间字符串(uuuu-MM-dd HH:mm:ss)
+     * @param time 时间字符串
      * @return LocalDateTime
      */
     public static LocalDateTime parseDateTime(String time) {
-        String str = dateTimeFormat(time);
-        return LocalDateTime.parse(time, DEFAULT_TIME_FORMATTER);
+        DateTimeFormatter formatter = getFormatter(time);
+        String value = time.replaceAll("\\D+", "-");
+
+        return LocalDateTime.parse(value, formatter);
     }
 
     /**
@@ -192,42 +216,12 @@ public final class DateTime {
     }
 
     /**
-     * 格式化日期时间字符串为uuuu-MM-dd HH-mm-ss格式
-     *
-     * @param time 输入的日期时间字符串
-     * @return 格式化为uuuu-MM-dd HH-mm-ss格式的字符串
-     */
-    public static String dateTimeFormat(String time) {
-        DateTimeFormatter formatter = getFormatter(time);
-        String result = time.replaceAll("\\D+", "-");
-        LocalDateTime dateValue = LocalDateTime.parse(result, formatter);
-
-        return DEFAULT_TIME_FORMATTER.format(dateValue);
-    }
-
-    /**
      * 获取时间格式
      *
      * @param time 时间字符串
      * @return 时间格式
      */
     private static DateTimeFormatter getFormatter(String time) {
-        if (FORMAT_MAP.isEmpty()) {
-            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$", "uuuu-MM-dd-HH-mm-ss");
-            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd-HH-mm");
-            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd-HH");
-            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd");
-            FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}$", "uuuu-MM");
-            FORMAT_MAP.put("^\\d{4}$", "uuuu");
-            FORMAT_MAP.put("^\\d{14}$", "uuuuMMddHHmmss");
-            FORMAT_MAP.put("^\\d{12}$", "uuuuMMddHHmm");
-            FORMAT_MAP.put("^\\d{10}$", "uuuuMMddHH");
-            FORMAT_MAP.put("^\\d{8}$", "uuuuMMdd");
-            FORMAT_MAP.put("^\\d{6}$", "uuuuMM");
-            FORMAT_MAP.put("^\\d{2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uu-MM-dd");
-            FORMAT_MAP.put("^\\d{1,2}\\D+\\d{1,2}\\D+\\d{4}$", "dd-MM-uuuu");
-        }
-
         DateTimeFormatter formatter = null;
         for (String key : FORMAT_MAP.keySet()) {
             if (Pattern.compile(key).matcher(time).matches()) {
