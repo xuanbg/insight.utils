@@ -222,7 +222,6 @@ public final class DateTime {
      * @return 时间格式
      */
     private static DateTimeFormatter getFormatter(String time) {
-        DateTimeFormatter formatter = null;
         for (String key : FORMAT_MAP.keySet()) {
             if (Pattern.compile(key).matcher(time).matches()) {
                 return DateTimeFormatter.ofPattern(FORMAT_MAP.get(key));
