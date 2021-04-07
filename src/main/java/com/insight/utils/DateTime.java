@@ -35,12 +35,12 @@ public final class DateTime {
     /**
      * 默认日期格式化器
      */
-    private static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERNS[0]);
+    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERNS[0]);
 
     /**
      * 默认时间格式化器
      */
-    private static final DateTimeFormatter DEFAULT_TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERNS[0]);
+    public static final DateTimeFormatter DEFAULT_TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERNS[0]);
 
 
     /**
@@ -126,8 +126,8 @@ public final class DateTime {
      * @return LocalDateTime
      */
     public static LocalDateTime parseDateTime(String time) {
-        DateTimeFormatter formatter = getFormatter(time);
-        return LocalDateTime.parse(time, formatter);
+        String str = dateTimeFormat(time);
+        return LocalDateTime.parse(time, DEFAULT_TIME_FORMATTER);
     }
 
     /**
@@ -192,12 +192,26 @@ public final class DateTime {
     }
 
     /**
+     * 格式化日期时间字符串为uuuu-MM-dd HH-mm-ss格式
+     *
+     * @param time 输入的日期时间字符串
+     * @return 格式化为uuuu-MM-dd HH-mm-ss格式的字符串
+     */
+    public static String dateTimeFormat(String time) {
+        DateTimeFormatter formatter = getFormatter(time);
+        String result = time.replaceAll("\\D+", "-");
+        LocalDateTime dateValue = LocalDateTime.parse(result, formatter);
+
+        return DEFAULT_TIME_FORMATTER.format(dateValue);
+    }
+
+    /**
      * 获取时间格式
      *
      * @param time 时间字符串
      * @return 时间格式
      */
-    public static DateTimeFormatter getFormatter(String time) {
+    private static DateTimeFormatter getFormatter(String time) {
         if (FORMAT_MAP.isEmpty()) {
             FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$", "uuuu-MM-dd-HH-mm-ss");
             FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd-HH-mm");
@@ -222,19 +236,5 @@ public final class DateTime {
         }
 
         throw new BusinessException("不合法的时间日期格式: " + time);
-    }
-
-    /**
-     * 格式化日期时间字符串为uuuu-MM-dd HH-mm-ss格式
-     *
-     * @param date 输入的日期时间字符串
-     * @return 格式化为uuuu-MM-dd HH-mm-ss格式的字符串
-     */
-    public static String dateTimeFormat(String date) {
-        DateTimeFormatter formatter = getFormatter(date);
-        String result = date.replaceAll("\\D+", "-");
-        LocalDateTime dateValue = LocalDateTime.parse(result, formatter);
-
-        return DEFAULT_TIME_FORMATTER.format(dateValue);
     }
 }
