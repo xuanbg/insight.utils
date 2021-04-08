@@ -2,10 +2,14 @@ package com.insight.utils;
 
 import com.insight.utils.common.BusinessException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -39,19 +43,23 @@ public final class DateTime {
 
     static {
         FORMAT_MAP = new HashMap<>(16);
-        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$", "uuuu-MM-dd-HH-mm-ss");
-        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd-HH-mm");
-        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd-HH");
-        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}$", "uuuu-MM-dd");
-        FORMAT_MAP.put("^\\d{4}\\D+\\d{1,2}$", "uuuu-MM");
-        FORMAT_MAP.put("^\\d{4}$", "uuuu");
-        FORMAT_MAP.put("^\\d{14}$", "uuuuMMddHHmmss");
-        FORMAT_MAP.put("^\\d{12}$", "uuuuMMddHHmm");
-        FORMAT_MAP.put("^\\d{10}$", "uuuuMMddHH");
-        FORMAT_MAP.put("^\\d{8}$", "uuuuMMdd");
-        FORMAT_MAP.put("^\\d{6}$", "uuuuMM");
-        FORMAT_MAP.put("^\\d{2}\\D+\\d{1,2}\\D+\\d{1,2}$", "uu-MM-dd");
-        FORMAT_MAP.put("^\\d{1,2}\\D+\\d{1,2}\\D+\\d{4}$", "dd-MM-uuuu");
+        FORMAT_MAP.put("^\\d{2}/\\d{1,2}/\\d{1,2}/\\d{1,2}/\\d{1,2}/\\d{1,2}.*$", "yy/MM/dd/HH/mm/ss");
+        FORMAT_MAP.put("^\\d{4}/\\d{1,2}/\\d{1,2}/\\d{1,2}/\\d{1,2}/\\d{1,2}.*$", "yyyy/MM/dd/HH/mm/ss");
+        FORMAT_MAP.put("^\\d{2}/\\d{1,2}/\\d{1,2}/\\d{1,2}/\\d{1,2}$", "yy/MM/dd/HH/mm");
+        FORMAT_MAP.put("^\\d{4}/\\d{1,2}/\\d{1,2}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd/HH/mm");
+        FORMAT_MAP.put("^\\d{2}/\\d{1,2}/\\d{1,2}/\\d{1,2}$", "yy/MM/dd/HH");
+        FORMAT_MAP.put("^\\d{4}/\\d{1,2}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd/HH");
+        FORMAT_MAP.put("^\\d{2}/\\d{1,2}/\\d{1,2}$", "yy/MM/dd");
+        FORMAT_MAP.put("^\\d{4}/\\d{1,2}/\\d{1,2}$", "yyyy/MM/dd");
+        FORMAT_MAP.put("^\\d{2}/\\d{1,2}$", "yy/MM");
+        FORMAT_MAP.put("^\\d{4}/\\d{1,2}$", "yyyy/MM");
+        FORMAT_MAP.put("^\\d{2}$", "yy");
+        FORMAT_MAP.put("^\\d{4}$", "yyyy");
+        FORMAT_MAP.put("^\\d{12}\\d{1,2}$", "yyyyMMddHHmmss");
+        FORMAT_MAP.put("^\\d{10}\\d{1,2}$", "yyyyMMddHHmm");
+        FORMAT_MAP.put("^\\d{8}\\d{1,2}$", "yyyyMMddHH");
+        FORMAT_MAP.put("^\\d{6}\\d{1,2}$", "yyyyMMdd");
+        FORMAT_MAP.put("^\\d{4}\\d{1,2}$", "yyyyMM");
     }
 
     /**
@@ -148,10 +156,21 @@ public final class DateTime {
      * @return LocalDateTime
      */
     public static LocalDateTime parseDateTime(String time) {
-        DateTimeFormatter formatter = getFormatter(time);
-        String value = time.replaceAll("\\D+", "-");
+        String value = time.replaceAll("\\D+", "/");
+        for (Map.Entry<String, String> entry : FORMAT_MAP.entrySet()) {
+            if (Pattern.compile(entry.getKey()).matcher(value).matches()) {
+                String format = entry.getValue();
+                SimpleDateFormat formatter = new SimpleDateFormat(format);
+                try {
+                    Date date = formatter.parse(value);
+                    return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+                } catch (ParseException ex) {
+                    throw new BusinessException("不合法的时间日期格式: " + ex.getMessage());
+                }
+            }
+        }
 
-        return LocalDateTime.parse(value, formatter);
+        throw new BusinessException("不合法的时间日期格式: " + value);
     }
 
     /**
@@ -213,21 +232,5 @@ public final class DateTime {
      */
     public static Long getRemainSeconds(LocalDateTime endDate) {
         return getDifference(LocalDateTime.now(), endDate);
-    }
-
-    /**
-     * 获取时间格式
-     *
-     * @param time 时间字符串
-     * @return 时间格式
-     */
-    private static DateTimeFormatter getFormatter(String time) {
-        for (String key : FORMAT_MAP.keySet()) {
-            if (Pattern.compile(key).matcher(time).matches()) {
-                return DateTimeFormatter.ofPattern(FORMAT_MAP.get(key));
-            }
-        }
-
-        throw new BusinessException("不合法的时间日期格式: " + time);
     }
 }
