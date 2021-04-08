@@ -157,6 +157,16 @@ public final class DateTime {
     }
 
     /**
+     * 默认格式字符串转换LocalDate
+     *
+     * @param date 日期字符串
+     * @return LocalDate
+     */
+    public static LocalDate parseDate(String date) {
+        return parseDate(date, DATE_PATTERN);
+    }
+
+    /**
      * 指定格式字符串转换LocalDate
      *
      * @param date    日期字符串
@@ -174,7 +184,7 @@ public final class DateTime {
      * @param date 日期字符串
      * @return LocalDate
      */
-    public static LocalDate parseDate(String date) {
+    public static LocalDate autoParseDate(String date) {
         return autoParseDateTime(date).toLocalDate();
     }
 
