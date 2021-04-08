@@ -102,7 +102,7 @@ public class InterfaceDto {
     }
 
     public Integer getLimitGap() {
-        return limitGap;
+        return limitGap == null ? 0 : limitGap;
     }
 
     public void setLimitGap(Integer limitGap) {
@@ -110,7 +110,7 @@ public class InterfaceDto {
     }
 
     public Integer getLimitCycle() {
-        return limitCycle;
+        return limitCycle == null ? 0 : limitCycle;
     }
 
     public void setLimitCycle(Integer limitCycle) {
@@ -118,7 +118,7 @@ public class InterfaceDto {
     }
 
     public Integer getLimitMax() {
-        return limitMax;
+        return limitMax == null ? 0 : limitMax;
     }
 
     public void setLimitMax(Integer limitMax) {
@@ -134,7 +134,7 @@ public class InterfaceDto {
     }
 
     public Boolean getNeedToken() {
-        return needToken;
+        return needToken != null && needToken;
     }
 
     public void setNeedToken(Boolean needToken) {
@@ -142,7 +142,7 @@ public class InterfaceDto {
     }
 
     public Boolean getVerify() {
-        return isVerify;
+        return isVerify != null && isVerify;
     }
 
     public void setVerify(Boolean verify) {
@@ -150,7 +150,7 @@ public class InterfaceDto {
     }
 
     public Boolean getLimit() {
-        return isLimit;
+        return isLimit != null && isLimit;
     }
 
     public void setLimit(Boolean limit) {
@@ -158,7 +158,7 @@ public class InterfaceDto {
     }
 
     public Boolean getLogResult() {
-        return isLogResult;
+        return isLogResult != null && isLogResult;
     }
 
     public void setLogResult(Boolean logResult) {
