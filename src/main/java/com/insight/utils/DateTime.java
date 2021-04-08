@@ -89,7 +89,7 @@ public final class DateTime {
     /**
      * 格式化当前时间
      *
-     * @param pattern - 日期时间格式
+     * @param pattern - 时间格式
      * @return 指定格式的当前时间字符串
      */
     public static String formatCurrentTime(String pattern) {
@@ -100,7 +100,7 @@ public final class DateTime {
      * 格式化指定时间
      *
      * @param time    时间字符串
-     * @param pattern 日期时间格式
+     * @param pattern 时间格式
      * @return 指定格式的时间字符串
      */
     public static String formatDateTime(LocalDateTime time, String pattern) {
@@ -130,16 +130,6 @@ public final class DateTime {
     }
 
     /**
-     * 字符串转换LocalDate
-     *
-     * @param time 日期字符串(uuuu-MM-dd)
-     * @return LocalDate
-     */
-    public static LocalDate parseDate(String time) {
-        return parseDateTime(time).toLocalDate();
-    }
-
-    /**
      * 获取与当前时间差若干秒的时间
      *
      * @param seconds 秒数
@@ -147,6 +137,40 @@ public final class DateTime {
      */
     public static LocalDateTime getTime(long seconds) {
         return LocalDateTime.now().plusSeconds(seconds);
+    }
+
+    /**
+     * 字符串转换LocalDate
+     *
+     * @param date    日期字符串
+     * @param pattern 日期格式
+     * @return LocalDate
+     */
+    public static LocalDate parseDate(String date, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return LocalDate.parse(date, formatter);
+    }
+
+    /**
+     * 字符串转换LocalDate
+     *
+     * @param date 日期字符串(uuuu-MM-dd)
+     * @return LocalDate
+     */
+    public static LocalDate parseDate(String date) {
+        return parseDateTime(date).toLocalDate();
+    }
+
+    /**
+     * 字符串转换LocalDateTime
+     *
+     * @param time    时间字符串
+     * @param pattern 时间格式
+     * @return LocalDateTime
+     */
+    public static LocalDateTime parseDateTime(String time, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return LocalDateTime.parse(time, formatter);
     }
 
     /**
