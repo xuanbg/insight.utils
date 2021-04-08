@@ -74,25 +74,25 @@ public final class DateTime {
     }
 
     /**
-     * 格式化当前日期
+     * 格式化当前日期为默认格式
      *
-     * @return uuuu-MM-dd格式的当前日期字符串
+     * @return 默认格式的当前日期字符串
      */
     public static String formatCurrentDate() {
         return LocalDate.now().toString();
     }
 
     /**
-     * 格式化当前时间
+     * 格式化当前时间为默认格式
      *
-     * @return uuuu-MM-dd HH:mm:ss格式的当前时间字符串
+     * @return 默认格式的当前时间字符串
      */
     public static String formatCurrentTime() {
         return formatCurrentTime(TIME_PATTERN);
     }
 
     /**
-     * 格式化当前时间
+     * 格式化当前时间为指定格式
      *
      * @param pattern - 时间格式
      * @return 指定格式的当前时间字符串
@@ -102,7 +102,19 @@ public final class DateTime {
     }
 
     /**
-     * 格式化指定时间
+     * 格式化指定日期为指定格式
+     *
+     * @param date    日期字符串
+     * @param pattern 日期格式
+     * @return 指定格式的日期字符串
+     */
+    public static String formatDate(LocalDate date, String pattern) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        return date.format(formatter);
+    }
+
+    /**
+     * 格式化指定时间为指定格式
      *
      * @param time    时间字符串
      * @param pattern 时间格式
@@ -114,13 +126,13 @@ public final class DateTime {
     }
 
     /**
-     * 格式化指定时间
+     * 格式化任意格式时间字符串为默认格式
      *
      * @param time 时间字符串
-     * @return uuuu-MM-dd HH:mm:ss格式的时间字符串
+     * @return 默认格式的时间字符串
      */
     public static String formatDateTime(String time) {
-        LocalDateTime value = parseDateTime(time);
+        LocalDateTime value = autoParseDateTime(time);
         return DEFAULT_TIME_FORMATTER.format(value);
     }
 
@@ -145,7 +157,7 @@ public final class DateTime {
     }
 
     /**
-     * 字符串转换LocalDate
+     * 指定格式字符串转换LocalDate
      *
      * @param date    日期字符串
      * @param pattern 日期格式
@@ -157,17 +169,27 @@ public final class DateTime {
     }
 
     /**
-     * 字符串转换LocalDate
+     * 任意格式字符串转换LocalDate
      *
-     * @param date 日期字符串(uuuu-MM-dd)
+     * @param date 日期字符串
      * @return LocalDate
      */
     public static LocalDate parseDate(String date) {
-        return parseDateTime(date).toLocalDate();
+        return autoParseDateTime(date).toLocalDate();
     }
 
     /**
-     * 字符串转换LocalDateTime
+     * 默认格式字符串转换LocalDateTime
+     *
+     * @param time 默认格式时间字符串
+     * @return LocalDateTime
+     */
+    public static LocalDateTime parseDateTime(String time) {
+        return parseDateTime(time, TIME_PATTERN);
+    }
+
+    /**
+     * 指定格式字符串转换LocalDateTime
      *
      * @param time    时间字符串
      * @param pattern 时间格式
@@ -179,12 +201,12 @@ public final class DateTime {
     }
 
     /**
-     * 字符串转换LocalDateTime
+     * 任意格式字符串转换LocalDateTime
      *
      * @param time 时间字符串
      * @return LocalDateTime
      */
-    public static LocalDateTime parseDateTime(String time) {
+    public static LocalDateTime autoParseDateTime(String time) {
         String value = time.replaceAll("\\D+", "/");
         for (Map.Entry<String, String> entry : FORMAT_MAP.entrySet()) {
             if (Pattern.compile(entry.getKey()).matcher(value).matches()) {
