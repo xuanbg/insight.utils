@@ -27,14 +27,19 @@ public final class DateTime {
     private static final Map<String, String> FORMAT_MAP;
 
     /**
-     * 日期时间常用格式
+     * 默认日期格式
      */
-    private static final String TIME_PATTERN = "uuuu-MM-dd HH:mm:ss";
+    public static final String DATE_PATTERN = "uuuu-MM-dd";
+
+    /**
+     * 默认时间格式
+     */
+    public static final String TIME_PATTERN = "uuuu-MM-dd HH:mm:ss";
 
     /**
      * 默认日期格式化器
      */
-    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
 
     /**
      * 默认时间格式化器
