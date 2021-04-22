@@ -20,7 +20,7 @@ import java.util.Map;
  * @remark HttpClient工具类
  */
 public class HttpUtil {
-    private static Log logger = LogFactory.getLog(HttpUtil.class);
+    private static final Log LOGGER = LogFactory.getLog(HttpUtil.class);
     private static final CloseableHttpClient HTTPCLIENT = HttpClients.createDefault();
 
     /**
@@ -327,7 +327,7 @@ public class HttpUtil {
 
             return result;
         } catch (IOException ex) {
-            logger.error(ex.getMessage());
+            LOGGER.error(ex.getMessage());
             return null;
         }
     }

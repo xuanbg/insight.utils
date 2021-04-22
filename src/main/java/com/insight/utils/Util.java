@@ -247,13 +247,23 @@ public final class Util {
     }
 
     /**
-     * 字符串是否为空
+     * 字符串是否不为空
      *
      * @param str 字符串
      * @return 是否为空
      */
     public static boolean isNotEmpty(String str) {
         return str != null && !str.isEmpty();
+    }
+
+    /**
+     * 字符串是否为空
+     *
+     * @param str 字符串
+     * @return 是否为空
+     */
+    public static boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
     }
 
     /**

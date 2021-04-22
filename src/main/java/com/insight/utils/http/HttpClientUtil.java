@@ -35,7 +35,7 @@ import java.util.*;
  * @remark
  */
 public class HttpClientUtil {
-    private static final Log logger = LogFactory.getLog(HttpClientUtil.class);
+    private static final Log LOGGER = LogFactory.getLog(HttpClientUtil.class);
 
     /**
      * 每个路由最大连接数
@@ -107,7 +107,7 @@ public class HttpClientUtil {
 
             return result;
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         } finally {
             HttpClientUtils.closeQuietly(response);
         }
@@ -140,7 +140,7 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpGet, resultEncode);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return null;
@@ -177,7 +177,7 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpPost, resultEncode);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return null;
@@ -213,7 +213,7 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpPost, resultEncode);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return null;
@@ -282,7 +282,7 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpPost, resultEncode);
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return null;
@@ -305,7 +305,7 @@ public class HttpClientUtil {
                 return data;
             }
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return null;

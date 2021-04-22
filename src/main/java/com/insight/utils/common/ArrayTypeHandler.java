@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * @remark 数据库json字段转换集合
  */
 public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     /**
      * 构造函数
