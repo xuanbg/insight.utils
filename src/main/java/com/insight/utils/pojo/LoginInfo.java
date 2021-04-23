@@ -1,16 +1,11 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
-
 /**
  * @author 宣炳刚
  * @date 2018/1/4
  * @remark 用户登录信息实体类
  */
-public class LoginInfo implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class LoginInfo extends BaseXo {
 
     /**
      * 应用ID
@@ -88,10 +83,5 @@ public class LoginInfo implements Serializable {
 
     public void setHeadImg(String headImg) {
         this.headImg = headImg;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toBase64(this);
     }
 }

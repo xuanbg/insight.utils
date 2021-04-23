@@ -1,16 +1,11 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
-
 /**
  * @author 宣炳刚
  * @date 2017/9/15
  * @remark 功能信息
  */
-public class FuncInfo implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class FuncInfo extends BaseXo {
 
     /**
      * 方法名称
@@ -62,10 +57,5 @@ public class FuncInfo implements Serializable {
 
     public void setHideText(Boolean hideText) {
         isHideText = hideText;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

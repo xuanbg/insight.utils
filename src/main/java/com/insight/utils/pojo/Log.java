@@ -1,10 +1,8 @@
 package com.insight.utils.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.insight.utils.Json;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -12,8 +10,7 @@ import java.time.LocalDateTime;
  * @date 2019-09-13
  * @remark 操作日志记录类
  */
-public class Log implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class Log extends BaseXo {
 
     /**
      * 日志ID
@@ -145,10 +142,5 @@ public class Log implements Serializable {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

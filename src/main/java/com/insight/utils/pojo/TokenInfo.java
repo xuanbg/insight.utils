@@ -2,9 +2,7 @@ package com.insight.utils.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.DateTime;
-import com.insight.utils.Json;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,9 +13,8 @@ import java.util.List;
  * @date 2018/1/4
  * @remark 令牌信息实体类
  */
-public class TokenInfo implements Serializable {
+public class TokenInfo extends BaseXo {
     public static final int TIME_OUT = 300;
-    private static final long serialVersionUID = -1L;
 
     /**
      * 访问令牌MD5摘要
@@ -291,10 +288,5 @@ public class TokenInfo implements Serializable {
     @JsonIgnore
     public boolean isFailure() {
         return getLife() > 0 && LocalDateTime.now().isAfter(failureTime.plusSeconds(TIME_OUT));
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

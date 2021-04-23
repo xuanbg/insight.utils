@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -12,7 +13,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.insight.utils.annotation.DateDeserializer;
 import com.insight.utils.common.Base64Encryptor;
 import com.insight.utils.pojo.AccessToken;
 import org.apache.commons.logging.LogFactory;
@@ -48,7 +48,7 @@ public final class Json {
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
         module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
         module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
-        module.addDeserializer(Date.class, new DateDeserializer());
+        module.addDeserializer(Date.class, new DateDeserializers.DateDeserializer());
 
         MAPPER.registerModule(module);
         MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

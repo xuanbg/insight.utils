@@ -1,17 +1,14 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.io.Serializable;
+import com.insight.utils.Json;
 
 /**
  * @author 作者
  * @date 2017年9月5日
  * @remark Reply封装
  */
-public final class Reply implements Serializable {
-    private static final long serialVersionUID = -1L;
+public final class Reply extends BaseXo {
 
     /**
      * 是否成功
@@ -134,10 +131,5 @@ public final class Reply implements Serializable {
     public <T> T getListFromOption(Class<?>... type) {
         String json = Json.toJson(option);
         return Json.toList(json, type);
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

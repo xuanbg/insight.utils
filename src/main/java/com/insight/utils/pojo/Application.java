@@ -1,8 +1,5 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -10,8 +7,7 @@ import java.time.LocalDateTime;
  * @date 2017/9/30
  * @remark 应用实体类
  */
-public class Application implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class Application extends BaseXo {
 
     /**
      * 应用ID
@@ -193,10 +189,5 @@ public class Application implements Serializable {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

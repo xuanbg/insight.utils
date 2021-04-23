@@ -1,16 +1,11 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
-
 /**
  * @author 宣炳刚
  * @date 2020/6/9
  * @remark 联系信息DTO
  */
-public class ContactInfo implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class ContactInfo extends BaseXo {
 
     /**
      * 联系人姓名
@@ -140,10 +135,5 @@ public class ContactInfo implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

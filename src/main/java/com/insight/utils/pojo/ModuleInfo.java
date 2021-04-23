@@ -1,16 +1,11 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
-
 /**
  * @author 宣炳刚
  * @date 2017/9/15
  * @remark 模块信息
  */
-public class ModuleInfo implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class ModuleInfo extends BaseXo {
 
     /**
      * 图标路径
@@ -62,10 +57,5 @@ public class ModuleInfo implements Serializable {
 
     public void setAutoLoad(Boolean autoLoad) {
         isAutoLoad = autoLoad;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

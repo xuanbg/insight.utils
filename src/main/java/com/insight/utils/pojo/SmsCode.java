@@ -1,18 +1,14 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 /**
  * @author 宣炳刚
  * @date 2019-09-13
  * @remark 短信验证码DTO
  */
-public class SmsCode implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class SmsCode extends BaseXo {
 
     /**
      * 验证码类型:0.验证手机号;1.注册用户账号;2.重置密码;3.修改支付密码;4.修改手机号
@@ -68,10 +64,5 @@ public class SmsCode implements Serializable {
 
     public void setMinutes(Integer minutes) {
         this.minutes = minutes;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

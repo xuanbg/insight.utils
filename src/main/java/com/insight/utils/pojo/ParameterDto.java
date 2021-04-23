@@ -1,16 +1,11 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
-
 /**
  * @author 宣炳刚
  * @date 2020/6/24
  * @remark 选项参数DTO
  */
-public class ParameterDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class ParameterDto extends BaseXo {
 
     /**
      * 唯一ID
@@ -49,10 +44,5 @@ public class ParameterDto implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

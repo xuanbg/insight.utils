@@ -1,9 +1,8 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
+import com.insight.utils.Util;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -11,8 +10,7 @@ import java.time.LocalDate;
  * @date 2019/05/20
  * @remark 分页类
  */
-public class SearchDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class SearchDto extends BaseXo {
 
     /**
      * 主键
@@ -124,7 +122,7 @@ public class SearchDto implements Serializable {
     }
 
     public String getKeyword() {
-        return keyword == null || keyword.isEmpty() ? null : keyword.replace("%", "\\%");
+        return Util.isEmpty(keyword) ? null : keyword.replace("%", "\\%");
     }
 
     public void setKeyword(String keyword) {
@@ -196,7 +194,7 @@ public class SearchDto implements Serializable {
     }
 
     public String getOrderBy() {
-        if (orderBy == null || orderBy.isEmpty() || orderBy.contains(";")) {
+        if (Util.isEmpty(orderBy) || orderBy.contains(";")) {
             return "id";
         } else {
             StringBuilder result = new StringBuilder();
@@ -218,15 +216,10 @@ public class SearchDto implements Serializable {
     }
 
     public String getOrderType() {
-        return orderType == null || orderType.isEmpty() || !orderType.matches("asc|desc") ? "desc" : orderType;
+        return Util.isEmpty(orderType) || !orderType.matches("asc|desc") ? "desc" : orderType;
     }
 
     public void setOrderType(String orderType) {
         this.orderType = orderType;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

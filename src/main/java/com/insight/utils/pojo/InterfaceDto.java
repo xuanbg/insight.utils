@@ -1,13 +1,11 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
 /**
  * @author 宣炳刚
  * @date 2019-08-29
  * @remark 接口配置信息
  */
-public class InterfaceDto {
+public class InterfaceDto extends BaseXo {
 
     /**
      * 接口HTTP请求方法
@@ -163,10 +161,5 @@ public class InterfaceDto {
 
     public void setLogResult(Boolean logResult) {
         isLogResult = logResult;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

@@ -1,16 +1,11 @@
 package com.insight.utils.pojo;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
-
 /**
  * @author 宣炳刚
  * @date 2019/12/6
  * @remark 角色成员DTO
  */
-public class MemberDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class MemberDto extends BaseXo {
 
     /**
      * 角色成员ID
@@ -88,10 +83,5 @@ public class MemberDto implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }
