@@ -7,6 +7,8 @@ import org.apache.commons.logging.LogFactory;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author duxl
@@ -23,6 +25,21 @@ public final class Util {
      */
     public static String uuid() {
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    /**
+     * 使用正则提取字符串
+     *
+     * @param regex  正则表达式
+     * @param source 源字符串
+     * @param group  分组
+     * @return 符合正则的字符串
+     */
+    public static String getMatcher(String regex, String source, int group) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(source);
+
+        return matcher.find() ? matcher.group(group) : null;
     }
 
     /**
