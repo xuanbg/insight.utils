@@ -118,7 +118,7 @@ public final class ReplyHelper {
 
         return reply;
     }
-    
+
     /**
      * 请求成功
      *
@@ -336,9 +336,25 @@ public final class ReplyHelper {
     /**
      * 服务端错误
      *
+     * @param requestId 请求ID
      * @return Reply
      */
-    public static Reply error() {
+    public static Reply error(String requestId) {
+        ERROR_REPLY.setOption(requestId);
+        return ERROR_REPLY;
+    }
+
+    /**
+     * 服务端错误
+     *
+     * @param requestId 请求ID
+     * @param message   错误信息
+     * @return Reply
+     */
+    public static Reply error(String requestId, String message) {
+        ERROR_REPLY.setMessage(message);
+        ERROR_REPLY.setOption(requestId);
+
         return ERROR_REPLY;
     }
 }
