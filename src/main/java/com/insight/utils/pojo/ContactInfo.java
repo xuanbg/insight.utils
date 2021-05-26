@@ -25,7 +25,7 @@ public class ContactInfo extends BaseXo {
     /**
      * 公司所在省/直辖市ID
      */
-    private String provinceId;
+    private Long provinceId;
 
     /**
      * 公司所在省/直辖市
@@ -35,7 +35,7 @@ public class ContactInfo extends BaseXo {
     /**
      * 公司所在市ID
      */
-    private String cityId;
+    private Long cityId;
 
     /**
      * 公司所在市
@@ -45,7 +45,7 @@ public class ContactInfo extends BaseXo {
     /**
      * 公司所在区县ID
      */
-    private String countyId;
+    private Long countyId;
 
     /**
      * 公司所在区县
@@ -81,11 +81,11 @@ public class ContactInfo extends BaseXo {
         this.contactMail = contactMail;
     }
 
-    public String getProvinceId() {
+    public Long getProvinceId() {
         return provinceId;
     }
 
-    public void setProvinceId(String provinceId) {
+    public void setProvinceId(Long provinceId) {
         this.provinceId = provinceId;
     }
 
@@ -97,11 +97,11 @@ public class ContactInfo extends BaseXo {
         this.province = province;
     }
 
-    public String getCityId() {
+    public Long getCityId() {
         return cityId;
     }
 
-    public void setCityId(String cityId) {
+    public void setCityId(Long cityId) {
         this.cityId = cityId;
     }
 
@@ -113,11 +113,11 @@ public class ContactInfo extends BaseXo {
         this.city = city;
     }
 
-    public String getCountyId() {
+    public Long getCountyId() {
         return countyId;
     }
 
-    public void setCountyId(String countyId) {
+    public void setCountyId(Long countyId) {
         this.countyId = countyId;
     }
 

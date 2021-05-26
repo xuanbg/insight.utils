@@ -15,17 +15,17 @@ public class Log extends BaseXo {
     /**
      * 日志ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 应用ID
      */
-    private String appId;
+    private Long appId;
 
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 类型
@@ -40,7 +40,7 @@ public class Log extends BaseXo {
     /**
      * 关联业务ID
      */
-    private String businessId;
+    private Long businessId;
 
     /**
      * 记录内容
@@ -55,7 +55,7 @@ public class Log extends BaseXo {
     /**
      * 创建人ID
      */
-    private String creatorId;
+    private Long creatorId;
 
     /**
      * 创建时间
@@ -64,27 +64,27 @@ public class Log extends BaseXo {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getAppId() {
+    public Long getAppId() {
         return appId;
     }
 
-    public void setAppId(String appId) {
+    public void setAppId(Long appId) {
         this.appId = appId;
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 
@@ -104,11 +104,11 @@ public class Log extends BaseXo {
         this.business = business;
     }
 
-    public String getBusinessId() {
+    public Long getBusinessId() {
         return businessId;
     }
 
-    public void setBusinessId(String businessId) {
+    public void setBusinessId(Long businessId) {
         this.businessId = businessId;
     }
 
@@ -128,11 +128,11 @@ public class Log extends BaseXo {
         this.creator = creator;
     }
 
-    public String getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(String creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 

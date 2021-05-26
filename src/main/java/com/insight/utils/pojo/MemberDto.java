@@ -10,12 +10,12 @@ public class MemberDto extends BaseXo {
     /**
      * 角色成员ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 父ID
      */
-    private String parentId;
+    private Long parentId;
 
     /**
      * 成员类型:0.未定义;1.用户;2.用户组;3.职位
@@ -37,19 +37,19 @@ public class MemberDto extends BaseXo {
      */
     private String remark;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 

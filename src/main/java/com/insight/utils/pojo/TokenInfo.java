@@ -24,17 +24,17 @@ public class TokenInfo extends BaseXo {
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 应用ID
      */
-    private String appId;
+    private Long appId;
 
     /**
      * 授权码生命周期(秒)
@@ -104,27 +104,27 @@ public class TokenInfo extends BaseXo {
         this.hash = hash;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 
-    public String getAppId() {
+    public Long getAppId() {
         return appId;
     }
 
-    public void setAppId(String appId) {
+    public void setAppId(Long appId) {
         this.appId = appId;
     }
 

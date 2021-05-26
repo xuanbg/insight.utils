@@ -20,12 +20,12 @@ public class SearchDto extends BaseXo {
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 所有者ID
      */
-    private String ownerId;
+    private Long ownerId;
 
     /**
      * 类型
@@ -97,19 +97,19 @@ public class SearchDto extends BaseXo {
         this.id = id;
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 
-    public String getOwnerId() {
+    public Long getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(String ownerId) {
+    public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
     }
 
