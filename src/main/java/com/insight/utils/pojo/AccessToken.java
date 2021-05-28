@@ -10,7 +10,7 @@ public class AccessToken extends BaseXo {
     /**
      * 令牌ID，唯一
      */
-    private Long id;
+    private String id;
 
     /**
      * 安全码，用于验证令牌合法性
@@ -20,11 +20,11 @@ public class AccessToken extends BaseXo {
     public AccessToken() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
