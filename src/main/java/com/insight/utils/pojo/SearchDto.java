@@ -23,6 +23,11 @@ public class SearchDto extends BaseXo {
     private Long tenantId;
 
     /**
+     * 应用ID
+     */
+    private Long appId;
+
+    /**
      * 所有者ID
      */
     private Long ownerId;
@@ -103,6 +108,14 @@ public class SearchDto extends BaseXo {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
     }
 
     public Long getOwnerId() {
