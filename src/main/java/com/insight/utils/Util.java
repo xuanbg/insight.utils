@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author duxl
@@ -73,17 +74,28 @@ public final class Util {
     }
 
     /**
+     * 获取一个0-指定最大值的随机数
+     *
+     * @param max 最大值
+     * @return 随机正整数
+     */
+    public static int getRandom(int max) {
+        double random = Math.random() * (max + 1);
+        return (int) Math.floor(random);
+    }
+
+    /**
      * 生成一个指定长度的纯数字组成的随机字符串
      *
      * @param length 生成字符串长度(1-8)
      * @return 随机字符串
      */
     public static String randomString(Integer length) {
-        Random random = new Random();
         String base = "00000000";
 
-        double max = Math.pow(Double.parseDouble("10"), length.doubleValue());
-        String r = String.valueOf(random.nextInt((int) max));
+        int max = (int) Math.pow(Double.parseDouble("10"), length.doubleValue());
+        int random = getRandom(max);
+        String r = String.valueOf(random);
 
         int len = r.length();
         return length.equals(len) ? r : base.substring(0, length - len) + r;
@@ -218,6 +230,39 @@ public final class Util {
     }
 
     /**
+     * 逗号分割字符串转整型集合
+     *
+     * @param str 逗号分割字符串
+     * @return 整型集合
+     */
+    public static List<Integer> toIntList(String str) {
+        String[] list = str.split(",");
+        return Arrays.stream(list).map(Integer::parseInt).collect(Collectors.toList());
+    }
+
+    /**
+     * 逗号分割字符串转长整型集合
+     *
+     * @param str 逗号分割字符串
+     * @return 长整型集合
+     */
+    public static List<Long> toLongList(String str) {
+        String[] list = str.split(",");
+        return Arrays.stream(list).map(Long::parseLong).collect(Collectors.toList());
+    }
+
+    /**
+     * 逗号分割字符串转字符串集合
+     *
+     * @param str 逗号分割字符串
+     * @return 字符串集合
+     */
+    public static List<String> toStringList(String str) {
+        String[] list = str.split(",");
+        return Arrays.asList(list);
+    }
+
+    /**
      * 分割list
      *
      * @param source 原list
@@ -281,6 +326,26 @@ public final class Util {
      */
     public static boolean isEmpty(String str) {
         return str == null || str.isEmpty();
+    }
+
+    /**
+     * 集合是否不为空
+     *
+     * @param list 集合
+     * @return 是否不为空
+     */
+    public static <T> boolean isNotEmpty(List<T> list) {
+        return list != null && !list.isEmpty();
+    }
+
+    /**
+     * 集合是否为空
+     *
+     * @param list 集合
+     * @return 是否为空
+     */
+    public static <T> boolean isEmpty(List<T> list) {
+        return list == null || list.isEmpty();
     }
 
     /**
