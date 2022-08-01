@@ -240,7 +240,7 @@ public final class DateTime {
      * @return String - 返回星期几
      */
     public static Integer getWeek() {
-        return LocalDate.now().getDayOfWeek().getValue();
+        return getWeek(LocalDate.now());
     }
 
     /**
@@ -249,7 +249,7 @@ public final class DateTime {
      * @param date 日期
      * @return 1-7，7为星期天
      */
-    public static Integer calcWeek(LocalDate date) {
+    public static Integer getWeek(LocalDate date) {
         return date.getDayOfWeek().getValue();
     }
 
@@ -261,6 +261,17 @@ public final class DateTime {
     public static long getCurrentMonthDays() {
         LocalDate one = LocalDate.now().withDayOfMonth(1);
         return one.plusMonths(1).toEpochDay() - one.toEpochDay();
+    }
+
+    /**
+     * 获取时间差周数
+     *
+     * @param startDate 开始日期
+     * @param endDate   截止日期
+     * @return 周数
+     */
+    public static Long getDiffWeeks(LocalDate startDate, LocalDate endDate) {
+        return getDiffDays(startDate, endDate) / 7;
     }
 
     /**
