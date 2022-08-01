@@ -1,7 +1,5 @@
 package com.insight.utils.pojo;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author 宣炳刚
@@ -13,25 +11,21 @@ public class SmsCode extends BaseXo {
     /**
      * 验证码类型:0.验证手机号;1.注册用户账号;2.重置密码;3.修改支付密码;4.修改手机号
      */
-    @NotNull(message = "验证码类型不能为空")
     private Integer type;
 
     /**
      * 手机号
      */
-    @NotEmpty(message = "手机号不能为空")
     private String mobile;
 
     /**
      * 验证码长度
      */
-    @NotNull(message = "验证码长度不能为空")
     private Integer length;
 
     /**
      * 验证码有效时间(分钟)
      */
-    @NotNull(message = "验证码有效时间不能为空")
     private Integer minutes;
 
     public Integer getType() {
