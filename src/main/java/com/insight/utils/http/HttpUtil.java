@@ -7,11 +7,15 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -106,6 +110,20 @@ public class HttpUtil {
     /**
      * POST方法
      *
+     * @param url      URL
+     * @param body     请求体
+     * @param encoding 返回数据编码
+     * @param type     返回数据类型
+     * @param <T>      泛型类型
+     * @return 数据实体
+     */
+    public static <T> T post(String url, Object body, String encoding, Class<T> type) {
+        return post(url, body, new HashMap<>(), encoding, type);
+    }
+
+    /**
+     * POST方法
+     *
      * @param url     URL
      * @param body    请求体
      * @param headers 请求头
@@ -122,20 +140,6 @@ public class HttpUtil {
      *
      * @param url      URL
      * @param body     请求体
-     * @param encoding 返回数据编码
-     * @param type     返回数据类型
-     * @param <T>      泛型类型
-     * @return 数据实体
-     */
-    public static <T> T post(String url, Object body, String encoding, Class<T> type) {
-        return post(url, body, null, encoding, type);
-    }
-
-    /**
-     * POST方法
-     *
-     * @param url      URL
-     * @param body     请求体
      * @param headers  请求头
      * @param encoding 返回数据编码
      * @param type     返回数据类型
@@ -144,8 +148,20 @@ public class HttpUtil {
      */
     public static <T> T post(String url, Object body, Map<String, String> headers, String encoding, Class<T> type) {
         HttpPost request = new HttpPost(url);
+        String contentType = headers.get("Content-Type");
         if (body != null) {
-            HttpEntity entity = new StringEntity(Json.toJson(body), ContentType.APPLICATION_JSON);
+            HttpEntity entity;
+            if (contentType == null || contentType.isEmpty() || contentType.contains("json")) {
+                String val = Json.toJson(body);
+                entity = new StringEntity(val, ContentType.APPLICATION_JSON);
+            } else {
+                MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+                Json.toStringValueMap(body).forEach((k, v) -> {
+                    StringBody val = new StringBody(v, ContentType.create("text/plain", Charset.forName(encoding)));
+                    multipartEntityBuilder.addPart(k, val);
+                });
+                entity = multipartEntityBuilder.build();
+            }
             request.setEntity(entity);
         }
 
