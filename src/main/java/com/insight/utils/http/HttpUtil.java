@@ -4,16 +4,22 @@ import com.insight.utils.Json;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -148,16 +154,22 @@ public class HttpUtil {
         HttpPost request = new HttpPost(url);
         String contentType = headers.get("Content-Type");
         if (body != null) {
-            HttpEntity entity;
             if (contentType == null || contentType.isEmpty() || contentType.contains("json")) {
                 String val = Json.toJson(body);
-                entity = new StringEntity(val, ContentType.APPLICATION_JSON);
-            } else {
+                request.setEntity(new StringEntity(val, ContentType.APPLICATION_JSON));
+            } else if (contentType.contains("multipart")) {
                 MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
                 Json.toStringValueMap(body).forEach(multipartEntityBuilder::addTextBody);
-                entity = multipartEntityBuilder.build();
+                request.setEntity(multipartEntityBuilder.build());
+            } else if (contentType.contains("urlencoded")) {
+                List<NameValuePair> list = new ArrayList<>();
+                Json.toStringValueMap(body).forEach((k, v) -> list.add(new BasicNameValuePair(k, v)));
+                try {
+                    request.setEntity(new UrlEncodedFormEntity(list, encoding));
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            request.setEntity(entity);
         }
 
         String result = execute(request, headers, encoding);
