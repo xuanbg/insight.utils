@@ -8,13 +8,11 @@ import org.apache.http.client.methods.*;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -156,10 +154,7 @@ public class HttpUtil {
                 entity = new StringEntity(val, ContentType.APPLICATION_JSON);
             } else {
                 MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-                Json.toStringValueMap(body).forEach((k, v) -> {
-                    StringBody val = new StringBody(v, ContentType.create("text/plain", Charset.forName(encoding)));
-                    multipartEntityBuilder.addPart(k, val);
-                });
+                Json.toStringValueMap(body).forEach(multipartEntityBuilder::addTextBody);
                 entity = multipartEntityBuilder.build();
             }
             request.setEntity(entity);
