@@ -4,7 +4,7 @@
 
     <groupId>com.insight</groupId>
     <artifactId>utils</artifactId>
-    <version>2.1.4-RELEASE</version>
+    <version>2.1.5-RELEASE</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -53,11 +53,6 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>4.5.13</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.4.3</version>
         </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
