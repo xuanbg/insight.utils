@@ -18,7 +18,7 @@ public final class Des3Encryptor {
     /**
      * 密钥key
      */
-    private static String defaultKey = "apindes3";
+    private static final String DEFAULT_KEY = "apindes3";
 
     /**
      * 加密密码功能对象
@@ -35,7 +35,7 @@ public final class Des3Encryptor {
      * 默认构造函数
      */
     public Des3Encryptor() {
-        this(defaultKey);
+        this(DEFAULT_KEY);
     }
 
     /**
@@ -105,7 +105,7 @@ public final class Des3Encryptor {
         byte[] arrayTemp = new byte[8];
         int length = array.length;
 
-        System.arraycopy(array, 0, arrayTemp, 0, length > 8 ? 8 : length);
+        System.arraycopy(array, 0, arrayTemp, 0, Math.min(length, 8));
 
         return new SecretKeySpec(arrayTemp, "DES");
     }
