@@ -11,11 +11,6 @@ import com.insight.utils.Json;
 public final class Reply extends BaseXo {
 
     /**
-     * 是否成功
-     */
-    private Boolean success;
-
-    /**
      * 错误码
      */
     private Integer code;
@@ -42,11 +37,7 @@ public final class Reply extends BaseXo {
     }
 
     public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
+        return code >= 200 && code < 300;
     }
 
     public Integer getCode() {

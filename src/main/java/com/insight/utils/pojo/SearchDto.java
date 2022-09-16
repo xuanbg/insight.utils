@@ -58,6 +58,11 @@ public class SearchDto extends BaseXo {
     private Integer size;
 
     /**
+     * 最后ID
+     */
+    private Long LastId;
+
+    /**
      * 偏移量
      */
     private Integer offset;
@@ -164,6 +169,14 @@ public class SearchDto extends BaseXo {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public Long getLastId() {
+        return LastId;
+    }
+
+    public void setLastId(Long lastId) {
+        LastId = lastId;
     }
 
     public Integer getOffset() {

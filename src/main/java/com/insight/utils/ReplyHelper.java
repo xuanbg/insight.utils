@@ -43,32 +43,26 @@ public final class ReplyHelper {
         //invalid account
         INVALID_ACCOUNT_REPLY.setCode(411);
         INVALID_ACCOUNT_REPLY.setMessage("非法的账户名");
-        INVALID_ACCOUNT_REPLY.setSuccess(false);
 
         //account exist
         ACCOUNT_EXIST_REPLY.setCode(412);
         ACCOUNT_EXIST_REPLY.setMessage("用户已存在");
-        ACCOUNT_EXIST_REPLY.setSuccess(false);
 
         //invalid code
         INVALID_CODE_REPLY.setCode(423);
         INVALID_CODE_REPLY.setMessage("验证码错误");
-        INVALID_CODE_REPLY.setSuccess(false);
 
         //invalid phone
         INVALID_PHONE_REPLY.setCode(431);
         INVALID_PHONE_REPLY.setMessage("手机格式不正确");
-        INVALID_PHONE_REPLY.setSuccess(false);
 
         //invalid email
         INVALID_EMAIL_REPLY.setCode(432);
         INVALID_EMAIL_REPLY.setMessage("邮箱格式不正确");
-        INVALID_EMAIL_REPLY.setSuccess(false);
 
         //error
         ERROR_REPLY.setCode(500);
         ERROR_REPLY.setMessage("服务器繁忙");
-        ERROR_REPLY.setSuccess(false);
     }
 
     /**
@@ -79,7 +73,6 @@ public final class ReplyHelper {
     public static Reply success() {
         Reply reply = new Reply();
         reply.setCode(200);
-        reply.setSuccess(true);
         reply.setMessage("请求成功");
 
         return reply;
@@ -94,7 +87,6 @@ public final class ReplyHelper {
     public static Reply success(Object data) {
         Reply reply = new Reply();
         reply.setCode(200);
-        reply.setSuccess(true);
         reply.setData(data);
         reply.setMessage("请求成功");
 
@@ -111,7 +103,6 @@ public final class ReplyHelper {
     public static Reply success(Object data, Object option) {
         Reply reply = new Reply();
         reply.setCode(200);
-        reply.setSuccess(true);
         reply.setData(data);
         reply.setOption(option);
         reply.setMessage("请求成功");
@@ -130,7 +121,6 @@ public final class ReplyHelper {
     public static Reply success(Object data, Object option, String msg) {
         Reply reply = new Reply();
         reply.setCode(200);
-        reply.setSuccess(true);
         reply.setData(data);
         reply.setOption(option);
         reply.setMessage(msg);
@@ -148,7 +138,6 @@ public final class ReplyHelper {
     public static Reply success(Object data, String msg) {
         Reply reply = new Reply();
         reply.setCode(200);
-        reply.setSuccess(true);
         reply.setData(data);
         reply.setMessage(msg);
 
@@ -164,7 +153,6 @@ public final class ReplyHelper {
     public static Reply created(Object data) {
         Reply reply = new Reply();
         reply.setCode(201);
-        reply.setSuccess(true);
         reply.setData(data);
         reply.setMessage("创建数据成功");
 
@@ -179,7 +167,6 @@ public final class ReplyHelper {
     public static Reply fail() {
         Reply reply = new Reply();
         reply.setCode(400);
-        reply.setSuccess(false);
         reply.setMessage("请求失败");
 
         return reply;
@@ -194,7 +181,6 @@ public final class ReplyHelper {
     public static Reply fail(String msg) {
         Reply reply = new Reply();
         reply.setCode(400);
-        reply.setSuccess(false);
         reply.setMessage(msg);
 
         return reply;
@@ -208,7 +194,6 @@ public final class ReplyHelper {
     public static Reply notExist(Object data) {
         Reply reply = new Reply();
         reply.setCode(414);
-        reply.setSuccess(false);
         reply.setData(data);
         reply.setMessage("用户不存在");
 
@@ -224,7 +209,6 @@ public final class ReplyHelper {
     public static Reply notExist(String msg) {
         Reply reply = new Reply();
         reply.setCode(414);
-        reply.setSuccess(false);
         reply.setMessage(msg);
 
         return reply;
@@ -256,7 +240,6 @@ public final class ReplyHelper {
     public static Reply invalidPassword() {
         Reply reply = new Reply();
         reply.setCode(420);
-        reply.setSuccess(false);
         reply.setMessage("密码错误");
 
         return reply;
@@ -271,7 +254,6 @@ public final class ReplyHelper {
     public static Reply invalidPassword(String msg) {
         Reply reply = new Reply();
         reply.setCode(420);
-        reply.setSuccess(false);
         reply.setMessage(msg);
 
         return reply;
@@ -294,7 +276,6 @@ public final class ReplyHelper {
     public static Reply invalidParam() {
         Reply reply = new Reply();
         reply.setCode(430);
-        reply.setSuccess(false);
         reply.setMessage("无效参数");
 
         return reply;
@@ -309,7 +290,6 @@ public final class ReplyHelper {
     public static Reply invalidParam(String msg) {
         Reply reply = new Reply();
         reply.setCode(430);
-        reply.setSuccess(false);
         reply.setMessage(msg);
 
         return reply;
