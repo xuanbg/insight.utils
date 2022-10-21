@@ -14,6 +14,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.insight.utils.common.Base64Encryptor;
+import com.insight.utils.common.BusinessException;
 import com.insight.utils.pojo.AccessToken;
 import org.apache.commons.logging.LogFactory;
 
@@ -86,8 +87,7 @@ public final class Json {
         try {
             return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementClasses));
         } catch (IOException e) {
-            log(json, e.getMessage());
-            return null;
+            throw new BusinessException(e.getMessage());
         }
     }
 

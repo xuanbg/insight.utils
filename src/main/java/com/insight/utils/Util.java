@@ -288,6 +288,24 @@ public final class Util {
     }
 
     /**
+     * 比较两个集合是否不同
+     *
+     * @param source 源集合
+     * @param target 目标集合
+     * @param <T>    类型
+     * @return 集合是否不同
+     */
+    public static <T> boolean isDifferent(List<T> source, List<T> target) {
+        if (source.size() != target.size()){
+            return true;
+        }
+
+        List<T> s = Json.cloneList(source);
+        List<T> t = Json.cloneList(target);
+        return s.retainAll(t) || t.retainAll(s);
+    }
+
+    /**
      * 将一个fix字符串转换成map
      *
      * @param content 字符串，比如x1=a&x2=b
