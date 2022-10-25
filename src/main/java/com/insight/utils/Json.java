@@ -76,16 +76,16 @@ public final class Json {
     /**
      * 将json转换成指定类型的集合
      *
-     * @param obj            bean类型
-     * @param elementClasses 集合元素类型
-     * @param <T>            泛型
+     * @param <T>         泛型
+     * @param obj         bean类型
+     * @param elementType 集合元素类型
      * @return List
      */
-    public static <T> T cloneList(Object obj, Class<?>... elementClasses) {
+    public static <T> T cloneList(Object obj, Class<?>... elementType) {
         String json = toJson(obj);
 
         try {
-            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementClasses));
+            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementType));
         } catch (IOException e) {
             throw new BusinessException(e.getMessage());
         }
