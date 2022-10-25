@@ -300,8 +300,8 @@ public final class Util {
             return true;
         }
 
-        List<T> s = Json.cloneList(source);
-        List<T> t = Json.cloneList(target);
+        List<T> s = Json.cloneList(source, source.getClass());
+        List<T> t = Json.cloneList(target, target.getClass());
         return s.retainAll(t) || t.retainAll(s);
     }
 
