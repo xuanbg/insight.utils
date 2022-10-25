@@ -290,17 +290,29 @@ public final class Util {
     /**
      * 比较两个集合是否不同
      *
-     * @param source      源集合
-     * @param target      目标集合
-     * @param elementType 集合元素类型
-     * @param <T>         类型
+     * @param source 源集合
+     * @param target 目标集合
+     * @param <T>    类型
      * @return 集合是否不同
      */
-    public static <T> boolean isDifferent(List<T> source, List<T> target, Class<?>... elementType) {
+    public static <T> boolean isDifferent(List<T> source, List<T> target) {
+        if (source == null && target == null) {
+            return false;
+        }
+
+        if (source == null || target == null){
+            return true;
+        }
+
+        if (source.isEmpty() && target.isEmpty()) {
+            return false;
+        }
+
         if (source.size() != target.size()) {
             return true;
         }
 
+        Class<?> elementType = source.get(0).getClass();
         List<T> s = Json.cloneList(source, elementType);
         List<T> t = Json.cloneList(target, elementType);
 
