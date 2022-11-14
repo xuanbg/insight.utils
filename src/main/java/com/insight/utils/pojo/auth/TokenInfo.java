@@ -1,7 +1,8 @@
-package com.insight.utils.pojo;
+package com.insight.utils.pojo.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.DateTime;
+import com.insight.utils.pojo.base.BaseXo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

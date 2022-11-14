@@ -15,7 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.insight.utils.common.Base64Encryptor;
 import com.insight.utils.common.BusinessException;
-import com.insight.utils.pojo.AccessToken;
+import com.insight.utils.pojo.auth.AccessToken;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.insight.utils.pojo;
+package com.insight.utils.pojo.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Json;

@@ -1,6 +1,8 @@
 package com.insight.utils.pojo;
 
 
+import com.insight.utils.pojo.base.BaseXo;
+
 /**
  * @author 宣炳刚
  * @date 2019-09-13

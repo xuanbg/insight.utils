@@ -1,4 +1,4 @@
-package com.insight.utils.pojo;
+package com.insight.utils.pojo.base;
 
 import com.insight.utils.Util;
 import org.springframework.format.annotation.DateTimeFormat;

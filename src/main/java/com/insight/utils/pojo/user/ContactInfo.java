@@ -1,4 +1,6 @@
-package com.insight.utils.pojo;
+package com.insight.utils.pojo.user;
+
+import com.insight.utils.pojo.base.BaseXo;
 
 /**
  * @author 宣炳刚

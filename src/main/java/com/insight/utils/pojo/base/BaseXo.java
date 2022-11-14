@@ -1,7 +1,8 @@
-package com.insight.utils.pojo;
+package com.insight.utils.pojo.base;
 
 import com.insight.utils.Json;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @remark VO/DTO基类
  */
 public class BaseXo implements Serializable {
+    @Serial
     private static final long serialVersionUID = -1L;
 
     /**

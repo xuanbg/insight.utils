@@ -1,6 +1,6 @@
 package com.insight.utils;
 
-import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.base.Reply;
 
 /**
  * @author 作者
