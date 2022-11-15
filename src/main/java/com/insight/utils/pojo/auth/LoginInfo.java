@@ -27,7 +27,7 @@ public class LoginInfo extends BaseXo {
     /**
      * 机构名称
      */
-    private Long orgName;
+    private String orgName;
 
     /**
      * 用户ID
@@ -73,11 +73,11 @@ public class LoginInfo extends BaseXo {
         this.orgId = orgId;
     }
 
-    public Long getOrgName() {
+    public String getOrgName() {
         return orgName;
     }
 
-    public void setOrgName(Long orgName) {
+    public void setOrgName(String orgName) {
         this.orgName = orgName;
     }
 

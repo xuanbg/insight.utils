@@ -13,6 +13,11 @@ public class BaseVo extends BaseXo {
     private Long id;
 
     /**
+     * 编码
+     */
+    private String code;
+
+    /**
      * 名称
      */
     private String name;
@@ -23,6 +28,14 @@ public class BaseVo extends BaseXo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
