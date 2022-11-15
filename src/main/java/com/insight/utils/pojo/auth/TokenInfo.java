@@ -2,7 +2,6 @@ package com.insight.utils.pojo.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.DateTime;
-import com.insight.utils.pojo.base.BaseXo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,28 +13,13 @@ import java.util.List;
  * @date 2018/1/4
  * @remark 令牌信息实体类
  */
-public class TokenInfo extends BaseXo {
+public class TokenInfo extends LoginInfo {
     public static final int TIME_OUT = 300;
 
     /**
      * 访问令牌MD5摘要
      */
     private String hash;
-
-    /**
-     * 用户ID
-     */
-    private Long userId;
-
-    /**
-     * 租户ID
-     */
-    private Long tenantId;
-
-    /**
-     * 应用ID
-     */
-    private Long appId;
 
     /**
      * 授权码生命周期(秒)
@@ -103,30 +87,6 @@ public class TokenInfo extends BaseXo {
 
     public void setHash(String hash) {
         this.hash = hash;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
     }
 
     public Long getPermitLife() {

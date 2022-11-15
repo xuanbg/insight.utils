@@ -20,6 +20,16 @@ public class LoginInfo extends BaseXo {
     private Long tenantId;
 
     /**
+     * 机构ID
+     */
+    private Long orgId;
+
+    /**
+     * 机构名称
+     */
+    private Long orgName;
+
+    /**
      * 用户ID
      */
     private Long userId;
@@ -53,6 +63,22 @@ public class LoginInfo extends BaseXo {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
+    public Long getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(Long orgName) {
+        this.orgName = orgName;
     }
 
     public Long getUserId() {
