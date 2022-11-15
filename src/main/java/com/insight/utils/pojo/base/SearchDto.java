@@ -38,6 +38,11 @@ public class SearchDto extends BaseXo {
     private Integer type;
 
     /**
+     * 代码
+     */
+    private String code;
+
+    /**
      * 查询关键词
      */
     private String keyword;
@@ -137,6 +142,14 @@ public class SearchDto extends BaseXo {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getKeyword() {
