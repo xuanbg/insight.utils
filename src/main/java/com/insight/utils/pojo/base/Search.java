@@ -24,6 +24,11 @@ public class Search extends BaseXo {
     private Long tenantId;
 
     /**
+     * 机构代码
+     */
+    private String orgCode;
+
+    /**
      * 应用ID
      */
     private Long appId;
@@ -129,6 +134,14 @@ public class Search extends BaseXo {
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public String getOrgCode() {
+        return orgCode;
+    }
+
+    public void setOrgCode(String orgCode) {
+        this.orgCode = orgCode;
     }
 
     public Long getAppId() {
