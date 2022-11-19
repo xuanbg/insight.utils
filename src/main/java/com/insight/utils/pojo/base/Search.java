@@ -34,6 +34,11 @@ public class Search extends BaseXo {
     private Long ownerId;
 
     /**
+     * 所有者
+     */
+    private String owner;
+
+    /**
      * 类型
      */
     private Integer type;
@@ -140,6 +145,14 @@ public class Search extends BaseXo {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public Integer getType() {
