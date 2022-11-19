@@ -2,6 +2,8 @@ package com.insight.utils;
 
 import com.insight.utils.pojo.base.Reply;
 
+import java.util.ArrayList;
+
 /**
  * @author 作者
  * @date 2017年9月5日
@@ -140,6 +142,16 @@ public final class ReplyHelper {
         reply.setCode(200);
         reply.setData(data);
         reply.setMessage(msg);
+
+        return reply;
+    }
+
+    public static Reply resultIsEmpty(){
+        Reply reply = new Reply();
+        reply.setCode(200);
+        reply.setData(new ArrayList<>());
+        reply.setMessage("没有查询到符合条件的数据");
+        reply.setOption(0);
 
         return reply;
     }
