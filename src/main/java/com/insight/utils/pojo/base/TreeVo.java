@@ -5,12 +5,7 @@ package com.insight.utils.pojo.base;
  * @date 2021/12/10
  * @remark 树形数据VO
  */
-public class TreeVo extends BaseXo {
-
-    /**
-     * 主键
-     */
-    private Long id;
+public class TreeVo extends BaseVo {
 
     /**
      * 父级ID
@@ -18,17 +13,9 @@ public class TreeVo extends BaseXo {
     private Long parentId;
 
     /**
-     * 名称
+     * 节点类型
      */
-    private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Integer type;
 
     public Long getParentId() {
         return parentId;
@@ -38,11 +25,11 @@ public class TreeVo extends BaseXo {
         this.parentId = parentId;
     }
 
-    public String getName() {
-        return name;
+    public Integer getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(Integer type) {
+        this.type = type;
     }
 }
