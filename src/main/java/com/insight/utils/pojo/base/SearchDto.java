@@ -99,11 +99,6 @@ public class SearchDto extends BaseXo {
      */
     private String orderBy;
 
-    /**
-     * 排序类型
-     */
-    private String orderType;
-
     public Long getId() {
         return id;
     }
@@ -234,31 +229,14 @@ public class SearchDto extends BaseXo {
 
     public String getOrderBy() {
         if (Util.isEmpty(orderBy) || orderBy.contains(";")) {
-            return "id";
+            return "id desc";
         } else {
-            StringBuilder result = new StringBuilder();
-            for (int i = 0; i < orderBy.length(); i++) {
-                String c = orderBy.substring(i, i + 1);
-                if (i > 0 && c.matches("[A-Z]")) {
-                    result.append("_");
-                }
-
-                result.append(c.toLowerCase());
-            }
-
-            return result.toString();
+            orderBy = orderBy.replace("DESC", "desc").replace("ASC", "asc");
+            return Util.camelToUnderScore(orderBy);
         }
     }
 
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
-    }
-
-    public String getOrderType() {
-        return Util.isEmpty(orderType) || !orderType.matches("asc|desc") ? "desc" : orderType;
-    }
-
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
     }
 }

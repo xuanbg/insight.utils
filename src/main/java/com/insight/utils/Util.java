@@ -230,6 +230,43 @@ public final class Util {
     }
 
     /**
+     * 驼峰转下划线
+     *
+     * @param str 源字符串
+     * @return 转换后字符串
+     */
+    public static String camelToUnderScore(String str) {
+        Pattern compile = Pattern.compile("[A-Z]");
+        Matcher matcher = compile.matcher(str);
+        StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
+        }
+
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    /**
+     * 下划线转驼峰
+     *
+     * @param str 源字符串
+     * @return 转换后字符串
+     */
+    public static String underScoreToCamel(String str) {
+        str = str.toLowerCase();
+        Pattern compile = Pattern.compile("_[a-z]");
+        Matcher matcher = compile.matcher(str);
+        StringBuilder sb = new StringBuilder();
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, matcher.group(0).toUpperCase().replace("_", ""));
+        }
+
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    /**
      * 逗号分割字符串转整型集合
      *
      * @param str 逗号分割字符串
@@ -258,7 +295,17 @@ public final class Util {
      * @return 字符串集合
      */
     public static List<String> toStringList(String str) {
-        String[] list = str.split(",");
+        return toStringList(str, ",");
+    }
+
+    /**
+     * 字符串转字符串集合
+     *
+     * @param str 分割字符
+     * @return 字符串集合
+     */
+    public static List<String> toStringList(String str, String regex) {
+        String[] list = str.split(regex);
         return Arrays.asList(list);
     }
 
@@ -300,7 +347,7 @@ public final class Util {
             return false;
         }
 
-        if (source == null || target == null){
+        if (source == null || target == null) {
             return true;
         }
 
