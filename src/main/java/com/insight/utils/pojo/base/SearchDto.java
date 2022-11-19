@@ -4,6 +4,7 @@ import com.insight.utils.Util;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -51,6 +52,11 @@ public class SearchDto extends BaseXo {
      * 关键值
      */
     private String value;
+
+    /**
+     * 范围集
+     */
+    private List<Object> rangeSet;
 
     /**
      * 第几页
@@ -161,6 +167,14 @@ public class SearchDto extends BaseXo {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public List<Object> getRangeSet() {
+        return rangeSet;
+    }
+
+    public void setRangeSet(List<Object> rangeSet) {
+        this.rangeSet = rangeSet;
     }
 
     public Integer getPage() {
