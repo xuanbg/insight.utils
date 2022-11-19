@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2019/05/20
  * @remark 分页类
  */
-public class SearchDto extends BaseXo {
+public class Search extends BaseXo {
 
     /**
      * 主键
@@ -56,7 +56,12 @@ public class SearchDto extends BaseXo {
     /**
      * 范围集
      */
-    private List<Object> rangeSet;
+    private List<String> stringSet;
+
+    /**
+     * 范围集
+     */
+    private List<Long> longSet;
 
     /**
      * 第几页
@@ -169,12 +174,20 @@ public class SearchDto extends BaseXo {
         this.value = value;
     }
 
-    public List<Object> getRangeSet() {
-        return rangeSet;
+    public List<String> getStringSet() {
+        return stringSet;
     }
 
-    public void setRangeSet(List<Object> rangeSet) {
-        this.rangeSet = rangeSet;
+    public void setStringSet(List<String> stringSet) {
+        this.stringSet = stringSet;
+    }
+
+    public List<Long> getLongSet() {
+        return longSet;
+    }
+
+    public void setLongSet(List<Long> longSet) {
+        this.longSet = longSet;
     }
 
     public Integer getPage() {
