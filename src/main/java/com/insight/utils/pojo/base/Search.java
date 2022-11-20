@@ -64,6 +64,28 @@ public class Search extends BaseXo {
     private String value;
 
     /**
+     * 状态
+     */
+    private Integer status;
+
+    /**
+     * 是否仅有效数据:null.全部数据,true.仅失效数据,false.仅有效数据
+     */
+    private Boolean invalid;
+
+    /**
+     * 开始日期
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+
+    /**
+     * 截止日期
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
+
+    /**
      * 范围集
      */
     private List<String> stringSet;
@@ -92,28 +114,6 @@ public class Search extends BaseXo {
      * 偏移量
      */
     private Integer offset;
-
-    /**
-     * 状态
-     */
-    private Integer status;
-
-    /**
-     * 是否仅有效数据:null.全部数据,true.仅失效数据,false.仅有效数据
-     */
-    private Boolean invalid;
-
-    /**
-     * 开始日期
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
-
-    /**
-     * 截止日期
-     */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
 
     /**
      * 排序字段
@@ -200,54 +200,6 @@ public class Search extends BaseXo {
         this.value = value;
     }
 
-    public List<String> getStringSet() {
-        return stringSet;
-    }
-
-    public void setStringSet(List<String> stringSet) {
-        this.stringSet = stringSet;
-    }
-
-    public List<Long> getLongSet() {
-        return longSet;
-    }
-
-    public void setLongSet(List<Long> longSet) {
-        this.longSet = longSet;
-    }
-
-    public Integer getPage() {
-        return page == null ? 1 : page;
-    }
-
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public Integer getSize() {
-        return size == null ? 20 : size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
-    }
-
-    public Long getLastId() {
-        return LastId;
-    }
-
-    public void setLastId(Long lastId) {
-        LastId = lastId;
-    }
-
-    public Integer getOffset() {
-        return offset == null ? (getSize() * (getPage() - 1)) : offset;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -278,6 +230,54 @@ public class Search extends BaseXo {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public List<String> getStringSet() {
+        return stringSet;
+    }
+
+    public void setStringSet(List<String> stringSet) {
+        this.stringSet = stringSet;
+    }
+
+    public List<Long> getLongSet() {
+        return longSet;
+    }
+
+    public void setLongSet(List<Long> longSet) {
+        this.longSet = longSet;
+    }
+
+    public Integer getPage() {
+        return page == null || page <= 0 ? 0 : page - 1;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return size == null ? 20 : size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Long getLastId() {
+        return LastId;
+    }
+
+    public void setLastId(Long lastId) {
+        LastId = lastId;
+    }
+
+    public Integer getOffset() {
+        return offset == null ? getSize() * getPage() : offset;
+    }
+
+    public void setOffset(Integer offset) {
+        this.offset = offset;
     }
 
     public String getOrderBy() {
