@@ -257,7 +257,7 @@ public class Search extends BaseXo {
     }
 
     public Integer getSize() {
-        return size == null ? 20 : size;
+        return size == null || size < 10 ? 10 : size;
     }
 
     public void setSize(Integer size) {
