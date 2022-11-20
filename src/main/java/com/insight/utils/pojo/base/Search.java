@@ -98,12 +98,12 @@ public class Search extends BaseXo {
     /**
      * 第几页
      */
-    private Integer page;
+    private Integer pageNum;
 
     /**
      * 每页数量
      */
-    private Integer size;
+    private Integer pageSize;
 
     /**
      * 最后ID
@@ -119,6 +119,21 @@ public class Search extends BaseXo {
      * 排序字段
      */
     private String orderBy;
+
+    /**
+     * 构造方法
+     */
+    public Search(){
+    }
+
+    /**
+     * 构造方法
+     *
+     * @param id 主键
+     */
+    public Search(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
@@ -248,20 +263,20 @@ public class Search extends BaseXo {
         this.longSet = longSet;
     }
 
-    public Integer getPage() {
-        return page == null || page <= 0 ? 0 : page - 1;
+    public Integer getPageNum() {
+        return pageNum == null || pageNum <= 1 ? 1 : pageNum;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 
-    public Integer getSize() {
-        return size == null || size < 10 ? 10 : size;
+    public Integer getPageSize() {
+        return pageSize == null || pageSize < 10 ? 10 : pageSize;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     public Long getLastId() {
@@ -273,7 +288,7 @@ public class Search extends BaseXo {
     }
 
     public Integer getOffset() {
-        return offset == null ? getSize() * getPage() : offset;
+        return offset == null ? ((getPageNum() - 1) * getPageSize()) : offset;
     }
 
     public void setOffset(Integer offset) {
