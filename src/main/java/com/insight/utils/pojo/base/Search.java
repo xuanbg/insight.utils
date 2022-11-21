@@ -123,7 +123,7 @@ public class Search extends BaseXo {
     /**
      * 构造方法
      */
-    public Search(){
+    public Search() {
     }
 
     /**
@@ -296,7 +296,7 @@ public class Search extends BaseXo {
     }
 
     public String getOrderBy() {
-        if (Util.isEmpty(orderBy) || orderBy.contains(";")) {
+        if (Util.isEmpty(orderBy) || orderBy.contains(";") || orderBy.contains("'")) {
             return "id desc";
         } else {
             orderBy = orderBy.replace("DESC", "desc").replace("ASC", "asc");
