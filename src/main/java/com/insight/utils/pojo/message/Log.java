@@ -1,4 +1,4 @@
-package com.insight.utils.pojo;
+package com.insight.utils.pojo.message;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.insight.utils.pojo.base.BaseXo;

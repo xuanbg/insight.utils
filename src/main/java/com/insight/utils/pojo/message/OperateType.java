@@ -1,4 +1,4 @@
-package com.insight.utils.pojo;
+package com.insight.utils.pojo.message;
 
 /**
  * @author 宣炳刚
@@ -29,7 +29,7 @@ public enum OperateType {
     /**
      * 操作名称
      */
-    private String name;
+    private final String name;
 
     /**
      * 构造方法

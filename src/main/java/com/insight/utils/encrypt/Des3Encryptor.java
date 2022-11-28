@@ -1,13 +1,15 @@
 package com.insight.utils.encrypt;
 
-import com.sun.crypto.provider.SunJCE;
+import com.insight.utils.common.BusinessException;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
 import java.security.Key;
-import java.security.Security;
 
 /**
  * @author duxl
@@ -23,12 +25,12 @@ public final class Des3Encryptor {
     /**
      * 加密密码功能对象
      */
-    private Cipher encryptCipher = null;
+    private final Cipher encryptCipher;
 
     /**
      * 解密密码功能对象
      */
-    private Cipher decryptCipher = null;
+    private final Cipher decryptCipher;
 
 
     /**
@@ -44,16 +46,18 @@ public final class Des3Encryptor {
      * @param strKey 密钥键
      */
     public Des3Encryptor(String strKey) {
-        Security.addProvider(new SunJCE());
-        Key key = getKey(strKey.getBytes());
         try {
+            DESKeySpec desKey = new DESKeySpec(strKey.getBytes());
+            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+            SecretKey secretKey = keyFactory.generateSecret(desKey);
+
             encryptCipher = Cipher.getInstance("DES");
-            encryptCipher.init(Cipher.ENCRYPT_MODE, key);
+            encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
             decryptCipher = Cipher.getInstance("DES");
-            decryptCipher.init(Cipher.DECRYPT_MODE, key);
-        } catch (Exception e) {
-            e.printStackTrace();
+            decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
+        } catch (Exception ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 
