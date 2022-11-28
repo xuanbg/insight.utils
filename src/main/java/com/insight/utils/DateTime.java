@@ -1,6 +1,6 @@
 package com.insight.utils;
 
-import com.insight.utils.common.BusinessException;
+import com.insight.utils.pojo.base.BusinessException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

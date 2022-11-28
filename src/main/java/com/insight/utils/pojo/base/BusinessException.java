@@ -1,4 +1,4 @@
-package com.insight.utils.common;
+package com.insight.utils.pojo.base;
 
 /**
  * @author 宣炳刚

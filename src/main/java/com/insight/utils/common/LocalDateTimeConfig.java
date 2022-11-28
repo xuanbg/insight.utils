@@ -36,9 +36,9 @@ public class LocalDateTimeConfig {
         JavaTimeModule module = new JavaTimeModule();
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTime.DEFAULT_TIME_FORMATTER));
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTime.DEFAULT_TIME_FORMATTER));
+        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_INSTANT));
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_OFFSET_DATE_TIME));
-        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ISO_INSTANT));
 
         module.addSerializer(LocalDate.class, new LocalDateSerializer(DateTime.DEFAULT_DATE_FORMATTER));
         module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTime.DEFAULT_DATE_FORMATTER));

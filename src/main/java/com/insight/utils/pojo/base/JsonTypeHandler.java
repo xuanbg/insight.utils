@@ -1,4 +1,4 @@
-package com.insight.utils.common;
+package com.insight.utils.pojo.base;
 
 import com.insight.utils.Json;
 import org.apache.ibatis.type.BaseTypeHandler;
@@ -11,18 +11,18 @@ import java.sql.SQLException;
 
 /**
  * @author 宣炳刚
- * @date 2018/8/2
- * @remark 数据库json字段转换集合
+ * @date 2018/5/16
+ * @remark 数据库json字段转换对象
  */
-public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
+public class JsonTypeHandler<T> extends BaseTypeHandler<T> {
     private final Class<T> clazz;
 
     /**
-     * 构造函数
+     * 构造方法
      *
      * @param clazz 类型
      */
-    public ArrayTypeHandler(Class<T> clazz) {
+    public JsonTypeHandler(Class<T> clazz) {
         if (clazz == null) {
             throw new IllegalArgumentException("Type argument cannot be null");
         }
@@ -51,7 +51,7 @@ public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
      */
     @Override
     public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        return Json.toList(rs.getString(columnName), clazz);
+        return Json.toBean(rs.getString(columnName), clazz);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
      */
     @Override
     public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        return Json.toList(rs.getString(columnIndex), clazz);
+        return Json.toBean(rs.getString(columnIndex), clazz);
     }
 
     /**
@@ -75,6 +75,6 @@ public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
      */
     @Override
     public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        return Json.toList(cs.getString(columnIndex), clazz);
+        return Json.toBean(cs.getString(columnIndex), clazz);
     }
 }

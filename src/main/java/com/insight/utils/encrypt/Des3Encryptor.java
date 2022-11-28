@@ -1,6 +1,6 @@
 package com.insight.utils.encrypt;
 
-import com.insight.utils.common.BusinessException;
+import com.insight.utils.pojo.base.BusinessException;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
