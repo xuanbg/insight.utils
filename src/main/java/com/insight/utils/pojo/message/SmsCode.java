@@ -39,6 +39,11 @@ public class SmsCode extends BaseXo {
      */
     private Integer minutes;
 
+    /**
+     * 验证码长度
+     */
+    private Integer lenght;
+
     public Map<String, Object> getParam() {
         Map<String, Object> map = new HashMap<>(4);
         map.put("code", getCode());
@@ -97,5 +102,13 @@ public class SmsCode extends BaseXo {
 
     public void setMinutes(Integer minutes) {
         this.minutes = minutes;
+    }
+
+    public Integer getLenght() {
+        return lenght;
+    }
+
+    public void setLenght(Integer lenght) {
+        this.lenght = lenght;
     }
 }
