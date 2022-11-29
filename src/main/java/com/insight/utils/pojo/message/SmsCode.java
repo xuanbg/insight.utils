@@ -11,6 +11,11 @@ import com.insight.utils.pojo.base.BaseXo;
 public class SmsCode extends BaseXo {
 
     /**
+     * 通道
+     */
+    private String channel;
+
+    /**
      * 验证码类型:0.验证手机号;1.注册用户账号;2.重置密码;3.修改支付密码;4.修改手机号
      */
     private Integer type;
@@ -29,6 +34,14 @@ public class SmsCode extends BaseXo {
      * 验证码有效时间(分钟)
      */
     private Integer minutes;
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
 
     public Integer getType() {
         return type;
