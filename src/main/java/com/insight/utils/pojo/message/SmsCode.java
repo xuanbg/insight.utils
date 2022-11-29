@@ -85,11 +85,7 @@ public class SmsCode extends BaseXo {
     }
 
     public String getCode() {
-        if (Util.isEmpty(code)) {
-            throw new BusinessException("验证码不能为空");
-        }
-
-        return code;
+        return Util.isEmpty(code) ? code : Util.randomString(getLenght());
     }
 
     public void setCode(String code) {
@@ -105,7 +101,7 @@ public class SmsCode extends BaseXo {
     }
 
     public Integer getLenght() {
-        return lenght;
+        return lenght == null ? 6 : lenght;
     }
 
     public void setLenght(Integer lenght) {
