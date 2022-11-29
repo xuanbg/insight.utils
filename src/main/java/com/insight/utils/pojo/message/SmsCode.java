@@ -1,7 +1,11 @@
 package com.insight.utils.pojo.message;
 
-
+import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
+import com.insight.utils.pojo.base.BusinessException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 宣炳刚
@@ -26,16 +30,28 @@ public class SmsCode extends BaseXo {
     private String mobile;
 
     /**
-     * 验证码长度
+     * 验证码
      */
-    private Integer length;
+    private String code;
 
     /**
      * 验证码有效时间(分钟)
      */
     private Integer minutes;
 
+    public Map<String, Object> getParam() {
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("code", getCode());
+        map.put("minutes", getMinutes());
+
+        return map;
+    }
+
     public String getChannel() {
+        if (Util.isEmpty(channel)) {
+            throw new BusinessException("短信通道不能为空");
+        }
+
         return channel;
     }
 
@@ -52,6 +68,10 @@ public class SmsCode extends BaseXo {
     }
 
     public String getMobile() {
+        if (Util.isEmpty(mobile)) {
+            throw new BusinessException("手机号不能为空");
+        }
+
         return mobile;
     }
 
@@ -59,16 +79,20 @@ public class SmsCode extends BaseXo {
         this.mobile = mobile;
     }
 
-    public Integer getLength() {
-        return length;
+    public String getCode() {
+        if (Util.isEmpty(code)) {
+            throw new BusinessException("验证码不能为空");
+        }
+
+        return code;
     }
 
-    public void setLength(Integer length) {
-        this.length = length;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getMinutes() {
-        return minutes;
+        return minutes == null ? 5 : minutes;
     }
 
     public void setMinutes(Integer minutes) {
