@@ -85,7 +85,7 @@ public class SmsCode extends BaseXo {
     }
 
     public String getCode() {
-        return Util.isEmpty(code) ? code : Util.randomString(getLenght());
+        return Util.isEmpty(code) ? Util.randomString(getLenght()) : code;
     }
 
     public void setCode(String code) {
