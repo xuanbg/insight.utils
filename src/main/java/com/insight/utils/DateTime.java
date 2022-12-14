@@ -27,24 +27,34 @@ public final class DateTime {
     private static final Map<String, String> FORMAT_MAP;
 
     /**
+     * 默认日期时间格式
+     */
+    public static final String DATETIME_PATTERN = "uuuu-MM-dd HH:mm:ss";
+
+    /**
      * 默认日期格式
      */
-    public static final String DATE_PATTERN = "uuuu-MM-dd";
+    public static final String DATET_PATTERN = "uuuu-MM-dd";
 
     /**
      * 默认时间格式
      */
-    public static final String TIME_PATTERN = "uuuu-MM-dd HH:mm:ss";
+    public static final String TIME_PATTERN = "HH:mm:ss";
+
+    /**
+     * 默认日期时间格式化器
+     */
+    public static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(DATETIME_PATTERN);
 
     /**
      * 默认日期格式化器
      */
-    public static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATET_PATTERN);
 
     /**
      * 默认时间格式化器
      */
-    public static final DateTimeFormatter DEFAULT_TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
 
     static {
         FORMAT_MAP = new HashMap<>(16);
@@ -88,7 +98,7 @@ public final class DateTime {
      * @return 默认格式的当前时间字符串
      */
     public static String formatCurrentTime() {
-        return formatCurrentTime(TIME_PATTERN);
+        return formatCurrentTime(DATETIME_PATTERN);
     }
 
     /**
@@ -133,7 +143,7 @@ public final class DateTime {
      */
     public static String formatDateTime(String time) {
         LocalDateTime value = autoParseDateTime(time);
-        return DEFAULT_TIME_FORMATTER.format(value);
+        return DATETIME_FORMATTER.format(value);
     }
 
     /**
@@ -163,7 +173,7 @@ public final class DateTime {
      * @return LocalDate
      */
     public static LocalDate parseDate(String date) {
-        return parseDate(date, DATE_PATTERN);
+        return parseDate(date, DATET_PATTERN);
     }
 
     /**
@@ -195,7 +205,7 @@ public final class DateTime {
      * @return LocalDateTime
      */
     public static LocalDateTime parseDateTime(String time) {
-        return parseDateTime(time, TIME_PATTERN);
+        return parseDateTime(time, DATETIME_PATTERN);
     }
 
     /**

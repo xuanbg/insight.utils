@@ -53,10 +53,6 @@ public class SmsCode extends BaseXo {
     }
 
     public String getChannel() {
-        if (Util.isEmpty(channel)) {
-            throw new BusinessException("短信通道不能为空");
-        }
-
         return channel;
     }
 
@@ -85,7 +81,11 @@ public class SmsCode extends BaseXo {
     }
 
     public String getCode() {
-        return Util.isEmpty(code) ? Util.randomString(getLenght()) : code;
+        if (Util.isEmpty(code)) {
+            code = Util.randomString(getLenght());
+        }
+
+        return code;
     }
 
     public void setCode(String code) {
