@@ -57,17 +57,17 @@ public class InterfaceDto extends BaseXo {
     /**
      * 是否验证Token
      */
-    private Boolean isVerify;
+    private Boolean verify;
 
     /**
      * 是否限流
      */
-    private Boolean isLimit;
+    private Boolean limit;
 
     /**
      * 是否通过日志输出返回值
      */
-    private Boolean isLogResult;
+    private Boolean logResult;
 
     public String getMethod() {
         return method;
@@ -142,26 +142,26 @@ public class InterfaceDto extends BaseXo {
     }
 
     public Boolean getVerify() {
-        return isVerify != null && isVerify;
+        return verify != null && verify;
     }
 
     public void setVerify(Boolean verify) {
-        isVerify = verify;
+        this.verify = verify;
     }
 
     public Boolean getLimit() {
-        return isLimit != null && isLimit;
+        return limit != null && limit;
     }
 
     public void setLimit(Boolean limit) {
-        isLimit = limit;
+        this.limit = limit;
     }
 
     public Boolean getLogResult() {
-        return isLogResult != null && isLogResult;
+        return logResult != null && logResult;
     }
 
     public void setLogResult(Boolean logResult) {
-        isLogResult = logResult;
+        this.logResult = logResult;
     }
 }

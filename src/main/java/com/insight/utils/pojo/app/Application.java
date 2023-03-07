@@ -54,17 +54,17 @@ public class Application extends BaseXo {
     /**
      * 验证来源
      */
-    private Boolean isVerifySource;
+    private Boolean verifySource;
 
     /**
      * 是否单点登录
      */
-    private Boolean isSigninOne;
+    private Boolean signinOne;
 
     /**
      * 是否自动刷新令牌
      */
-    private Boolean isAutoRefresh;
+    private Boolean autoRefresh;
 
     /**
      * 创建人
@@ -146,27 +146,27 @@ public class Application extends BaseXo {
     }
 
     public Boolean getVerifySource() {
-        return isVerifySource != null && isVerifySource;
+        return verifySource != null && verifySource;
     }
 
     public void setVerifySource(Boolean verifySource) {
-        isVerifySource = verifySource;
+        this.verifySource = verifySource;
     }
 
     public Boolean getSigninOne() {
-        return isSigninOne != null && isSigninOne;
+        return signinOne != null && signinOne;
     }
 
     public void setSigninOne(Boolean signinOne) {
-        isSigninOne = signinOne;
+        this.signinOne = signinOne;
     }
 
     public Boolean getAutoRefresh() {
-        return isAutoRefresh != null && isAutoRefresh;
+        return autoRefresh != null && autoRefresh;
     }
 
     public void setAutoRefresh(Boolean autoRefresh) {
-        isAutoRefresh = autoRefresh;
+        this.autoRefresh = autoRefresh;
     }
 
     public String getCreator() {

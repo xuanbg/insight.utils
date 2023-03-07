@@ -74,12 +74,12 @@ public class User extends BaseXo {
     /**
      * 用户是否内置
      */
-    private Boolean isBuiltin;
+    private Boolean builtin;
 
     /**
      * 用户是否失效
      */
-    private Boolean isInvalid;
+    private Boolean invalid;
 
     /**
      * 创建人
@@ -193,19 +193,19 @@ public class User extends BaseXo {
     }
 
     public Boolean getBuiltin() {
-        return isBuiltin;
+        return builtin;
     }
 
     public void setBuiltin(Boolean builtin) {
-        isBuiltin = builtin;
+        this.builtin = builtin;
     }
 
     public Boolean getInvalid() {
-        return isInvalid;
+        return invalid;
     }
 
     public void setInvalid(Boolean invalid) {
-        isInvalid = invalid;
+        this.invalid = invalid;
     }
 
     public String getCreator() {
