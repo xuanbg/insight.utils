@@ -42,12 +42,12 @@ public class Application extends BaseXo {
     private String domain;
 
     /**
-     * 授权码生命周期(毫秒)
+     * 授权码生命周期(秒)
      */
     private Long permitLife;
 
     /**
-     * 令牌生命周期(毫秒)
+     * 令牌生命周期(秒)
      */
     private Long tokenLife;
 
@@ -130,7 +130,7 @@ public class Application extends BaseXo {
     }
 
     public Long getPermitLife() {
-        return permitLife;
+        return permitLife == null ? 5 : permitLife;
     }
 
     public void setPermitLife(Long permitLife) {
@@ -138,7 +138,7 @@ public class Application extends BaseXo {
     }
 
     public Long getTokenLife() {
-        return tokenLife;
+        return tokenLife == null ? 7200 : tokenLife;
     }
 
     public void setTokenLife(Long tokenLife) {
@@ -146,7 +146,7 @@ public class Application extends BaseXo {
     }
 
     public Boolean getVerifySource() {
-        return isVerifySource;
+        return isVerifySource != null && isVerifySource;
     }
 
     public void setVerifySource(Boolean verifySource) {
@@ -154,7 +154,7 @@ public class Application extends BaseXo {
     }
 
     public Boolean getSigninOne() {
-        return isSigninOne;
+        return isSigninOne != null && isSigninOne;
     }
 
     public void setSigninOne(Boolean signinOne) {
@@ -162,7 +162,7 @@ public class Application extends BaseXo {
     }
 
     public Boolean getAutoRefresh() {
-        return isAutoRefresh;
+        return isAutoRefresh != null && isAutoRefresh;
     }
 
     public void setAutoRefresh(Boolean autoRefresh) {
