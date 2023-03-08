@@ -40,6 +40,16 @@ public class LoginInfo extends BaseXo {
     private Long userId;
 
     /**
+     * 用户类型: 0.平台用户, 1.外部用户
+     */
+    private Integer userType;
+
+    /**
+     * 用户编码
+     */
+    private String userCode;
+
+    /**
      * 用户姓名
      */
     private String userName;
@@ -100,6 +110,22 @@ public class LoginInfo extends BaseXo {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public String getUserName() {

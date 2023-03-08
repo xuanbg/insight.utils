@@ -144,7 +144,7 @@ public class Search extends BaseXo {
     }
 
     public Long getTenantId() {
-        return tenantId;
+        return ownerId == null && Util.isEmpty(orgCode) ? tenantId : null;
     }
 
     public void setTenantId(Long tenantId) {
@@ -152,7 +152,7 @@ public class Search extends BaseXo {
     }
 
     public String getOrgCode() {
-        return orgCode;
+        return ownerId == null ? orgCode : null;
     }
 
     public void setOrgCode(String orgCode) {

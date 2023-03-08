@@ -17,7 +17,7 @@ public class User extends BaseXo {
     private Long id;
 
     /**
-     * 用户类型:0.外部用户, 1.平台用户, 2.租户用户
+     * 用户类型: 0.平台用户, 1.外部用户
      */
     private Integer type;
 

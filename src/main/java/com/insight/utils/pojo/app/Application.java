@@ -17,6 +17,11 @@ public class Application extends BaseXo {
     private Long id;
 
     /**
+     * 类型: 0.常规应用, 1.限定应用(与用户类型匹配)
+     */
+    private Integer type;
+
+    /**
      * 序号
      */
     private Integer index;
@@ -87,6 +92,14 @@ public class Application extends BaseXo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getIndex() {
