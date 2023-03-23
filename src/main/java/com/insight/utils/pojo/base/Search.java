@@ -139,6 +139,10 @@ public class Search extends BaseXo {
         return tenantId == null && Util.isEmpty(orgCode) && ownerId == null;
     }
 
+    public Boolean orderByIsEmpty() {
+        return Util.isEmpty(orderBy);
+    }
+
     public Long getId() {
         return id;
     }
