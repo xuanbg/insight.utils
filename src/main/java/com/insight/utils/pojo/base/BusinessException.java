@@ -10,7 +10,7 @@ public class BusinessException extends RuntimeException {
     /**
      * 异常代码
      */
-    private Integer code;
+    private Integer code = 400;
 
     /**
      * 异常消息
