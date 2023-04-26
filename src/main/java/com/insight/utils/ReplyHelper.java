@@ -146,7 +146,7 @@ public final class ReplyHelper {
         return reply;
     }
 
-    public static Reply resultIsEmpty(){
+    public static Reply resultIsEmpty() {
         Reply reply = new Reply();
         reply.setCode(200);
         reply.setData(new ArrayList<>());
@@ -177,11 +177,7 @@ public final class ReplyHelper {
      * @return Reply
      */
     public static Reply fail() {
-        Reply reply = new Reply();
-        reply.setCode(400);
-        reply.setMessage("请求失败");
-
-        return reply;
+        return fail("请求失败");
     }
 
     /**
@@ -191,6 +187,17 @@ public final class ReplyHelper {
      * @return Reply
      */
     public static Reply fail(String msg) {
+        return fail(400, msg);
+    }
+
+    /**
+     * 服务端错误
+     *
+     * @param code 错误代码
+     * @param msg  消息
+     * @return Reply
+     */
+    public static Reply fail(Integer code, String msg) {
         Reply reply = new Reply();
         reply.setCode(400);
         reply.setMessage(msg);

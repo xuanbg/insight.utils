@@ -17,6 +17,11 @@ public class User extends BaseXo {
     private Long id;
 
     /**
+     * 租户ID
+     */
+    private Long tenantId;
+
+    /**
      * 用户类型: 0.平台用户, 1.外部用户
      */
     private Integer type;
@@ -102,6 +107,14 @@ public class User extends BaseXo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
     }
 
     public Integer getType() {
