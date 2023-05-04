@@ -198,9 +198,48 @@ public final class ReplyHelper {
      * @return Reply
      */
     public static Reply fail(Integer code, String msg) {
+        return fail(code, null, msg);
+    }
+
+    /**
+     * 服务端错误
+     *
+     * @param data 数据
+     * @param msg  消息
+     * @return Reply
+     */
+    public static Reply fail(Object data, String msg) {
+        return fail(400, data, msg);
+    }
+
+    /**
+     * 服务端错误
+     *
+     * @param code 错误代码
+     * @param data 数据
+     * @param msg  消息
+     * @return Reply
+     */
+    public static Reply fail(Integer code, Object data, String msg) {
         Reply reply = new Reply();
-        reply.setCode(400);
+        reply.setCode(code);
         reply.setMessage(msg);
+        reply.setData(data);
+
+        return reply;
+    }
+
+    /**
+     * 用户组织不唯一
+     *
+     * @param data 数据
+     * @return Reply
+     */
+    public static Reply isMultiTenant(Object data) {
+        Reply reply = new Reply();
+        reply.setCode(426);
+        reply.setData(data);
+        reply.setMessage("用户组织不唯一，请选择要登录的组织");
 
         return reply;
     }
@@ -208,6 +247,7 @@ public final class ReplyHelper {
     /**
      * 用户不存在
      *
+     * @param data 数据
      * @return Reply
      */
     public static Reply notExist(Object data) {
