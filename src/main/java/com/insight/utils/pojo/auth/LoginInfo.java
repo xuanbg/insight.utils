@@ -30,6 +30,11 @@ public class LoginInfo extends BaseXo {
     private String name;
 
     /**
+     * 微信昵称
+     */
+    private String nickname;
+
+    /**
      * 应用ID
      */
     private Long appId;
@@ -89,6 +94,14 @@ public class LoginInfo extends BaseXo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public Long getAppId() {
