@@ -15,6 +15,11 @@ public class LoginInfo extends BaseXo {
     private Long id;
 
     /**
+     * 用户类型
+     */
+    private Integer type;
+
+    /**
      * 用户姓名
      */
     private String name;
@@ -55,6 +60,14 @@ public class LoginInfo extends BaseXo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getName() {
