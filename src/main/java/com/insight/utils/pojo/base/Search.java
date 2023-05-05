@@ -24,6 +24,11 @@ public class Search extends BaseXo {
     private Long tenantId;
 
     /**
+     * 机构ID
+     */
+    private Long orgId;
+
+    /**
      * 机构代码
      */
     private String orgCode;
@@ -136,7 +141,7 @@ public class Search extends BaseXo {
     }
 
     public Boolean ownerIsEmpty() {
-        return tenantId == null && Util.isEmpty(orgCode) && ownerId == null;
+        return tenantId == null && orgId == null && Util.isEmpty(orgCode) && ownerId == null;
     }
 
     public Boolean orderByIsEmpty() {
@@ -152,15 +157,23 @@ public class Search extends BaseXo {
     }
 
     public Long getTenantId() {
-        return ownerId == null && Util.isEmpty(orgCode) ? tenantId : null;
+        return tenantId;
     }
 
     public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
     public String getOrgCode() {
-        return ownerId == null ? orgCode : null;
+        return orgCode;
     }
 
     public void setOrgCode(String orgCode) {

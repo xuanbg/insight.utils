@@ -10,6 +10,16 @@ import com.insight.utils.pojo.base.BaseXo;
 public class LoginInfo extends BaseXo {
 
     /**
+     * 用户ID
+     */
+    private Long id;
+
+    /**
+     * 用户姓名
+     */
+    private String name;
+
+    /**
      * 应用ID
      */
     private Long appId;
@@ -35,34 +45,25 @@ public class LoginInfo extends BaseXo {
     private String orgName;
 
     /**
-     * 用户ID
+     * 区号
      */
-    private Long userId;
+    private String areaCode;
 
-    /**
-     * 用户类型: 0.平台用户, 1.外部用户
-     */
-    private Integer userType;
+    public Long getId() {
+        return id;
+    }
 
-    /**
-     * 用户编码
-     */
-    private String userCode;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    /**
-     * 用户姓名
-     */
-    private String userName;
+    public String getName() {
+        return name;
+    }
 
-    /**
-     * 用户手机号
-     */
-    private String mobile;
-
-    /**
-     * 用户头像
-     */
-    private String headImg;
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Long getAppId() {
         return appId;
@@ -104,51 +105,11 @@ public class LoginInfo extends BaseXo {
         this.orgName = orgName;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getAreaCode() {
+        return areaCode;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getUserType() {
-        return userType;
-    }
-
-    public void setUserType(Integer userType) {
-        this.userType = userType;
-    }
-
-    public String getUserCode() {
-        return userCode;
-    }
-
-    public void setUserCode(String userCode) {
-        this.userCode = userCode;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getHeadImg() {
-        return headImg;
-    }
-
-    public void setHeadImg(String headImg) {
-        this.headImg = headImg;
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
     }
 }

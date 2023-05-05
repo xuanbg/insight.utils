@@ -1,8 +1,7 @@
 package com.insight.utils.http;
 
 import com.insight.utils.Util;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.insight.utils.pojo.base.BusinessException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -34,8 +33,7 @@ import java.util.*;
  * @date 2018/1/11.
  * @remark
  */
-public class HttpClientUtil {
-    private static final Log LOGGER = LogFactory.getLog(HttpClientUtil.class);
+public final class HttpClientUtil {
 
     /**
      * 每个路由最大连接数
@@ -107,12 +105,10 @@ public class HttpClientUtil {
 
             return result;
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            throw new BusinessException(e.getMessage());
         } finally {
             HttpClientUtils.closeQuietly(response);
         }
-
-        return null;
     }
 
     /**
@@ -140,10 +136,8 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpGet, resultEncode);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
@@ -177,10 +171,8 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpPost, resultEncode);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
@@ -213,10 +205,8 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpPost, resultEncode);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
@@ -282,10 +272,8 @@ public class HttpClientUtil {
 
             return httpClientExecute(httpPost, resultEncode);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
 
@@ -297,17 +285,15 @@ public class HttpClientUtil {
      */
     public static byte[] getByteFromUrl(String url) {
         try {
-            byte[] data;
             HttpGet get = new HttpGet(url);
             HttpResponse res = getApiHttpClient().execute(get);
-            if (res.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                data = EntityUtils.toByteArray(res.getEntity());
-                return data;
+            if (res.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+                throw new BusinessException(res.toString());
             }
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
 
-        return null;
+            return EntityUtils.toByteArray(res.getEntity());
+        } catch (IOException e) {
+            throw new BusinessException(e.getMessage());
+        }
     }
 }

@@ -1,8 +1,7 @@
 package com.insight.utils.http;
 
 import com.insight.utils.Json;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.insight.utils.pojo.base.BusinessException;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -27,8 +26,7 @@ import java.util.Map;
  * @date 2019/9/26
  * @remark HttpClient工具类
  */
-public class HttpUtil {
-    private static final Log LOGGER = LogFactory.getLog(HttpUtil.class);
+public final class HttpUtil {
     private static final CloseableHttpClient HTTPCLIENT = HttpClients.createDefault();
 
     /**
@@ -341,7 +339,7 @@ public class HttpUtil {
         try {
             CloseableHttpResponse response = HTTPCLIENT.execute(request);
             if (response == null) {
-                return null;
+                throw new BusinessException("请求未响应");
             }
 
             HttpEntity entity = response.getEntity();
@@ -350,8 +348,7 @@ public class HttpUtil {
 
             return result;
         } catch (IOException ex) {
-            LOGGER.error(ex.getMessage());
-            return null;
+            throw new BusinessException(ex.getMessage());
         }
     }
 }

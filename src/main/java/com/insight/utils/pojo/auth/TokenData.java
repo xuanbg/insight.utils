@@ -2,6 +2,7 @@ package com.insight.utils.pojo.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.DateTime;
+import com.insight.utils.pojo.base.BaseXo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.List;
  * @date 2018/1/4
  * @remark 令牌信息实体类
  */
-public class TokenInfo extends LoginInfo {
+public class TokenData extends BaseXo {
     public static final int TIME_OUT = 300;
 
     /**
@@ -80,6 +81,11 @@ public class TokenInfo extends LoginInfo {
      * 功能授权代码集合
      */
     private List<String> permitFuncs;
+
+    /**
+     * 用户登录信息
+     */
+    protected LoginInfo loginInfo;
 
     public String getHash() {
         return hash;
@@ -183,6 +189,84 @@ public class TokenInfo extends LoginInfo {
 
     public void setPermitFuncs(List<String> permitFuncs) {
         this.permitFuncs = permitFuncs;
+    }
+
+    public LoginInfo getLoginInfo() {
+        return loginInfo;
+    }
+
+    public void setLoginInfo(LoginInfo loginInfo) {
+        this.loginInfo = loginInfo;
+    }
+
+    /**
+     * 获取应用ID
+     *
+     * @return 应用ID
+     */
+    @JsonIgnore
+    public Long getAppId() {
+        return loginInfo.getAppId();
+    }
+
+    /**
+     * 设置应用ID
+     *
+     * @param id 应用ID
+     */
+    @JsonIgnore
+    public void setAppId(Long id) {
+        loginInfo.setAppId(id);
+    }
+
+    /**
+     * 获取用户ID
+     *
+     * @return 用户ID
+     */
+    @JsonIgnore
+    public Long getUserId() {
+        return loginInfo.getId();
+    }
+
+    /**
+     * 获取租户ID
+     *
+     * @return 租户ID
+     */
+    @JsonIgnore
+    public Long getTenantId() {
+        return loginInfo.getTenantId();
+    }
+
+    /**
+     * 设置登租户名称
+     *
+     * @param name 租户名称
+     */
+    @JsonIgnore
+    public void setTenantName(String name) {
+        loginInfo.setTenantName(name);
+    }
+
+    /**
+     * 设置登录机构ID
+     *
+     * @param id 机构ID
+     */
+    @JsonIgnore
+    public void setOrgId(Long id) {
+        loginInfo.setOrgId(id);
+    }
+
+    /**
+     * 设置登录机构名称
+     *
+     * @param name 机构名称
+     */
+    @JsonIgnore
+    public void setOrgName(String name) {
+        loginInfo.setOrgName(name);
     }
 
     /**

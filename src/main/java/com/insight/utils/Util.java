@@ -1,8 +1,6 @@
 package com.insight.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -17,7 +15,6 @@ import java.util.stream.Collectors;
  * @remark 基础帮助类
  */
 public final class Util {
-    private static final Log logger = LogFactory.getLog(Util.class);
 
     /**
      * 生成uuid
@@ -107,23 +104,19 @@ public final class Util {
      * @param obj 源对象
      * @return HashMap
      */
-    public static Map<String, String> objectToMap(Object obj) {
+    public static Map<String, String> objectToMap(Object obj) throws IllegalAccessException {
         Map<String, String> map = new HashMap<>(32);
         for (Field field : obj.getClass().getDeclaredFields()) {
             String fieldName = field.getName();
-            try {
-                field.setAccessible(true);
-                Object val = field.get(obj);
-                if (val == null) {
-                    continue;
-                }
-
-                String typeName = field.getType().getSimpleName();
-                String value = "String".equals(typeName) ? (String) val : Json.toJson(val);
-                map.put(fieldName, value);
-            } catch (IllegalAccessException ex) {
-                logger.error("字段读取失败: " + ex.getMessage());
+            field.setAccessible(true);
+            Object val = field.get(obj);
+            if (val == null) {
+                continue;
             }
+
+            String typeName = field.getType().getSimpleName();
+            String value = "String".equals(typeName) ? (String) val : Json.toJson(val);
+            map.put(fieldName, value);
         }
 
         return map;

@@ -18,7 +18,7 @@ import java.util.Date;
  *    最后一位为校验位
  * </pre>
  */
-public class IDValidator {
+public final class IDValidator {
     /**
      * <pre>
      * 省、直辖市代码表：
@@ -33,7 +33,7 @@ public class IDValidator {
      *     91 : 国外
      * </pre>
      */
-    private static String[] cityCode = {"11", "12", "13", "14", "15", "21",
+    private static final String[] cityCode = {"11", "12", "13", "14", "15", "21",
             "22", "23", "31", "32", "33", "34", "35", "36", "37", "41", "42",
             "43", "44", "45", "46", "50", "51", "52", "53", "54", "61", "62",
             "63", "64", "65", "71", "81", "82", "91"};
@@ -41,7 +41,7 @@ public class IDValidator {
     /**
      * 每位加权因子
      */
-    private static int[] power = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
+    private static final int[] power = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};
 
     /**
      * 验证所有的身份证的合法性
@@ -277,40 +277,19 @@ public class IDValidator {
     private static String getCheckCodeBySum(int sum17) {
         String checkCode = null;
         switch (sum17 % 11) {
-            case 10:
-                checkCode = "2";
-                break;
-            case 9:
-                checkCode = "3";
-                break;
-            case 8:
-                checkCode = "4";
-                break;
-            case 7:
-                checkCode = "5";
-                break;
-            case 6:
-                checkCode = "6";
-                break;
-            case 5:
-                checkCode = "7";
-                break;
-            case 4:
-                checkCode = "8";
-                break;
-            case 3:
-                checkCode = "9";
-                break;
-            case 2:
-                checkCode = "x";
-                break;
-            case 1:
-                checkCode = "0";
-                break;
-            case 0:
-                checkCode = "1";
-                break;
-            default:
+            case 10 -> checkCode = "2";
+            case 9 -> checkCode = "3";
+            case 8 -> checkCode = "4";
+            case 7 -> checkCode = "5";
+            case 6 -> checkCode = "6";
+            case 5 -> checkCode = "7";
+            case 4 -> checkCode = "8";
+            case 3 -> checkCode = "9";
+            case 2 -> checkCode = "x";
+            case 1 -> checkCode = "0";
+            case 0 -> checkCode = "1";
+            default -> {
+            }
         }
         return checkCode;
     }

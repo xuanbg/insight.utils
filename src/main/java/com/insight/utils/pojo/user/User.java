@@ -1,60 +1,18 @@
 package com.insight.utils.pojo.user;
 
-import com.insight.utils.pojo.base.BaseXo;
-
 import java.time.LocalDateTime;
 
 /**
  * @author 宣炳刚
- * @date 2018/1/4
- * @remark 用户实体类
+ * @date 2023/5/4
+ * @remark
  */
-public class User extends BaseXo {
-
-    /**
-     * 用户ID
-     */
-    private Long id;
-
-    /**
-     * 租户ID
-     */
-    private Long tenantId;
-
-    /**
-     * 用户类型: 0.平台用户, 1.外部用户
-     */
-    private Integer type;
-
-    /**
-     * 用户编码
-     */
-    private String code;
-
-    /**
-     * 用户姓名
-     */
-    private String name;
+public class User extends UserBase {
 
     /**
      * 登录账号
      */
     private String account;
-
-    /**
-     * 用户手机号
-     */
-    private String mobile;
-
-    /**
-     * 用户E-mail
-     */
-    private String email;
-
-    /**
-     * 微信UnionID
-     */
-    private String unionId;
 
     /**
      * 登录密码
@@ -67,9 +25,9 @@ public class User extends BaseXo {
     private String payPassword;
 
     /**
-     * 用户头像
+     * 微信UnionID
      */
-    private String headImg;
+    private String unionId;
 
     /**
      * 备注
@@ -101,76 +59,12 @@ public class User extends BaseXo {
      */
     private LocalDateTime createdTime;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getAccount() {
         return account;
     }
 
     public void setAccount(String account) {
         this.account = account;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUnionId() {
-        return unionId;
-    }
-
-    public void setUnionId(String unionId) {
-        this.unionId = unionId;
     }
 
     public String getPassword() {
@@ -189,12 +83,12 @@ public class User extends BaseXo {
         this.payPassword = payPassword;
     }
 
-    public String getHeadImg() {
-        return headImg;
+    public String getUnionId() {
+        return unionId;
     }
 
-    public void setHeadImg(String headImg) {
-        this.headImg = headImg;
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
     }
 
     public String getRemark() {

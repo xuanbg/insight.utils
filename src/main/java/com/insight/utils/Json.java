@@ -15,7 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.insight.utils.common.Base64Encryptor;
 import com.insight.utils.pojo.base.BusinessException;
-import com.insight.utils.pojo.auth.AccessToken;
+import com.insight.utils.pojo.auth.TokenKey;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
@@ -55,9 +55,6 @@ public final class Json {
         MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         MAPPER.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    }
-
-    private Json() {
     }
 
     /**
@@ -256,8 +253,8 @@ public final class Json {
      * @param base64Str accesstoken str
      * @return AccessToken
      */
-    public static AccessToken toAccessToken(String base64Str) {
-        return toBeanFromBase64(base64Str, AccessToken.class);
+    public static TokenKey toToken(String base64Str) {
+        return toBeanFromBase64(base64Str, TokenKey.class);
     }
 
     /**
