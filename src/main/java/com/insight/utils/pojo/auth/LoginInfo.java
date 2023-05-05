@@ -20,6 +20,11 @@ public class LoginInfo extends BaseXo {
     private Integer type;
 
     /**
+     * 用户编码
+     */
+    private String code;
+
+    /**
      * 用户姓名
      */
     private String name;
@@ -68,6 +73,14 @@ public class LoginInfo extends BaseXo {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
