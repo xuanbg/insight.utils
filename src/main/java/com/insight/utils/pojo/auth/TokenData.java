@@ -18,6 +18,41 @@ public class TokenData extends BaseXo {
     public static final int TIME_OUT = 300;
 
     /**
+     * 应用ID
+     */
+    private Long appId;
+
+    /**
+     * 用户ID
+     */
+    private Long userId;
+
+    /**
+     * 租户ID
+     */
+    private Long tenantId;
+
+    /**
+     * 租户名称
+     */
+    private String tenantName;
+
+    /**
+     * 机构ID
+     */
+    private Long orgId;
+
+    /**
+     * 机构名称
+     */
+    private String orgName;
+
+    /**
+     * 区号
+     */
+    private String areaCode;
+
+    /**
      * 访问令牌MD5摘要
      */
     private String hash;
@@ -82,10 +117,61 @@ public class TokenData extends BaseXo {
      */
     private List<String> permitFuncs;
 
-    /**
-     * 用户登录信息
-     */
-    protected LoginInfo loginInfo;
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public String getTenantName() {
+        return tenantName;
+    }
+
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
+    }
+
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
 
     public String getHash() {
         return hash;
@@ -189,84 +275,6 @@ public class TokenData extends BaseXo {
 
     public void setPermitFuncs(List<String> permitFuncs) {
         this.permitFuncs = permitFuncs;
-    }
-
-    public LoginInfo getLoginInfo() {
-        return loginInfo;
-    }
-
-    public void setLoginInfo(LoginInfo loginInfo) {
-        this.loginInfo = loginInfo;
-    }
-
-    /**
-     * 获取应用ID
-     *
-     * @return 应用ID
-     */
-    @JsonIgnore
-    public Long getAppId() {
-        return loginInfo.getAppId();
-    }
-
-    /**
-     * 设置应用ID
-     *
-     * @param id 应用ID
-     */
-    @JsonIgnore
-    public void setAppId(Long id) {
-        loginInfo.setAppId(id);
-    }
-
-    /**
-     * 获取用户ID
-     *
-     * @return 用户ID
-     */
-    @JsonIgnore
-    public Long getUserId() {
-        return loginInfo.getId();
-    }
-
-    /**
-     * 获取租户ID
-     *
-     * @return 租户ID
-     */
-    @JsonIgnore
-    public Long getTenantId() {
-        return loginInfo.getTenantId();
-    }
-
-    /**
-     * 设置登租户名称
-     *
-     * @param name 租户名称
-     */
-    @JsonIgnore
-    public void setTenantName(String name) {
-        loginInfo.setTenantName(name);
-    }
-
-    /**
-     * 设置登录机构ID
-     *
-     * @param id 机构ID
-     */
-    @JsonIgnore
-    public void setOrgId(Long id) {
-        loginInfo.setOrgId(id);
-    }
-
-    /**
-     * 设置登录机构名称
-     *
-     * @param name 机构名称
-     */
-    @JsonIgnore
-    public void setOrgName(String name) {
-        loginInfo.setOrgName(name);
     }
 
     /**
