@@ -1,38 +1,13 @@
 package com.insight.utils.pojo.auth;
 
-import com.insight.utils.pojo.base.BaseXo;
+import com.insight.utils.pojo.user.UserBase;
 
 /**
  * @author 宣炳刚
  * @date 2018/1/4
  * @remark 用户登录信息实体类
  */
-public class LoginInfo extends BaseXo {
-
-    /**
-     * 用户ID
-     */
-    private Long id;
-
-    /**
-     * 用户类型
-     */
-    private Integer type;
-
-    /**
-     * 用户编码
-     */
-    private String code;
-
-    /**
-     * 用户姓名
-     */
-    private String name;
-
-    /**
-     * 微信昵称
-     */
-    private String nickname;
+public class LoginInfo extends UserBase {
 
     /**
      * 应用ID
@@ -63,46 +38,6 @@ public class LoginInfo extends BaseXo {
      * 区号
      */
     private String areaCode;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 
     public Long getAppId() {
         return appId;
