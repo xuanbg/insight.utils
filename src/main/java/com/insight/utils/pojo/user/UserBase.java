@@ -60,7 +60,7 @@ public class UserBase extends BaseXo {
     }
 
     public Integer getType() {
-        return type;
+        return type == null ? 0 : type;
     }
 
     public void setType(Integer type) {
@@ -115,7 +115,7 @@ public class UserBase extends BaseXo {
         this.headImg = headImg;
     }
 
-    public Boolean mobileEquals(String mobile){
+    public Boolean mobileEquals(String mobile) {
         return Objects.equals(this.mobile, mobile);
     }
 
@@ -124,12 +124,11 @@ public class UserBase extends BaseXo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        var userBase = (UserBase) o;
-
-        if (!Objects.equals(code, userBase.code)) return false;
-        if (!Objects.equals(name, userBase.name)) return false;
-        if (!Objects.equals(mobile, userBase.mobile)) return false;
-        return Objects.equals(email, userBase.email);
+        var user = (UserBase) o;
+        if (Objects.equals(code, user.code)) return true;
+        if (Objects.equals(name, user.name)) return true;
+        if (Objects.equals(mobile, user.mobile)) return true;
+        return Objects.equals(email, user.email);
     }
 
     @Override
