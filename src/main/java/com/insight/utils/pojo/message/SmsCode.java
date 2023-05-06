@@ -20,7 +20,7 @@ public class SmsCode extends BaseXo {
     private String channel;
 
     /**
-     * 验证码类型:0.验证手机号;1.注册用户账号;2.重置密码;3.修改支付密码;4.修改手机号
+     * 验证码类型: 0.验证手机号, 1.注册用户账号, 2.重置密码, 3.修改支付密码, 4.修改手机号
      */
     private Integer type;
 
@@ -61,7 +61,7 @@ public class SmsCode extends BaseXo {
     }
 
     public Integer getType() {
-        return type;
+        return type == null ? 0 : type;
     }
 
     public void setType(Integer type) {
