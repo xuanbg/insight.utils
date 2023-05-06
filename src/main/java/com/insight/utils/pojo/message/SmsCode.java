@@ -20,7 +20,7 @@ public class SmsCode extends BaseXo {
     private String channel;
 
     /**
-     * 验证码类型: 0.验证手机号, 1.注册用户账号, 2.重置密码, 3.修改支付密码, 4.修改手机号
+     * 验证码类型: 0.注册账号｜验证手机号, 1.验证码登录, 2.重置密码, 3.修改支付密码, 4.绑定｜修改手机号
      */
     private Integer type;
 
@@ -35,12 +35,12 @@ public class SmsCode extends BaseXo {
     private String code;
 
     /**
-     * 验证码有效时间(分钟)
+     * 验证码有效时间(分钟), 默认5分钟
      */
     private Integer minutes;
 
     /**
-     * 验证码长度
+     * 验证码长度, 默认6位
      */
     private Integer lenght;
 
