@@ -6,15 +6,26 @@ package com.insight.utils.pojo.message;
  * @remark
  */
 public enum OperateType {
+
     /**
      * 新增操作
      */
-    INSERT("新增数据"),
+    NEW("新增数据"),
 
     /**
      * 编辑操作
      */
-    UPDATE("更新数据"),
+    EDIT("修改数据"),
+
+    /**
+     * 编辑操作
+     */
+    DISABLE("禁用数据"),
+
+    /**
+     * 编辑操作
+     */
+    ENABLE("启用数据"),
 
     /**
      * 删除操作
