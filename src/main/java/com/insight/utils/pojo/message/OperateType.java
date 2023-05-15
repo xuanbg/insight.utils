@@ -8,6 +8,11 @@ package com.insight.utils.pojo.message;
 public enum OperateType {
 
     /**
+     * 查询操作
+     */
+    SELETE("查询数据"),
+
+    /**
      * 新增操作
      */
     NEW("新增数据"),
@@ -16,6 +21,11 @@ public enum OperateType {
      * 编辑操作
      */
     EDIT("修改数据"),
+
+    /**
+     * 备注操作
+     */
+    REMARK("备注"),
 
     /**
      * 编辑操作
@@ -33,9 +43,14 @@ public enum OperateType {
     DELETE("删除数据"),
 
     /**
-     * 查询操作
+     * 完成操作
      */
-    SELETE("查询数据");
+    COMPLETE("完成"),
+
+    /**
+     * 取消操作
+     */
+    CANCEL("取消");
 
     /**
      * 操作名称

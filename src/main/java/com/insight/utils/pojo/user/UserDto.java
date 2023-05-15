@@ -20,6 +20,11 @@ public class UserDto extends User {
     private Long orgId;
 
     /**
+     * 用户角色, 多个角色以逗号分割
+     */
+    private String roleName;
+
+    /**
      * 用户授权角色ID集合
      */
     private List<Long> roleIds;
@@ -38,6 +43,14 @@ public class UserDto extends User {
 
     public void setOrgId(Long orgId) {
         this.orgId = orgId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public List<Long> getRoleIds() {
