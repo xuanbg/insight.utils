@@ -7,7 +7,6 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
 
 /**
  * @author duxl
@@ -34,9 +33,9 @@ public final class Des3Encryptor {
      * 加密指定的字符串
      *
      * @param str 明文
-     * @return 密文
+     * @return 字节数组
      */
-    public String encrypt(String str) {
+    public byte[] encrypt(String str) {
         var bytes = str.getBytes(StandardCharsets.UTF_8);
         return encrypt("DES/ECB/PKCS5Padding", bytes);
     }
@@ -46,14 +45,14 @@ public final class Des3Encryptor {
      *
      * @param transformation 转换格式
      * @param bytes          字节数组
-     * @return 密文字符串
+     * @return 字节数组
      */
-    public String encrypt(String transformation, byte[] bytes) {
+    public byte[] encrypt(String transformation, byte[] bytes) {
         try {
             var encryptCipher = Cipher.getInstance(transformation);
             encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
-            return Base64.encodeBase64String(encryptCipher.doFinal(bytes));
+            return encryptCipher.doFinal(bytes);
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }
@@ -96,20 +95,5 @@ public final class Des3Encryptor {
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }
-    }
-
-    /**
-     * 根据指定的字节数组，构造一个密钥
-     *
-     * @param array 字节数组
-     * @return 密钥
-     */
-    private Key getKey(byte[] array) {
-        byte[] arrayTemp = new byte[8];
-        int length = array.length;
-
-        System.arraycopy(array, 0, arrayTemp, 0, Math.min(length, 8));
-
-        return new SecretKeySpec(arrayTemp, "DES");
     }
 }
