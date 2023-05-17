@@ -5,10 +5,8 @@ import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 /**
@@ -17,45 +15,16 @@ import java.security.Key;
  * @remark 3DES加解密类
  */
 public final class Des3Encryptor {
-    /**
-     * 密钥key
-     */
-    private static final String DEFAULT_KEY = "apindes3";
-
-    /**
-     * 加密密码功能对象
-     */
-    private final Cipher encryptCipher;
-
-    /**
-     * 解密密码功能对象
-     */
-    private final Cipher decryptCipher;
-
-
-    /**
-     * 默认构造函数
-     */
-    public Des3Encryptor() {
-        this(DEFAULT_KEY);
-    }
+    private final SecretKey secretKey;
 
     /**
      * 使用指定的密钥键
      *
-     * @param strKey 密钥键
+     * @param key 密钥键
      */
-    public Des3Encryptor(String strKey) {
+    public Des3Encryptor(String key) {
         try {
-            DESKeySpec desKey = new DESKeySpec(strKey.getBytes());
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            SecretKey secretKey = keyFactory.generateSecret(desKey);
-
-            encryptCipher = Cipher.getInstance("DES");
-            encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
-
-            decryptCipher = Cipher.getInstance("DES");
-            decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
+            secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "DES");
         } catch (Exception ex) {
             throw new BusinessException(ex.getMessage());
         }
@@ -68,35 +37,65 @@ public final class Des3Encryptor {
      * @return 密文
      */
     public String encrypt(String str) {
-        try {
-            byte[] byteMing = str.getBytes(Charset.defaultCharset());
-            byte[] byteMi = encryptCipher.doFinal(byteMing);
-            return Base64.encodeBase64String(byteMi);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        var bytes = str.getBytes(StandardCharsets.UTF_8);
+        return encrypt("DES/ECB/PKCS5Padding", bytes);
+    }
 
-        return null;
+    /**
+     * 加密指定的字节数组
+     *
+     * @param transformation 转换格式
+     * @param bytes          字节数组
+     * @return 密文字符串
+     */
+    public String encrypt(String transformation, byte[] bytes) {
+        try {
+            var encryptCipher = Cipher.getInstance(transformation);
+            encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+
+            return Base64.encodeBase64String(encryptCipher.doFinal(bytes));
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
+    }
+
+    /**
+     * 根据指定的字节数组解密
+     *
+     * @param bytes 字节数组
+     * @return 明文字符串
+     */
+    public String decrypt(byte[] bytes) {
+        return decrypt("DES/ECB/NoPadding", bytes);
     }
 
     /**
      * 根据指定的加密字符串解密
      *
-     * @param strMi 密文
+     * @param str Base64密文字符串
+     * @return 明文字符串
+     */
+    public String decrypt(String str) {
+        var bytes = Base64.decodeBase64(str);
+        return decrypt("DES/ECB/NoPadding", bytes);
+    }
+
+    /**
+     * 根据指定的加密字符串解密
+     *
+     * @param transformation 转换格式
+     * @param bytes          字节数组
      * @return 明文
      */
-    public String decrypt(String strMi) {
+    public String decrypt(String transformation, byte[] bytes) {
         try {
-            byte[] byteMi = Base64.decodeBase64(strMi);
-            byte[] byteMing = decryptCipher.doFinal(byteMi);
+            var decryptCipher = Cipher.getInstance(transformation);
+            decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
 
-
-            return new String(byteMing, Charset.defaultCharset());
+            return new String(decryptCipher.doFinal(bytes), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
