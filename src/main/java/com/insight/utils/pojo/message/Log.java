@@ -31,7 +31,7 @@ public class Log extends BaseXo {
     /**
      * 类型
      */
-    private OperateType type;
+    private String type;
 
     /**
      * 关联业务名称
@@ -89,11 +89,11 @@ public class Log extends BaseXo {
         this.tenantId = tenantId;
     }
 
-    public OperateType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(OperateType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

@@ -98,8 +98,9 @@ public final class Json {
         if (obj == null) {
             return null;
         }
-        if ("String".equals(obj.getClass().getSimpleName())) {
-            return obj.toString();
+
+        if (obj instanceof String) {
+            return (String) obj;
         }
 
         try {
