@@ -23,7 +23,7 @@ public final class Redis {
      * @param key 键
      * @return 过期时间
      */
-    private static long getExpire(String key) {
+    public static long getExpire(String key) {
         Long expire = REDIS.getExpire(key);
 
         return expire == null ? 0 : expire;
@@ -36,7 +36,7 @@ public final class Redis {
      * @param time 时间长度
      * @param unit 时间单位
      */
-    private static void setExpire(String key, long time, TimeUnit unit) {
+    public static void setExpire(String key, long time, TimeUnit unit) {
         REDIS.expire(key, time, unit);
     }
 
@@ -92,9 +92,8 @@ public final class Redis {
      */
     public static void set(String key, String value) {
         long expire = getExpire(key);
-        REDIS.opsForValue().set(key, value);
         if (expire > 0) {
-            setExpire(key, expire, TimeUnit.SECONDS);
+            REDIS.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
         }
     }
 
@@ -118,9 +117,8 @@ public final class Redis {
      * @param unit  时间单位
      */
     public static void set(String key, String value, Long time, TimeUnit unit) {
-        REDIS.opsForValue().set(key, value);
         if (time != null && time > 0) {
-            setExpire(key, time, unit);
+            REDIS.opsForValue().set(key, value, time, unit);
         }
     }
 
@@ -133,7 +131,20 @@ public final class Redis {
      */
     public static boolean setIfAbsent(String key, String value) {
         Boolean absent = REDIS.opsForValue().setIfAbsent(key, value);
+        return absent != null && absent;
+    }
 
+    /**
+     * 以键值对方式保存数据到Redis
+     *
+     * @param key     键
+     * @param value   值
+     * @param timeout 超时时间
+     * @param unit    时间单位
+     * @return 是否保存
+     */
+    public static boolean setIfAbsent(String key, String value, Integer timeout, TimeUnit unit) {
+        Boolean absent = REDIS.opsForValue().setIfAbsent(key, value, timeout, unit);
         return absent != null && absent;
     }
 
@@ -175,12 +186,22 @@ public final class Redis {
      * 从Redis读取指定键下的全部字段名
      *
      * @param key 键
-     * @return Value
+     * @return Keys
      */
     public static List<Object> getHashKeys(String key) {
         Set<Object> val = REDIS.opsForHash().keys(key);
 
         return new ArrayList<>(val);
+    }
+
+    /**
+     * 从Redis读取指定键下的全部值名
+     *
+     * @param key 键
+     * @return Value
+     */
+    public static List<Object> getHash(String key) {
+        return REDIS.opsForHash().values(key);
     }
 
     /**
