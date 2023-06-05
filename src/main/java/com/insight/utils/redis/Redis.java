@@ -24,8 +24,8 @@ public final class Redis {
      * @return 过期时间
      */
     public static long getExpire(String key) {
-        Long expire = REDIS.getExpire(key);
-        return expire == null ? 0 : expire;
+        var expire = REDIS.getExpire(key);
+        return expire == null ? -1 : expire;
     }
 
     /**
@@ -56,8 +56,8 @@ public final class Redis {
      * @param time 要改变的秒数
      */
     public static void changeExpire(String key, long time) {
-        Long expire = REDIS.getExpire(key);
-        if (expire == null || expire + time <= 0) {
+        var expire = getExpire(key);
+        if (expire + time <= 0) {
             return;
         }
 
@@ -93,6 +93,8 @@ public final class Redis {
         long expire = getExpire(key);
         if (expire > 0) {
             REDIS.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
+        } else if (expire < 0) {
+            REDIS.opsForValue().set(key, value);
         }
     }
 
