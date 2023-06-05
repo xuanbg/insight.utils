@@ -25,7 +25,6 @@ public final class Redis {
      */
     public static long getExpire(String key) {
         Long expire = REDIS.getExpire(key);
-
         return expire == null ? 0 : expire;
     }
 
