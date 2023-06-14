@@ -3,10 +3,7 @@ package com.insight.utils.redis;
 import com.insight.utils.common.ContextHolder;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,6 +15,25 @@ public final class Redis {
     private static final StringRedisTemplate REDIS = ContextHolder.getContext().getBean(StringRedisTemplate.class);
 
     /**
+     * Redis中是否存在指定键
+     *
+     * @param key 键
+     * @return 是否存在指定键
+     */
+    public static Boolean hasKey(String key) {
+        return REDIS.hasKey(key);
+    }
+
+    /**
+     * 从Redis删除指定键
+     *
+     * @param key 键
+     */
+    public static void deleteKey(String key) {
+        REDIS.delete(key);
+    }
+
+    /**
      * 获取Key过期时间
      *
      * @param key 键
@@ -26,27 +42,6 @@ public final class Redis {
     public static long getExpire(String key) {
         var expire = REDIS.getExpire(key);
         return expire == null ? -1 : expire;
-    }
-
-    /**
-     * 设置Key过期时间
-     *
-     * @param key  键
-     * @param time 时间长度
-     * @param unit 时间单位
-     */
-    public static void setExpire(String key, long time, TimeUnit unit) {
-        REDIS.expire(key, time, unit);
-    }
-
-    /**
-     * Redis中是否存在指定键
-     *
-     * @param key 键
-     * @return 是否存在指定键
-     */
-    public static Boolean hasKey(String key) {
-        return REDIS.hasKey(key);
     }
 
     /**
@@ -65,12 +60,14 @@ public final class Redis {
     }
 
     /**
-     * 从Redis删除指定键
+     * 设置Key过期时间
      *
-     * @param key 键
+     * @param key  键
+     * @param time 时间长度
+     * @param unit 时间单位
      */
-    public static void deleteKey(String key) {
-        REDIS.delete(key);
+    public static void setExpire(String key, long time, TimeUnit unit) {
+        REDIS.expire(key, time, unit);
     }
 
     /**
@@ -118,9 +115,7 @@ public final class Redis {
      * @param unit  时间单位
      */
     public static void set(String key, String value, Long time, TimeUnit unit) {
-        if (time != null && time > 0) {
-            REDIS.opsForValue().set(key, value, time, unit);
-        }
+        REDIS.opsForValue().set(key, value, time, unit);
     }
 
     /**
@@ -169,7 +164,6 @@ public final class Redis {
      */
     public static String get(String key, String field) {
         Object val = REDIS.opsForHash().get(key, field);
-
         return val == null ? null : val.toString();
     }
 
@@ -191,7 +185,6 @@ public final class Redis {
      */
     public static List<Object> getHashKeys(String key) {
         Set<Object> val = REDIS.opsForHash().keys(key);
-
         return new ArrayList<>(val);
     }
 
@@ -219,15 +212,11 @@ public final class Redis {
     /**
      * 以Hash方式保存数据到Redis
      *
-     * @param key  键
-     * @param map  Map 对象
-     * @param time 过期时间(秒),为空、0或负数不设置过期时间
+     * @param key 键
+     * @param map Map 对象
      */
-    public static void setHash(String key, Map<String, String> map, Long time) {
+    public static void setHash(String key, Map<String, String> map) {
         REDIS.opsForHash().putAll(key, map);
-        if (time != null && time > 0) {
-            setExpire(key, time, TimeUnit.SECONDS);
-        }
     }
 
     /**
@@ -237,7 +226,6 @@ public final class Redis {
      * @param field 字段名称
      */
     public static void deleteKey(String key, String field) {
-
         REDIS.opsForHash().delete(key, field);
     }
 
@@ -260,7 +248,6 @@ public final class Redis {
      */
     public static List<String> getMembers(String key) {
         Set<String> val = REDIS.opsForSet().members(key);
-
         return val == null ? null : new ArrayList<>(val);
     }
 
@@ -269,13 +256,9 @@ public final class Redis {
      *
      * @param key   键
      * @param value 值
-     * @param time  过期时间(秒),为空、0或负数不设置过期时间
      */
-    public static void add(String key, String value, Long time) {
+    public static void add(String key, String value) {
         REDIS.opsForSet().add(key, value);
-        if (time != null && time > 0) {
-            setExpire(key, time, TimeUnit.SECONDS);
-        }
     }
 
     /**
@@ -287,5 +270,134 @@ public final class Redis {
      */
     public static Long remove(String key, String value) {
         return REDIS.opsForSet().remove(key, value);
+    }
+
+    /**
+     * 按顺序获取Zset的全部数据
+     *
+     * @param key 键
+     * @return SET
+     */
+    public static Set<String> range(String key) {
+        return range(key, -1L);
+    }
+
+    /**
+     * 按顺序获取Zset的指定数量的数据
+     *
+     * @param key   键
+     * @param count 对象数量
+     * @return SET
+     */
+    public static Set<String> range(String key, Long count) {
+        return range(key, 0L, count);
+    }
+
+    /**
+     * 按顺序获取指定范围的Zset数据
+     *
+     * @param key   键
+     * @param start 开始位置
+     * @param end   截止位置
+     * @return SET
+     */
+    public static Set<String> range(String key, Long start, Long end) {
+        var size = REDIS.opsForZSet().size(key);
+        if (size == null || size == 0) {
+            return new HashSet<>();
+        }
+
+        return REDIS.opsForZSet().range(key, start, end);
+    }
+
+    /**
+     * 按倒序获取Zset的全部数据
+     *
+     * @param key 键
+     * @return SET
+     */
+    public static Set<String> reverseRange(String key) {
+        return reverseRange(key, -1L);
+    }
+
+    /**
+     * 按倒序获取Zset指定数量的数据
+     *
+     * @param key   键
+     * @param count 对象数量
+     * @return SET
+     */
+    public static Set<String> reverseRange(String key, Long count) {
+        return reverseRange(key, 0L, count);
+    }
+
+    /**
+     * 获取指定范围的Zset数据
+     *
+     * @param key   键
+     * @param start 开始位置
+     * @param end   截止位置
+     * @return SET
+     */
+    public static Set<String> reverseRange(String key, Long start, Long end) {
+        var size = REDIS.opsForZSet().size(key);
+        if (size == null || size == 0) {
+            return new HashSet<>();
+        }
+
+        return REDIS.opsForZSet().reverseRange(key, start, end);
+    }
+
+    /**
+     * 以Set方式保存数据到Redis
+     *
+     * @param key   键
+     * @param value 值
+     */
+    public static void addZset(String key, String value) {
+        REDIS.opsForZSet().add(key, value, 1);
+    }
+
+    /**
+     * 对指定值的Score进行递增
+     *
+     * @param key   键
+     * @param value 值
+     */
+    public static void incrementScore(String key, String value) {
+        REDIS.opsForZSet().incrementScore(key, value, 1);
+    }
+
+    /**
+     * 获取指定值的Score
+     *
+     * @param key   键
+     * @param value 值
+     * @return Score
+     */
+    public static Double score(String key, String value) {
+        return REDIS.opsForZSet().score(key, value);
+    }
+
+    /**
+     * 获取指定值的排名
+     *
+     * @param key   键
+     * @param value 值
+     * @return 排名
+     */
+    public static Long rank(String key, String value) {
+        return REDIS.opsForZSet().rank(key, value);
+    }
+
+    /**
+     * 删除指定的Set成员
+     *
+     * @param key   键
+     * @param value 值
+     * @return Set成员数
+     */
+    public static Long removeZset(String key, String value) {
+        return REDIS.opsForZSet().remove(key, value);
     }
 }
