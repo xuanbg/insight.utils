@@ -355,7 +355,7 @@ public final class Redis {
      * @param value 值
      */
     public static void addZset(String key, String value) {
-        REDIS.opsForZSet().add(key, value, 1);
+        REDIS.opsForZSet().add(key, value, 0.001);
     }
 
     /**
@@ -364,8 +364,8 @@ public final class Redis {
      * @param key   键
      * @param value 值
      */
-    public static void incrementScore(String key, String value) {
-        REDIS.opsForZSet().incrementScore(key, value, 1);
+    public static void increment(String key, String value) {
+        REDIS.opsForZSet().incrementScore(key, value, 0.001);
     }
 
     /**
