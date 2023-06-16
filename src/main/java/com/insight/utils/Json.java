@@ -66,7 +66,6 @@ public final class Json {
      */
     public static <T> T clone(Object obj, Class<T> type) {
         String json = toJson(obj);
-
         return toBean(json, type);
     }
 
