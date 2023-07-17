@@ -28,7 +28,7 @@ public final class StringOps extends KeyOps {
      * @param type 指定的类型
      * @return Value
      */
-    public <T> T get(String key, Class<T> type) {
+    public static  <T> T get(String key, Class<T> type) {
         var val = REDIS.opsForValue().get(key);
         if (val == null) return null;
 

@@ -31,7 +31,8 @@ public class HashOps extends KeyOps {
      * @return Value
      */
     public static String get(String key, Object field) {
-        return get(key, field, String.class);
+        var val = REDIS.opsForHash().get(key, field.toString());
+        return val == null ? null : val.toString();
     }
 
     /**
@@ -43,7 +44,7 @@ public class HashOps extends KeyOps {
      * @return Value
      */
     public static <T> T get(String key, Object field, Class<T> type) {
-        var val = REDIS.opsForHash().get(key, field);
+        var val = REDIS.opsForHash().get(key, field.toString());
         if (val == null) {
             return null;
         }
@@ -114,7 +115,7 @@ public class HashOps extends KeyOps {
      * @param value 值
      */
     public static void put(String key, String field, Object value) {
-        REDIS.opsForHash().put(key, field, value);
+        REDIS.opsForHash().put(key, field, value.toString());
     }
 
     /**

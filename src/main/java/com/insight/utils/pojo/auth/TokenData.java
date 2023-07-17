@@ -98,19 +98,9 @@ public class TokenData extends BaseXo {
     private LocalDateTime expiryTime;
 
     /**
-     * Token失效时间
-     */
-    private LocalDateTime failureTime;
-
-    /**
      * Token验证密钥
      */
     private String secretKey;
-
-    /**
-     * Token刷新密钥
-     */
-    private String refreshKey;
 
     /**
      * 功能授权代码集合
@@ -245,28 +235,12 @@ public class TokenData extends BaseXo {
         this.expiryTime = expiryTime;
     }
 
-    public LocalDateTime getFailureTime() {
-        return failureTime;
-    }
-
-    public void setFailureTime(LocalDateTime failureTime) {
-        this.failureTime = failureTime;
-    }
-
     public String getSecretKey() {
         return secretKey;
     }
 
     public void setSecretKey(String secretKey) {
         this.secretKey = secretKey;
-    }
-
-    public String getRefreshKey() {
-        return refreshKey;
-    }
-
-    public void setRefreshKey(String refreshKey) {
-        this.refreshKey = refreshKey;
     }
 
     public List<String> getPermitFuncs() {
@@ -331,15 +305,5 @@ public class TokenData extends BaseXo {
     @JsonIgnore
     public boolean isExpiry() {
         return getLife() > 0 && LocalDateTime.now().isAfter(expiryTime.plusSeconds(TIME_OUT));
-    }
-
-    /**
-     * Token是否失效
-     *
-     * @return Token是否失效
-     */
-    @JsonIgnore
-    public boolean isFailure() {
-        return getLife() > 0 && LocalDateTime.now().isAfter(failureTime.plusSeconds(TIME_OUT));
     }
 }
