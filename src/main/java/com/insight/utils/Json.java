@@ -14,9 +14,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.insight.utils.common.Base64Encryptor;
-import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.auth.TokenKey;
-import org.apache.commons.logging.LogFactory;
+import com.insight.utils.pojo.base.BusinessException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -40,7 +39,7 @@ public final class Json {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     static {
-        JavaTimeModule module = new JavaTimeModule();
+        var module = new JavaTimeModule();
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
         module.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
         module.addSerializer(LocalTime.class, new LocalTimeSerializer(TIME_FORMATTER));
@@ -65,7 +64,7 @@ public final class Json {
      * @return bean
      */
     public static <T> T clone(Object obj, Class<T> type) {
-        String json = toJson(obj);
+        var json = toJson(obj);
         return toBean(json, type);
     }
 
@@ -78,12 +77,11 @@ public final class Json {
      * @return List
      */
     public static <T> T cloneList(Object obj, Class<?>... elementType) {
-        String json = toJson(obj);
-
+        var json = toJson(obj);
         try {
             return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementType));
-        } catch (IOException e) {
-            throw new BusinessException(e.getMessage());
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 
@@ -104,9 +102,8 @@ public final class Json {
 
         try {
             return MAPPER.writeValueAsString(obj);
-        } catch (IOException e) {
-            LogFactory.getLog(Json.class).error("序列化对象失败!");
-            return null;
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 
@@ -125,9 +122,8 @@ public final class Json {
 
         try {
             return MAPPER.readValue(json, type);
-        } catch (IOException e) {
-            log(json, e.getMessage());
-            return null;
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 
@@ -146,9 +142,8 @@ public final class Json {
 
         try {
             return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementClasses));
-        } catch (IOException e) {
-            log(json, e.getMessage());
-            return null;
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 
@@ -166,9 +161,8 @@ public final class Json {
         try {
             //noinspection unchecked
             return MAPPER.readValue(json, HashMap.class);
-        } catch (IOException e) {
-            log(json, e.getMessage());
-            return null;
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 
@@ -179,8 +173,7 @@ public final class Json {
      * @return hashmap
      */
     public static Map<String, Object> toMap(Object obj) {
-        String json = toJson(obj);
-
+        var json = toJson(obj);
         return toMap(json);
     }
 
@@ -191,8 +184,7 @@ public final class Json {
      * @return hashmap
      */
     public static Map<String, String> toStringValueMap(Object obj) {
-        String json = toJson(obj);
-
+        var json = toJson(obj);
         return toStringValueMap(json);
     }
 
@@ -203,14 +195,14 @@ public final class Json {
      * @return hashmap
      */
     public static Map<String, String> toStringValueMap(String json) {
-        Map<String, Object> obj = toMap(json);
+        var obj = toMap(json);
         if (obj == null) {
             return null;
         }
 
         Map<String, String> map = new HashMap<>(16);
-        for (Map.Entry<String, Object> set : obj.entrySet()) {
-            Object value = set.getValue();
+        for (var set : obj.entrySet()) {
+            var value = set.getValue();
             map.put(set.getKey(), toJson(value));
         }
 
@@ -224,7 +216,7 @@ public final class Json {
      * @return base64编码的Json
      */
     public static String toBase64(Object obj) {
-        String json = toJson(obj);
+        var json = toJson(obj);
         if (json == null || json.isEmpty()) {
             return null;
         }
@@ -242,9 +234,12 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBeanFromBase64(String base64Str, Class<T> type) {
-        String json = Base64Encryptor.decodeToString(base64Str);
-
-        return toBean(json, type);
+        try {
+            var json = Base64Encryptor.decodeToString(base64Str);
+            return toBean(json, type);
+        } catch (Exception ex) {
+            throw new BusinessException(ex.getMessage());
+        }
     }
 
     /**
@@ -277,14 +272,5 @@ public final class Json {
      */
     public static JavaType getJavaType(Class<?> collectionClass, Class<?>... elementClasses) {
         return MAPPER.getTypeFactory().constructParametricType(collectionClass, elementClasses);
-    }
-
-    /**
-     * 输出错误的JSON字符串到日志
-     *
-     * @param str JSON字符串
-     */
-    private static void log(String str, String msg) {
-        LogFactory.getLog(Json.class).error("反序列化失败:" + msg + "\r\nJSON字符串：" + str);
     }
 }

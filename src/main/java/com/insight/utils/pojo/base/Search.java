@@ -1,5 +1,6 @@
 package com.insight.utils.pojo.base;
 
+import com.insight.utils.DateTime;
 import com.insight.utils.Util;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -89,6 +90,16 @@ public class Search extends BaseXo {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+
+    /**
+     * 年份
+     */
+    private String year;
+
+    /**
+     * 周次
+     */
+    private Integer weeks;
 
     /**
      * 范围集
@@ -253,7 +264,7 @@ public class Search extends BaseXo {
     }
 
     public LocalDate getStartDate() {
-        return startDate;
+        return startDate != null ? startDate : (Util.isNotEmpty(year) && weeks != null) ? DateTime.getWeeksOfYeay(year, weeks) : null;
     }
 
     public void setStartDate(LocalDate startDate) {
@@ -261,11 +272,27 @@ public class Search extends BaseXo {
     }
 
     public LocalDate getEndDate() {
-        return endDate == null ? null : endDate.plusDays(1);
+        return endDate != null ? endDate.plusDays(1) : (Util.isNotEmpty(year) && weeks != null) ? DateTime.getWeeksOfYeay(year, weeks).plusDays(7) : null;
     }
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public Integer getWeeks() {
+        return weeks;
+    }
+
+    public void setWeeks(Integer weeks) {
+        this.weeks = weeks;
     }
 
     public List<String> getStringSet() {

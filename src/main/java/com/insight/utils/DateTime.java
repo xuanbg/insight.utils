@@ -245,6 +245,20 @@ public final class DateTime {
     }
 
     /**
+     * 获取指定年份的第x周周日的日期
+     *
+     * @param year  年份
+     * @param weeks 周次
+     * @return 日期
+     */
+    public static LocalDate getWeeksOfYeay(String year, Integer weeks) {
+        var nyd = LocalDate.of(Integer.parseInt(year), 1, 1);
+        int week = getWeek(nyd) - 1;
+
+        return nyd.plusDays((weeks - 1) * 7L - week);
+    }
+
+    /**
      * 获取当前日期是星期几
      *
      * @return String - 返回星期几
