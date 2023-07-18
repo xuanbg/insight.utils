@@ -1,6 +1,7 @@
 package com.insight.utils.redis;
 
 import com.insight.utils.Json;
+import com.insight.utils.pojo.base.BusinessException;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,11 @@ public class HashOps extends KeyOps {
      * @return 是否存在指定键
      */
     public static Boolean hasKey(String key, Object field) {
-        return REDIS.opsForHash().hasKey(key, field);
+        if (field == null) {
+            throw new BusinessException("field 不能为空");
+        }
+
+        return REDIS.opsForHash().hasKey(key, field.toString());
     }
 
     /**
@@ -31,6 +36,10 @@ public class HashOps extends KeyOps {
      * @return Value
      */
     public static String get(String key, Object field) {
+        if (field == null) {
+            throw new BusinessException("field 不能为空");
+        }
+
         var val = REDIS.opsForHash().get(key, field.toString());
         return val == null ? null : val.toString();
     }
@@ -44,6 +53,10 @@ public class HashOps extends KeyOps {
      * @return Value
      */
     public static <T> T get(String key, Object field, Class<T> type) {
+        if (field == null) {
+            throw new BusinessException("field 不能为空");
+        }
+
         var val = REDIS.opsForHash().get(key, field.toString());
         if (val == null) {
             return null;
@@ -58,8 +71,9 @@ public class HashOps extends KeyOps {
      * @param key 键
      * @return Value
      */
-    public static Map<Object, Object> entries(String key) {
-        return REDIS.opsForHash().entries(key);
+    public static Map<String, String> entries(String key) {
+        var map = REDIS.opsForHash().entries(key);
+        return Json.toStringValueMap(map);
     }
 
     /**
@@ -114,8 +128,12 @@ public class HashOps extends KeyOps {
      * @param field 字段名称
      * @param value 值
      */
-    public static void put(String key, String field, Object value) {
-        REDIS.opsForHash().put(key, field, value.toString());
+    public static void put(String key, Object field, Object value) {
+        if (field == null) {
+            throw new BusinessException("field 不能为空");
+        }
+
+        REDIS.opsForHash().put(key, field.toString(), Json.toJson(value));
     }
 
     /**
@@ -125,7 +143,8 @@ public class HashOps extends KeyOps {
      * @param map Map 对象
      */
     public static void putAll(String key, Map<String, Object> map) {
-        REDIS.opsForHash().putAll(key, map);
+        var stringMap = Json.toStringValueMap(map);
+        REDIS.opsForHash().putAll(key, stringMap);
     }
 
     /**
@@ -134,7 +153,11 @@ public class HashOps extends KeyOps {
      * @param key   键
      * @param field 字段名称
      */
-    public static void delete(String key, String field) {
-        REDIS.opsForHash().delete(key, field);
+    public static void delete(String key, Object field) {
+        if (field == null) {
+            throw new BusinessException("field 不能为空");
+        }
+
+        REDIS.opsForHash().delete(key, field.toString());
     }
 }
