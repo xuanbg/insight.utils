@@ -53,9 +53,9 @@ public class TokenData extends BaseXo {
     private String areaCode;
 
     /**
-     * 访问令牌MD5摘要
+     * 用户特征字符串
      */
-    private String hash;
+    private String fingerprint;
 
     /**
      * 授权码生命周期(秒)
@@ -66,11 +66,6 @@ public class TokenData extends BaseXo {
      * 令牌生命周期(秒)
      */
     private Long life;
-
-    /**
-     * 验证来源
-     */
-    private Boolean verifySource;
 
     /**
      * 单点登录
@@ -163,12 +158,12 @@ public class TokenData extends BaseXo {
         this.areaCode = areaCode;
     }
 
-    public String getHash() {
-        return hash;
+    public String getFingerprint() {
+        return fingerprint;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
+    public void setFingerprint(String fingerprint) {
+        this.fingerprint = fingerprint;
     }
 
     public Long getPermitLife() {
@@ -185,14 +180,6 @@ public class TokenData extends BaseXo {
 
     public void setLife(Long life) {
         this.life = life;
-    }
-
-    public Boolean getVerifySource() {
-        return verifySource != null && verifySource;
-    }
-
-    public void setVerifySource(Boolean verifySource) {
-        this.verifySource = verifySource;
     }
 
     public Boolean getSignInOne() {
@@ -249,17 +236,6 @@ public class TokenData extends BaseXo {
 
     public void setPermitFuncs(List<String> permitFuncs) {
         this.permitFuncs = permitFuncs;
-    }
-
-    /**
-     * 验证Token是否合法
-     *
-     * @param hash 令牌哈希值
-     * @return Token是否合法
-     */
-    @JsonIgnore
-    public boolean verifyTokenHash(String hash) {
-        return this.hash.equals(hash);
     }
 
     /**
