@@ -133,7 +133,7 @@ public class HashOps extends KeyOps {
             throw new BusinessException("field 不能为空");
         }
 
-        REDIS.opsForHash().put(key, field.toString(), Json.toJson(value));
+        REDIS.opsForHash().put(key, field.toString(), value.toString());
     }
 
     /**
