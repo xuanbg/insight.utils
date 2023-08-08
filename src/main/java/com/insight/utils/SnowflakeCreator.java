@@ -48,6 +48,7 @@ public class SnowflakeCreator {
     /**
      * 产生下一个ID
      *
+     * @param subId 子ID, 0-15
      * @return ID
      */
     public synchronized Long nextId(long subId) {
@@ -70,7 +71,7 @@ public class SnowflakeCreator {
         // 上次时间戳更新为当前时间戳的值
         lastStmp = currStmp;
 
-        // 返回ID:\0\timestmp(41)|machine(6)|sequence(12)|sub_id(4)|
+        // 返回ID:|0|timestmp(41)|machine(6)|sequence(12)|sub_id(4)|
         return (currStmp - START_STMP) << TIMESTMP_LEFT | machineId << MACHINE_LEFT | sequence << SEQUENCE_LEFT | subId;
     }
 }
