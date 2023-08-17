@@ -1,5 +1,7 @@
 package com.insight.utils.pojo.user;
 
+import com.insight.utils.Util;
+
 import java.time.LocalDateTime;
 
 /**
@@ -60,7 +62,7 @@ public class User extends UserBase {
     private LocalDateTime createdTime;
 
     public String getAccount() {
-        return account;
+        return Util.isEmpty(account) ? null : account;
     }
 
     public void setAccount(String account) {
@@ -68,7 +70,7 @@ public class User extends UserBase {
     }
 
     public String getPassword() {
-        return password;
+        return Util.isEmpty(password) ? null : password;
     }
 
     public void setPassword(String password) {
@@ -76,7 +78,7 @@ public class User extends UserBase {
     }
 
     public String getPayPassword() {
-        return payPassword;
+        return Util.isEmpty(password) ? null : payPassword;
     }
 
     public void setPayPassword(String payPassword) {
@@ -84,7 +86,7 @@ public class User extends UserBase {
     }
 
     public String getUnionId() {
-        return unionId;
+        return Util.isEmpty(unionId) ? null : unionId;
     }
 
     public void setUnionId(String unionId) {
@@ -92,7 +94,7 @@ public class User extends UserBase {
     }
 
     public String getRemark() {
-        return remark;
+        return Util.isEmpty(remark) ? null : remark;
     }
 
     public void setRemark(String remark) {

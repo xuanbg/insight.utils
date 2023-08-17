@@ -41,6 +41,46 @@ public final class Util {
     }
 
     /**
+     * 取最小值
+     *
+     * @param args 整数数组
+     * @return 最小值
+     */
+    public static Integer getMin(Integer... args) {
+        return Arrays.stream(args).min(Integer::compare).orElseThrow();
+    }
+
+    /**
+     * 取最大值
+     *
+     * @param args 整数数组
+     * @return 最大值
+     */
+    public static Integer getMax(Integer... args) {
+        return Arrays.stream(args).max(Integer::compare).orElseThrow();
+    }
+
+    /**
+     * 数组取最小值
+     *
+     * @param args 整数数组
+     * @return 最小值
+     */
+    public static Integer getMin(int[] args) {
+        return Arrays.stream(args).min().orElseThrow();
+    }
+
+    /**
+     * 数组取最大值
+     *
+     * @param args 整数数组
+     * @return 最大值
+     */
+    public static Integer getMax(int[] args) {
+        return Arrays.stream(args).max().orElseThrow();
+    }
+
+    /**
      * 数值是否为0
      *
      * @param decimal 数值

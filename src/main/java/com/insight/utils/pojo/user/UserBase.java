@@ -1,5 +1,6 @@
 package com.insight.utils.pojo.user;
 
+import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
 
 import java.util.Objects;
@@ -68,7 +69,7 @@ public class UserBase extends BaseXo {
     }
 
     public String getCode() {
-        return code;
+        return Util.isEmpty(code) ? null : code;
     }
 
     public void setCode(String code) {
@@ -76,7 +77,7 @@ public class UserBase extends BaseXo {
     }
 
     public String getName() {
-        return name;
+        return Util.isEmpty(name) ? null : name;
     }
 
     public void setName(String name) {
@@ -84,7 +85,7 @@ public class UserBase extends BaseXo {
     }
 
     public String getMobile() {
-        return mobile;
+        return Util.isEmpty(mobile) ? null : mobile;
     }
 
     public void setMobile(String mobile) {
@@ -92,7 +93,7 @@ public class UserBase extends BaseXo {
     }
 
     public String getEmail() {
-        return email;
+        return Util.isEmpty(email) ? null : email;
     }
 
     public void setEmail(String email) {
@@ -100,7 +101,7 @@ public class UserBase extends BaseXo {
     }
 
     public String getNickname() {
-        return nickname;
+        return Util.isEmpty(nickname) ? null : nickname;
     }
 
     public void setNickname(String nickname) {
@@ -108,7 +109,7 @@ public class UserBase extends BaseXo {
     }
 
     public String getHeadImg() {
-        return headImg;
+        return Util.isEmpty(headImg) ? null : headImg;
     }
 
     public void setHeadImg(String headImg) {
