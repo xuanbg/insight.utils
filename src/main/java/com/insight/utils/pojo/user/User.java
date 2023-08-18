@@ -3,6 +3,7 @@ package com.insight.utils.pojo.user;
 import com.insight.utils.Util;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @author 宣炳刚
@@ -30,6 +31,11 @@ public class User extends UserBase {
      * 微信UnionID
      */
     private String unionId;
+
+    /**
+     * 微信OpenId
+     */
+    private Map<String, String> openId;
 
     /**
      * 备注
@@ -91,6 +97,14 @@ public class User extends UserBase {
 
     public void setUnionId(String unionId) {
         this.unionId = unionId;
+    }
+
+    public Map<String, String> getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(Map<String, String> openId) {
+        this.openId = openId;
     }
 
     public String getRemark() {
