@@ -22,8 +22,17 @@ public final class Des3Encryptor {
      * @param key 密钥键
      */
     public Des3Encryptor(String key) {
+        this(key.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * 使用指定的密钥键
+     *
+     * @param key 密钥键
+     */
+    public Des3Encryptor(byte[] key) {
         try {
-            secretKey = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "DES");
+            secretKey = new SecretKeySpec(key, "DES");
         } catch (Exception ex) {
             throw new BusinessException(ex.getMessage());
         }

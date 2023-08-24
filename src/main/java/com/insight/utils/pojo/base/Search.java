@@ -312,7 +312,7 @@ public class Search extends BaseXo {
     }
 
     public Integer getPageNum() {
-        return pageNum == null || pageNum <= 1 ? 1 : pageNum;
+        return pageNum != null && pageNum > 1 ? pageNum : 1;
     }
 
     public void setPageNum(Integer pageNum) {
@@ -320,7 +320,7 @@ public class Search extends BaseXo {
     }
 
     public Integer getPageSize() {
-        return pageSize == null || pageSize < 10 ? 10 : pageSize;
+        return pageSize == null ? 10 : pageSize;
     }
 
     public void setPageSize(Integer pageSize) {
