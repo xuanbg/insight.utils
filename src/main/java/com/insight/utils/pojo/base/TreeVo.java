@@ -5,24 +5,24 @@ package com.insight.utils.pojo.base;
  * @date 2021/12/10
  * @remark 树形数据VO
  */
-public class TreeVo extends BaseVo {
+public class TreeVo extends TreeBase {
 
     /**
-     * 父级ID
+     * 编码
      */
-    private Long parentId;
+    private String code;
 
     /**
      * 节点类型
      */
     private Integer type;
 
-    public Long getParentId() {
-        return parentId;
+    public String getCode() {
+        return code;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getType() {
