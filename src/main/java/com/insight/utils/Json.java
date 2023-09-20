@@ -116,7 +116,7 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBean(String json, Class<T> type) {
-        if (json == null || json.isEmpty()) {
+        if (json == null || json.isEmpty() || !json.matches("^\\s*([{\\[])(.*?)([}\\]])\\s*$")) {
             return null;
         }
 
@@ -234,12 +234,8 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBeanFromBase64(String base64Str, Class<T> type) {
-        try {
-            var json = Base64Encryptor.decodeToString(base64Str);
-            return toBean(json, type);
-        } catch (Exception ex) {
-            throw new BusinessException(ex.getMessage());
-        }
+        var json = Base64Encryptor.decodeToString(base64Str);
+        return toBean(json, type);
     }
 
     /**

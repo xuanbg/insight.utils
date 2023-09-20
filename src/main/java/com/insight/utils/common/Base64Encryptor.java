@@ -1,5 +1,7 @@
 package com.insight.utils.common;
 
+import com.insight.utils.pojo.base.BusinessException;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Base64;
@@ -54,7 +56,6 @@ public final class Base64Encryptor {
         }
 
         byte[] asBytes = Base64.getDecoder().decode(base64Str);
-
         return new String(asBytes, Charset.defaultCharset());
     }
 
@@ -154,10 +155,8 @@ public final class Base64Encryptor {
 
             return encode(bytes);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
@@ -176,9 +175,7 @@ public final class Base64Encryptor {
 
             return obj;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 }
