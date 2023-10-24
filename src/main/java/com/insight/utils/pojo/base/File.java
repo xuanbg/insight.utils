@@ -73,7 +73,7 @@ public class File extends BaseXo {
             case "bmp", "jpg", "jpeg", "gif", "png", "svg", "tif" -> 1;
             case "alac", "ape", "flac", "mp3", "wav" -> 2;
             case "avi", "flv", "mp4", "mpg", "mpeg", "mov", "swf", "wmv" -> 3;
-            case "doc", "docx", "md", "pdf", "ppt", "pptx", "txt", "xls", "xlsx" -> 4;
+            case "doc", "docx", "md", "pdf", "ppt", "pptx", "txt", "xls", "xlsx", "xw" -> 4;
             case "7z", "rar", "zip" -> 5;
             default -> 6;
         };
