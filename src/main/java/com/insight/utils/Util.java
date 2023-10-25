@@ -2,10 +2,12 @@ package com.insight.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.lang.reflect.Field;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,32 @@ import java.util.stream.Collectors;
  * @remark 基础帮助类
  */
 public final class Util {
+
+    /**
+     * 获取文件哈希值
+     *
+     * @param filePath 文件路径
+     * @return 哈希值
+     */
+    public static String getFileHash(String filePath) throws IOException, NoSuchAlgorithmException {
+        var md = MessageDigest.getInstance("MD5");
+
+        int length;
+        var buffer = new byte[8192];
+        var fs = new FileInputStream(filePath);
+        while ((length = fs.read(buffer)) != -1) {
+            md.update(buffer, 0, length);
+        }
+        fs.close();
+
+        var digest = md.digest();
+        var builder = new StringBuilder();
+        for (var b : digest) {
+            builder.append(String.format("%02x", b));
+        }
+
+        return builder.toString();
+    }
 
     /**
      * 生成uuid
@@ -34,8 +62,8 @@ public final class Util {
      * @return 符合正则的字符串
      */
     public static String getMatcher(String regex, String source, int group) {
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(source);
+        var pattern = Pattern.compile(regex);
+        var matcher = pattern.matcher(source);
 
         return matcher.find() ? matcher.group(group) : null;
     }
@@ -117,7 +145,7 @@ public final class Util {
      * @return 随机正整数
      */
     public static int getRandom(int max) {
-        double random = Math.random() * (max + 1);
+        var random = Math.random() * (max + 1);
         return (int) Math.floor(random);
     }
 
@@ -128,13 +156,13 @@ public final class Util {
      * @return 随机字符串
      */
     public static String randomString(Integer length) {
-        String base = "00000000";
+        var base = "00000000";
 
-        int max = (int) Math.pow(Double.parseDouble("10"), length.doubleValue());
-        int random = getRandom(max);
-        String r = String.valueOf(random);
+        var max = (int) Math.pow(Double.parseDouble("10"), length.doubleValue());
+        var random = getRandom(max);
+        var r = String.valueOf(random);
 
-        int len = r.length();
+        var len = r.length();
         return length.equals(len) ? r : base.substring(0, length - len) + r;
     }
 
@@ -146,16 +174,16 @@ public final class Util {
      */
     public static Map<String, String> objectToMap(Object obj) throws IllegalAccessException {
         Map<String, String> map = new HashMap<>(32);
-        for (Field field : obj.getClass().getDeclaredFields()) {
-            String fieldName = field.getName();
+        for (var field : obj.getClass().getDeclaredFields()) {
+            var fieldName = field.getName();
             field.setAccessible(true);
-            Object val = field.get(obj);
+            var val = field.get(obj);
             if (val == null) {
                 continue;
             }
 
-            String typeName = field.getType().getSimpleName();
-            String value = "String".equals(typeName) ? (String) val : Json.toJson(val);
+            var typeName = field.getType().getSimpleName();
+            var value = "String".equals(typeName) ? (String) val : Json.toJson(val);
             map.put(fieldName, value);
         }
 
@@ -180,7 +208,7 @@ public final class Util {
      * @return 转换后的字符串
      */
     public static String flushLeft(int num, int len) {
-        String format = "%0" + len + "d";
+        var format = "%0" + len + "d";
 
         return String.format(format, num);
     }
@@ -193,7 +221,7 @@ public final class Util {
      * @return 中文大写金额
      */
     public static String convertAmountToCn(BigDecimal amount, int type) {
-        long val = amount.multiply(BigDecimal.valueOf(100)).longValue();
+        var val = amount.multiply(BigDecimal.valueOf(100)).longValue();
 
         return convertAmountToCn(val, type);
     }
@@ -224,18 +252,18 @@ public final class Util {
             return "不支持万亿及更高金额";
         }
 
-        boolean isNegative = amount < 0;
-        StringBuilder cnAmount = new StringBuilder(isNegative ? "(负)" : "");
-        String value = String.valueOf(Math.abs(amount));
-        int length = value.length();
+        var isNegative = amount < 0;
+        var cnAmount = new StringBuilder(isNegative ? "(负)" : "");
+        var value = String.valueOf(Math.abs(amount));
+        var length = value.length();
 
-        String digital = "零壹贰叁肆伍陆柒捌玖";
-        String position = "仟佰拾亿仟佰拾万仟佰拾元角分".substring(14 - length);
-        int zeroCount = 0;
-        for (int i = 0; i < length; i++) {
-            int val = Integer.parseInt(value.substring(i, i + 1));
-            String digVal = digital.substring(val, val + 1);
-            String posVal = position.substring(i, i + 1);
+        var digital = "零壹贰叁肆伍陆柒捌玖";
+        var position = "仟佰拾亿仟佰拾万仟佰拾元角分".substring(14 - length);
+        var zeroCount = 0;
+        for (var i = 0; i < length; i++) {
+            var val = Integer.parseInt(value.substring(i, i + 1));
+            var digVal = digital.substring(val, val + 1);
+            var posVal = position.substring(i, i + 1);
             if (val > 0) {
                 if (zeroCount > 0 && (length - i + 2) % 4 > 0) {
                     cnAmount.append("零");
@@ -244,7 +272,7 @@ public final class Util {
                 zeroCount = 0;
             } else {
                 digVal = "";
-                boolean posIsEmpty = (length - i + 1) % 4 > 0 || (zeroCount > 2 && "万".equals(posVal));
+                var posIsEmpty = (length - i + 1) % 4 > 0 || (zeroCount > 2 && "万".equals(posVal));
                 if (posIsEmpty) {
                     posVal = "";
                 }
@@ -269,9 +297,9 @@ public final class Util {
      * @return 转换后字符串
      */
     public static String camelToUnderScore(String str) {
-        Pattern compile = Pattern.compile("[A-Z]");
-        Matcher matcher = compile.matcher(str);
-        StringBuilder sb = new StringBuilder();
+        var compile = Pattern.compile("[A-Z]");
+        var matcher = compile.matcher(str);
+        var sb = new StringBuilder();
         while (matcher.find()) {
             matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
         }
@@ -288,9 +316,9 @@ public final class Util {
      */
     public static String underScoreToCamel(String str) {
         str = str.toLowerCase();
-        Pattern compile = Pattern.compile("_[a-z]");
-        Matcher matcher = compile.matcher(str);
-        StringBuilder sb = new StringBuilder();
+        var compile = Pattern.compile("_[a-z]");
+        var matcher = compile.matcher(str);
+        var sb = new StringBuilder();
         while (matcher.find()) {
             matcher.appendReplacement(sb, matcher.group(0).toUpperCase().replace("_", ""));
         }
@@ -306,9 +334,9 @@ public final class Util {
      * @return byte[] 字节数组
      */
     public static byte[] hexStringToByteArray(String hexString) {
-        int len = hexString.length();
-        byte[] bytes = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
+        var len = hexString.length();
+        var bytes = new byte[len / 2];
+        for (var i = 0; i < len; i += 2) {
             // 两位一组，表示一个字节,把这样表示的16进制字符串，还原成一个字节
             bytes[i / 2] = (byte) ((Character.digit(hexString.charAt(i), 16) << 4) + Character
                     .digit(hexString.charAt(i + 1), 16));
@@ -324,9 +352,9 @@ public final class Util {
      * @return 转换后的结果
      */
     public static String byteArrayToHexString(byte[] data) {
-        StringBuilder sb = new StringBuilder(data.length * 2);
-        for (byte b : data) {
-            int v = b & 0xff;
+        var sb = new StringBuilder(data.length * 2);
+        for (var b : data) {
+            var v = b & 0xff;
             if (v < 16) {
                 sb.append('0');
             }
@@ -343,7 +371,7 @@ public final class Util {
      * @return 整型集合
      */
     public static List<Integer> toIntList(String str) {
-        String[] list = str.split(",");
+        var list = str.split(",");
         return Arrays.stream(list).map(Integer::parseInt).collect(Collectors.toList());
     }
 
@@ -354,7 +382,7 @@ public final class Util {
      * @return 长整型集合
      */
     public static List<Long> toLongList(String str) {
-        String[] list = str.split(",");
+        var list = str.split(",");
         return Arrays.stream(list).map(Long::parseLong).collect(Collectors.toList());
     }
 
@@ -375,7 +403,7 @@ public final class Util {
      * @return 字符串集合
      */
     public static List<String> toStringList(String str, String regex) {
-        String[] list = str.split(regex);
+        var list = str.split(regex);
         return Arrays.asList(list);
     }
 
@@ -389,10 +417,10 @@ public final class Util {
      */
     public static <T> List<List<T>> splitList(List<T> source, Integer n) {
         List<List<T>> result = new ArrayList<>();
-        int remaider = source.size() % n;
-        int number = source.size() / n;
-        int offset = 0;
-        for (int i = 0; i < n; i++) {
+        var remaider = source.size() % n;
+        var number = source.size() / n;
+        var offset = 0;
+        for (var i = 0; i < n; i++) {
             if (remaider > 0) {
                 remaider--;
                 offset++;
@@ -429,7 +457,7 @@ public final class Util {
             return true;
         }
 
-        Class<?> elementType = source.get(0).getClass();
+        var elementType = source.get(0).getClass();
         List<T> s = Json.cloneList(source, elementType);
         List<T> t = Json.cloneList(target, elementType);
 
@@ -445,9 +473,9 @@ public final class Util {
      */
     public static Map<String, String> fix(String content, String s1) {
         Map<String, String> map = new HashMap<>(16);
-        String[] arr = content.split(s1);
-        for (String a : arr) {
-            String[] s = a.split("=");
+        var arr = content.split(s1);
+        for (var a : arr) {
+            var s = a.split("=");
             if (s.length < 2) {
                 continue;
             }

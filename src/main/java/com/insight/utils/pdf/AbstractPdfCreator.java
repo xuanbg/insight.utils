@@ -6,7 +6,8 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPageEventHelper;
 import com.lowagie.text.pdf.PdfWriter;
 
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -15,26 +16,11 @@ import java.io.IOException;
  * @remark
  */
 public class AbstractPdfCreator implements PdfCreator {
-
-    /**
-     * 页框大小,采用的类型有 "crop", "trim", "art" and "bleed".，这里采用 "art"
-     */
     private static final String BOX_NAME = "art";
-
-    /**
-     * 文档类
-     */
+    protected Rectangle pageSize = PageSize.A4;
     protected Document document;
-
-    /**
-     * 页面框架大小配置
-     */
-    protected Rectangle pageSize;
-
-    /**
-     * 字节输出流
-     */
-    private ByteArrayOutputStream byteArrayOutputStream;
+    private PdfWriter writer;
+    private String path;
 
     /**
      * 初始化
@@ -43,8 +29,42 @@ public class AbstractPdfCreator implements PdfCreator {
      * @throws DocumentException 文档操作异常
      */
     @Override
-    public PdfCreator init() throws DocumentException {
-        return init(pageSize, null);
+    public PdfCreator init(String name) throws DocumentException, FileNotFoundException {
+        return init(name, pageSize, null);
+    }
+
+    /**
+     * 自定义初始化监听
+     *
+     * @param helper 自定义文档操作监听
+     * @return PdfCreator
+     * @throws DocumentException 文档操作异常
+     */
+    public PdfCreator init(String name, PdfPageEventHelper helper) throws DocumentException, FileNotFoundException {
+        return init(name, pageSize, helper);
+    }
+
+    /**
+     * 自定义初始化参数
+     *
+     * @param rectangle          页面大小设置
+     * @param pdfPageEventHelper 文档操作监听
+     * @return PdfCreator
+     * @throws DocumentException 文档操作异常
+     */
+    public PdfCreator init(String name, Rectangle rectangle, PdfPageEventHelper pdfPageEventHelper) throws DocumentException, FileNotFoundException {
+        path = "/opt/file/%s.pdf".formatted(name);
+        document = new Document();
+        document.setMargins(30, 30, 50, 90);
+        var stream = new FileOutputStream(path);
+        writer = PdfWriter.getInstance(document, stream);
+        writer.setBoxSize(BOX_NAME, rectangle);
+        if (pdfPageEventHelper != null) {
+            writer.setPageEvent(pdfPageEventHelper);
+        }
+
+        document.open();
+        return this;
     }
 
     /**
@@ -53,13 +73,13 @@ public class AbstractPdfCreator implements PdfCreator {
      * @param param 导出数据参数
      * @return ByteArrayOutputStream
      * @throws DocumentException 文档操作异常
-     * @throws IOException       IO操作异常
      */
     @Override
-    public ByteArrayOutputStream creator(PdfParam param) throws DocumentException, IOException {
+    public String creator(PdfParam param) throws DocumentException {
         execute(param);
         close();
-        return byteArrayOutputStream;
+
+        return path;
     }
 
     /**
@@ -106,46 +126,10 @@ public class AbstractPdfCreator implements PdfCreator {
      * 资源关闭
      *
      * @throws DocumentException 文档操作异常
-     * @throws IOException       IO操作异常
      */
     @Override
-    public void close() throws DocumentException, IOException {
+    public void close() throws DocumentException {
         document.close();
-        byteArrayOutputStream.close();
-    }
-
-    /**
-     * 自定义初始化监听
-     *
-     * @param helper 自定义文档操作监听
-     * @return PdfCreator
-     * @throws DocumentException 文档操作异常
-     */
-    public PdfCreator init(PdfPageEventHelper helper) throws DocumentException {
-        return init(pageSize, helper);
-    }
-
-    /**
-     * 自定义初始化参数
-     *
-     * @param rectangle          页面大小设置
-     * @param pdfPageEventHelper 文档操作监听
-     * @return PdfCreator
-     * @throws DocumentException 文档操作异常
-     */
-    public PdfCreator init(Rectangle rectangle, PdfPageEventHelper pdfPageEventHelper) throws DocumentException {
-        this.pageSize = null != pageSize ? pageSize : PageSize.A4;
-
-        document = new Document();
-        document.setMargins(30, 30, 50, 90);
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        PdfWriter writer = PdfWriter.getInstance(document, byteArrayOutputStream);
-        writer.setBoxSize(BOX_NAME, this.pageSize);
-        if (pdfPageEventHelper != null) {
-            writer.setPageEvent(pdfPageEventHelper);
-        }
-
-        document.open();
-        return this;
+        writer.close();
     }
 }
