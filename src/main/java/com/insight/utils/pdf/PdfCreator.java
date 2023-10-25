@@ -4,7 +4,6 @@ import com.lowagie.text.DocumentException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * @author 宣炳刚
@@ -25,12 +24,21 @@ public interface PdfCreator {
     /**
      * 构建pdf
      *
-     * @param map 导出数据参数
+     * @param param 导出数据参数
      * @return ByteArrayOutputStream
      * @throws DocumentException 文档操作异常
      * @throws IOException       IO操作异常
      */
-    ByteArrayOutputStream creator(Map<String, Object> map) throws DocumentException, IOException;
+    ByteArrayOutputStream creator(PdfParam param) throws DocumentException, IOException;
+
+    /**
+     * pdf构建执行
+     *
+     * @param param 导出数据所需参数
+     * @throws DocumentException 文档操作异常
+     * @throws IOException       IO操作异常
+     */
+    void execute(PdfParam param) throws DocumentException, IOException;
 
     /**
      * 资源关闭
