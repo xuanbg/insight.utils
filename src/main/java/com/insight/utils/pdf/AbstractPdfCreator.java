@@ -53,7 +53,7 @@ public class AbstractPdfCreator implements PdfCreator {
      * @throws DocumentException 文档操作异常
      */
     public PdfCreator init(String name, Rectangle rectangle, PdfPageEventHelper pdfPageEventHelper) throws DocumentException, FileNotFoundException {
-        path = "/opt/file/%s.pdf".formatted(name);
+        path = "/opt/files/%s.pdf".formatted(name);
         document = new Document();
         document.setMargins(30, 30, 50, 90);
         var stream = new FileOutputStream(path);
