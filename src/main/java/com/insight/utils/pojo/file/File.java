@@ -69,8 +69,8 @@ public class File extends Folder {
             return null;
         }
 
-        var array = fullName.split("\\.");
-        return array[0];
+        var index = fullName.lastIndexOf(".");
+        return fullName.substring(0, index);
     }
 
     public String getExt() {
@@ -83,8 +83,8 @@ public class File extends Folder {
             return null;
         }
 
-        var array = fullName.split("\\.");
-        return array.length > 1 ? array[1] : null;
+        var index = fullName.lastIndexOf(".");
+        return fullName.substring(index + 1);
     }
 
     public void setExt(String ext) {
