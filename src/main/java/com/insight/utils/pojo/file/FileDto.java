@@ -8,11 +8,6 @@ package com.insight.utils.pojo.file;
 public class FileDto extends File {
 
     /**
-     * 文件域名
-     */
-    private String domain;
-
-    /**
      * 文件哈希值
      */
     private String hash;
@@ -26,14 +21,6 @@ public class FileDto extends File {
      * 文件是否已存在
      */
     private Boolean existed;
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
 
     public String getHash() {
         return hash;

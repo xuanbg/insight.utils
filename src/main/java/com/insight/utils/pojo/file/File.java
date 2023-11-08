@@ -21,6 +21,11 @@ public class File extends Folder {
     private String ext;
 
     /**
+     * 文件域名
+     */
+    private String domain;
+
+    /**
      * 文件路径
      */
     private String path;
@@ -84,6 +89,14 @@ public class File extends Folder {
 
     public void setExt(String ext) {
         this.ext = ext;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 
     public String getPath() {
