@@ -104,9 +104,8 @@ public class AbstractPdfCreator implements PdfCreator {
 
             if (Util.isNotEmpty(paragraph.getContent())) {
                 var content = new Paragraph();
-                var list = paragraph.getContent();
-                for (var str : list) {
-                    if (str.matches("^<.*>$")) {
+                for (var str : paragraph.getContent()) {
+                    if (str.matches("^<[\\s\\S]*>$")) {
                         try {
                             content.addAll(HtmlParserUtil.html2Elements(str, param.getFont()));
                         } catch (IOException e) {

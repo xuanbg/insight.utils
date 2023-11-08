@@ -49,11 +49,14 @@ public class TreeBase extends BaseXo {
         this.name = name;
     }
 
+    /**
+     * 判断当前对象与给定的parentId和name是否相等。
+     *
+     * @param parentId 父id
+     * @param name 名称
+     * @return 如果当前对象的parentId和name与给定的parentId和name相等，则返回true；否则返回false。
+     */
     public Boolean equals(Long parentId, String name) {
-        if (!Objects.equals(this.parentId, parentId)) {
-            return false;
-        }
-
-        return Objects.equals(this.name, name);
+        return Objects.equals(this.parentId, parentId) && Objects.equals(this.name, name);
     }
 }

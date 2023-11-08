@@ -1,31 +1,19 @@
-package com.insight.utils.pojo.base;
+package com.insight.utils.pojo.file;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.insight.utils.Util;
 
 /**
  * @author 宣炳刚
  * @date 2023/8/26
- * @remark
+ * @remark 文件信息实体类
  */
-public class File extends BaseXo {
-
-    /**
-     * 文件ID
-     */
-    private Long id;
-
-    /**
-     * 类型: 0.文件夹, 1.图片, 2.音频, 3.视频, 4.文档, 5.压缩包, 6.其他
-     */
-    private Integer type;
+public class File extends Folder {
 
     /**
      * 文件名
      */
-    protected String file;
-
-    /**
-     * 名称
-     */
-    private String name;
+    private String file;
 
     /**
      * 扩展名
@@ -37,29 +25,7 @@ public class File extends BaseXo {
      */
     private String path;
 
-    /**
-     * 拥有人ID
-     */
-    protected Long ownerId;
-
-    /**
-     * 文件上传令牌
-     */
-    private String token;
-
-    /**
-     * 七牛文件空间bucket
-     */
-    private String bucket;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    @Override
     public Integer getType() {
         if (type != null) {
             return type;
@@ -79,26 +45,27 @@ public class File extends BaseXo {
         };
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public String getFile() {
+        return file;
     }
 
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    @Override
     public String getName() {
         if (name != null) {
             return name;
         }
 
         var fullName = getFullName();
-        if (fullName == null) {
+        if (Util.isEmpty(fullName)) {
             return null;
         }
 
         var array = fullName.split("\\.");
         return array[0];
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getExt() {
@@ -107,7 +74,7 @@ public class File extends BaseXo {
         }
 
         var fullName = getFullName();
-        if (fullName == null) {
+        if (Util.isEmpty(fullName)) {
             return null;
         }
 
@@ -142,43 +109,42 @@ public class File extends BaseXo {
     }
 
     public String getUrl() {
-        return "/upload/" + getPath();
+        return getPath() == null ? null : "/upload/" + getPath();
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getBucket() {
-        return bucket;
-    }
-
-    public void setBucket(String bucket) {
-        this.bucket = bucket;
-    }
-
+    /**
+     * 获取文件路径
+     *
+     * @return 文件路径
+     */
+    @JsonIgnore
     public String getFullPath() {
-        if (file == null) {
+        if (Util.isEmpty(file)) {
             return null;
         }
 
-        var array = file.split(":");
-        var path = array.length > 1 ? array[1] : array[0];
+        // 如路径为windows文件路径，则转换成unix文件路径
+        if (file.matches(".*:\\\\.*")) {
+            var index = path.indexOf(":");
+            var path = file.substring(index + 1);
+            return path.replaceAll("\\\\", "/").trim();
+        }
 
-        return path.replaceAll("\\\\", "/").trim();
+        return file.trim();
     }
 
+    /**
+     * 获取完整的文件名
+     *
+     * @return 完整的文件名，如果路径为空则返回null
+     */
     private String getFullName() {
         var fullPath = getFullPath();
-        if (fullPath == null) {
+        if (Util.isEmpty(fullPath)) {
             return null;
         }
 
-        var split = fullPath.lastIndexOf("/");
-        return split < 0 ? fullPath : fullPath.substring(split);
+        var index = fullPath.lastIndexOf("/");
+        return index < 0 ? fullPath : fullPath.substring(index + 1);
     }
 }

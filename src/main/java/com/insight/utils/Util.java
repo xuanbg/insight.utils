@@ -2,6 +2,7 @@ package com.insight.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -19,17 +20,28 @@ import java.util.stream.Collectors;
 public final class Util {
 
     /**
+     * 获取文件字节数
+     *
+     * @param path 文件路径
+     * @return 字节数
+     */
+    public static Long getFileSize(String path) {
+        var file = new File(path);
+        return file.length();
+    }
+
+    /**
      * 获取文件哈希值
      *
-     * @param filePath 文件路径
+     * @param path 文件路径
      * @return 哈希值
      */
-    public static String getFileHash(String filePath) throws IOException, NoSuchAlgorithmException {
+    public static String getFileHash(String path) throws IOException, NoSuchAlgorithmException {
         var md = MessageDigest.getInstance("MD5");
 
         int length;
         var buffer = new byte[8192];
-        var fs = new FileInputStream(filePath);
+        var fs = new FileInputStream(path);
         while ((length = fs.read(buffer)) != -1) {
             md.update(buffer, 0, length);
         }

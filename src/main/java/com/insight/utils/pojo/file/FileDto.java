@@ -1,16 +1,11 @@
-package com.insight.utils.pojo.base;
+package com.insight.utils.pojo.file;
 
 /**
  * @author 宣炳刚
  * @date 2020/12/31
- * @remark 文件DTO
+ * @remark 文件信息DTO
  */
 public class FileDto extends File {
-
-    /**
-     * 父级ID
-     */
-    private Long parentId;
 
     /**
      * 文件域名
@@ -25,24 +20,12 @@ public class FileDto extends File {
     /**
      * 文件字节数
      */
-    private Integer size;
+    private Long size;
 
     /**
      * 文件是否已存在
      */
     private Boolean existed;
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public void setFile(String file) {
-        this.file = file;
-    }
 
     public String getDomain() {
         return domain;
@@ -60,20 +43,12 @@ public class FileDto extends File {
         this.hash = hash;
     }
 
-    public Integer getSize() {
+    public Long getSize() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public void setSize(Long size) {
         this.size = size;
-    }
-
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
     }
 
     public Boolean getExisted() {

@@ -5,7 +5,6 @@ import com.lowagie.text.Chunk;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
-import com.lowagie.text.html.simpleparser.StyleSheet;
 import com.lowagie.text.pdf.PdfPTable;
 
 import java.io.IOException;
@@ -32,8 +31,7 @@ public class HtmlParserUtil {
             return null;
         }
 
-        Map<String, Object> map = new HashMap<>();
-        List<Element> elements = HTMLWorker.parseToList(new StringReader(html), new StyleSheet(), map);
+        List<Element> elements = HTMLWorker.parseToList(new StringReader(html), null);
         if (Util.isEmpty(elements)) {
             return null;
         }
