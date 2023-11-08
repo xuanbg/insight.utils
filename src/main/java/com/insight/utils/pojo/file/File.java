@@ -70,7 +70,7 @@ public class File extends Folder {
         }
 
         var index = fullName.lastIndexOf(".");
-        return fullName.substring(0, index);
+        return index < 0 ? fullName : fullName.substring(0, index);
     }
 
     public String getExt() {
@@ -84,7 +84,7 @@ public class File extends Folder {
         }
 
         var index = fullName.lastIndexOf(".");
-        return fullName.substring(index + 1);
+        return index < 0 ? null : fullName.substring(index + 1);
     }
 
     public void setExt(String ext) {
