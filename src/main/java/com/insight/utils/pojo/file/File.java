@@ -3,6 +3,8 @@ package com.insight.utils.pojo.file;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Util;
 
+import java.util.Objects;
+
 /**
  * @author 宣炳刚
  * @date 2023/8/26
@@ -19,6 +21,11 @@ public class File extends Folder {
      * 扩展名
      */
     private String ext;
+
+    /**
+     * 文件哈希值
+     */
+    private String hash;
 
     /**
      * 文件域名
@@ -91,6 +98,14 @@ public class File extends Folder {
         this.ext = ext;
     }
 
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
     public String getDomain() {
         return domain;
     }
@@ -144,6 +159,16 @@ public class File extends Folder {
         }
 
         return file.trim();
+    }
+
+    /**
+     * 判断两个文件是否相等
+     *
+     * @param file 文件
+     * @return 是否相等
+     */
+    public Boolean equals(File file) {
+        return Objects.equals(hash, file.hash) && Objects.equals(getName(), file.getName()) && Objects.equals(getExt(), file.getExt());
     }
 
     /**

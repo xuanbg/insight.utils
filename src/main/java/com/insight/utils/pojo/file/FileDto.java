@@ -8,11 +8,6 @@ package com.insight.utils.pojo.file;
 public class FileDto extends File {
 
     /**
-     * 文件哈希值
-     */
-    private String hash;
-
-    /**
      * 文件字节数
      */
     private Long size;
@@ -21,14 +16,6 @@ public class FileDto extends File {
      * 文件是否已存在
      */
     private Boolean existed;
-
-    public String getHash() {
-        return hash;
-    }
-
-    public void setHash(String hash) {
-        this.hash = hash;
-    }
 
     public Long getSize() {
         return size;
