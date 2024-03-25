@@ -53,12 +53,12 @@ public final class HttpClientUtil {
     /**
      * 数据传输过程中数据包之间间隔的最大时间
      */
-    public static final int SOCKET_TIMEOUT = 5 * SECONDS;
+    public static final int SOCKET_TIMEOUT = 600 * SECONDS;
 
     /**
      * 三次握手完成时间
      */
-    public static final int CONNECT_TIMEOUT = 10 * SECONDS;
+    public static final int CONNECT_TIMEOUT = 300 * SECONDS;
 
     /**
      * 从连接池获取连接的超时时间
