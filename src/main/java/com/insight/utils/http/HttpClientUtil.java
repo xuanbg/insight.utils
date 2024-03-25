@@ -72,18 +72,30 @@ public final class HttpClientUtil {
      *
      * @return 请求结果
      */
-    public static HttpClient getApiHttpClient() {
+    public static HttpClient getHttpClient() {
         if (apiHttpClient == null) {
             apiHttpClient = createDefaultHttpClient(createDefaultHttpClientConfig());
         }
+
         return apiHttpClient;
     }
 
+    /**
+     * 创建默认的请求配置
+     *
+     * @return 请求配置
+     */
     public static RequestConfig createDefaultHttpClientConfig() {
         return RequestConfig.custom().setSocketTimeout(SOCKET_TIMEOUT).setConnectTimeout(CONNECT_TIMEOUT)
                 .setConnectionRequestTimeout(CONNECTION_REQUEST_TIMEOUT).setRedirectsEnabled(false).build();
     }
 
+    /**
+     * 创建默认的httpclient
+     *
+     * @param config 请求配置
+     * @return 请求客户端
+     */
     public static CloseableHttpClient createDefaultHttpClient(RequestConfig config) {
         return HttpClients.custom().setDefaultRequestConfig(config).setMaxConnPerRoute(MAX_CONN_PER_ROUTE).setMaxConnTotal(MAX_CONN_TOTAL).build();
     }
@@ -99,8 +111,8 @@ public final class HttpClientUtil {
         HttpResponse response = null;
         String result;
         try {
-            response = getApiHttpClient().execute(request);
-            HttpEntity resEntity = response.getEntity();
+            response = getHttpClient().execute(request);
+            var resEntity = response.getEntity();
             result = EntityUtils.toString(resEntity, resultEncode);
 
             return result;
@@ -118,7 +130,18 @@ public final class HttpClientUtil {
      * @return 请求结果
      */
     public static String get(String requestUri) {
-        return get(requestUri, null, null);
+        return get(requestUri, null);
+    }
+
+    /**
+     * http get请求
+     *
+     * @param requestUri  请求URL
+     * @param headerParam 请求头参数
+     * @return 请求结果
+     */
+    public static String get(String requestUri, Map<String, String> headerParam) {
+        return get(requestUri, headerParam, "UTF-8");
     }
 
     /**
@@ -131,7 +154,7 @@ public final class HttpClientUtil {
      */
     public static String get(String requestUri, Map<String, String> headerParam, String resultEncode) {
         try {
-            HttpGet httpGet = new HttpGet(requestUri);
+            var httpGet = new HttpGet(requestUri);
             Optional.ofNullable(headerParam).orElse(new HashMap<>(16)).forEach(httpGet::setHeader);
 
             return execute(httpGet, resultEncode);
@@ -148,7 +171,19 @@ public final class HttpClientUtil {
      * @return 请求结果
      */
     public static String post(String requestUri, Map<String, String> requestParam) {
-        return post(requestUri, null, requestParam, null, null);
+        return post(requestUri, null, requestParam);
+    }
+
+    /**
+     * http post application/x-www-form-urlencoded
+     *
+     * @param requestUri   请求URL
+     * @param headerParam  请求头参数
+     * @param requestParam 请求参数
+     * @return 请求结果
+     */
+    public static String post(String requestUri, Map<String, String> headerParam, Map<String, String> requestParam) {
+        return post(requestUri, headerParam, requestParam, "UTF-8", "UTF-8");
     }
 
     /**
@@ -163,7 +198,7 @@ public final class HttpClientUtil {
      */
     public static String post(String requestUri, Map<String, String> headerParam, Map<String, String> requestParam, String requestEncode, String resultEncode) {
         try {
-            HttpPost httpPost = new HttpPost(requestUri);
+            var httpPost = new HttpPost(requestUri);
             Optional.ofNullable(headerParam).orElse(new HashMap<>(16)).forEach(httpPost::setHeader);
             List<NameValuePair> nameValuePairList = new ArrayList<>();
             Optional.ofNullable(requestParam).orElse(new HashMap<>(16)).forEach((k, v) -> nameValuePairList.add(new BasicNameValuePair(k, v)));
@@ -183,7 +218,19 @@ public final class HttpClientUtil {
      * @return 请求结果
      */
     public static String postJson(String requestUri, String assertion) {
-        return postJson(requestUri, null, assertion, ContentType.APPLICATION_JSON, null);
+        return postJson(requestUri, null, assertion);
+    }
+
+    /**
+     * http post application/json
+     *
+     * @param requestUri  请求URL
+     * @param headerParam 请求头参数
+     * @param assertion   json字符串
+     * @return 请求结果
+     */
+    public static String postJson(String requestUri, Map<String, String> headerParam, String assertion) {
+        return postJson(requestUri, headerParam, assertion, ContentType.APPLICATION_JSON, "UTF-8");
     }
 
     /**
@@ -198,7 +245,7 @@ public final class HttpClientUtil {
      */
     public static String postJson(String requestUri, Map<String, String> headerParam, String assertion, ContentType contentType, String resultEncode) {
         try {
-            HttpPost httpPost = new HttpPost(requestUri);
+            var httpPost = new HttpPost(requestUri);
             Optional.ofNullable(headerParam).orElse(new HashMap<>(16)).forEach(httpPost::setHeader);
             HttpEntity httpEntity = new StringEntity(assertion, contentType);
             httpPost.setEntity(httpEntity);
@@ -243,7 +290,7 @@ public final class HttpClientUtil {
      * @return 请求结果
      */
     public static String postFormData(String requestUri, Map<String, String> headerParam, Map<String, String> requestParam, String fileName, File file) {
-        return postFormData(requestUri, headerParam, requestParam, fileName, file, null, null);
+        return postFormData(requestUri, headerParam, requestParam, fileName, file, "UTF-8", "UTF-8");
     }
 
     /**
@@ -260,13 +307,13 @@ public final class HttpClientUtil {
      */
     public static String postFormData(String requestUri, Map<String, String> headerParam, Map<String, String> requestParam, String fileName, File file, String requestEncode, String resultEncode) {
         try {
-            MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+            var multipartEntityBuilder = MultipartEntityBuilder.create();
             if (file != null && Util.isNotEmpty(fileName)) {
                 multipartEntityBuilder.addBinaryBody(fileName, file).setMode(HttpMultipartMode.RFC6532);
             }
 
             Optional.ofNullable(requestParam).orElse(new HashMap<>(16)).forEach((k, v) -> multipartEntityBuilder.addPart(k, new StringBody(v, ContentType.create("text/plain", Charset.forName(requestEncode)))));
-            HttpPost httpPost = new HttpPost(requestUri);
+            var httpPost = new HttpPost(requestUri);
             Optional.ofNullable(headerParam).orElse(new HashMap<>(16)).forEach(httpPost::setHeader);
             httpPost.setEntity(multipartEntityBuilder.build());
 
@@ -285,8 +332,8 @@ public final class HttpClientUtil {
      */
     public static byte[] getByteFromUrl(String url) {
         try {
-            HttpGet get = new HttpGet(url);
-            HttpResponse res = getApiHttpClient().execute(get);
+            var get = new HttpGet(url);
+            var res = getHttpClient().execute(get);
             if (res.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 throw new BusinessException(res.toString());
             }
