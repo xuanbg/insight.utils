@@ -6,7 +6,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -33,7 +32,7 @@ import java.util.*;
  * @date 2018/1/11.
  * @remark
  */
-public final class HttpClientUtil {
+public final class HttpClient {
 
     /**
      * 每个路由最大连接数
@@ -65,14 +64,14 @@ public final class HttpClientUtil {
      */
     public static final int CONNECTION_REQUEST_TIMEOUT = 5 * SECONDS;
 
-    private static HttpClient apiHttpClient = null;
+    private static org.apache.http.client.HttpClient apiHttpClient = null;
 
     /**
      * 创建 httpclient
      *
      * @return 请求结果
      */
-    public static HttpClient getHttpClient() {
+    public static org.apache.http.client.HttpClient getHttpClient() {
         if (apiHttpClient == null) {
             apiHttpClient = createDefaultHttpClient(createDefaultHttpClientConfig());
         }

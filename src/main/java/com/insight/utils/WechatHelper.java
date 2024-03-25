@@ -1,6 +1,6 @@
 package com.insight.utils;
 
-import com.insight.utils.http.HttpClientUtil;
+import com.insight.utils.http.HttpClient;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.wechat.WechatToken;
 import com.insight.utils.pojo.wechat.WechatUser;
@@ -25,7 +25,7 @@ public final class WechatHelper {
      */
     public static WechatUser getUserInfo(String code, String weChatAppId, String secret) {
         String url = buildGetTokenUrl(code, weChatAppId, secret);
-        String tokenJson = HttpClientUtil.get(url,null,"utf-8");
+        String tokenJson = HttpClient.get(url,null,"utf-8");
         if (!checkWeChatResult(tokenJson)) {
             String msg = "AppID is: %s\r\nCode is: %s\r\nSecret is: %s\r\nResult is:%s".formatted(weChatAppId, code, secret, tokenJson);
             throw new BusinessException(msg);
@@ -37,7 +37,7 @@ public final class WechatHelper {
         }
 
         url = buildGetUserInfoUrl(token.getOpenid(), token.getAccess_token());
-        String resultJson = HttpClientUtil.get(url,null,"utf-8");
+        String resultJson = HttpClient.get(url,null,"utf-8");
         if (!checkWeChatResult(resultJson)) {
             String msg = "AppID is: %s\r\nToken is: %s\r\nResult is:%s".formatted(weChatAppId, token.getAccess_token(), resultJson);
             throw new BusinessException(msg);
