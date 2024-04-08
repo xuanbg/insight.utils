@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.DateTime;
 import com.insight.utils.pojo.base.BaseXo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,9 +77,9 @@ public class TokenData extends BaseXo {
     private Boolean autoRefresh;
 
     /**
-     * 租户到期时间
+     * 限定用户类型
      */
-    private LocalDate expireDate;
+    private Integer limitType;
 
     /**
      * 授权码获取时间
@@ -198,12 +197,12 @@ public class TokenData extends BaseXo {
         this.autoRefresh = autoRefresh;
     }
 
-    public LocalDate getExpireDate() {
-        return expireDate;
+    public Integer getLimitType() {
+        return limitType;
     }
 
-    public void setExpireDate(LocalDate expireDate) {
-        this.expireDate = expireDate;
+    public void setLimitType(Integer limitType) {
+        this.limitType = limitType;
     }
 
     public LocalDateTime getPermitTime() {

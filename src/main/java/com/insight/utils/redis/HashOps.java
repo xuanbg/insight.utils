@@ -140,10 +140,10 @@ public class HashOps extends KeyOps {
      * 以Hash方式保存数据到Redis
      *
      * @param key 键
-     * @param map Map 对象
+     * @param obj 对象
      */
-    public static void putAll(String key, Map<String, Object> map) {
-        var stringMap = Json.toStringValueMap(map);
+    public static void putAll(String key, Object obj) {
+        var stringMap = Json.toStringValueMap(obj);
         REDIS.opsForHash().putAll(key, stringMap);
     }
 
