@@ -102,7 +102,7 @@ public class User extends UserBase {
     }
 
     public Boolean getBuiltin() {
-        return builtin;
+        return builtin != null && builtin;
     }
 
     public void setBuiltin(Boolean builtin) {
@@ -110,7 +110,7 @@ public class User extends UserBase {
     }
 
     public Boolean getInvalid() {
-        return invalid;
+        return invalid != null && invalid;
     }
 
     public void setInvalid(Boolean invalid) {

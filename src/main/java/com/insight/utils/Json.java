@@ -116,14 +116,14 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBean(String json, Class<T> type) {
-        if (json == null || json.isEmpty() || !json.matches("^\\s*([{\\[])(.*?)([}\\]])\\s*$")) {
+        if (Util.isNotEmpty(json) && json.trim().matches("^\\s*([{\\[])(.*?)([}\\]])\\s*$")) {
+            try {
+                return MAPPER.readValue(json.trim(), type);
+            } catch (IOException ex) {
+                throw new BusinessException(ex.getMessage());
+            }
+        } else {
             return null;
-        }
-
-        try {
-            return MAPPER.readValue(json, type);
-        } catch (IOException ex) {
-            throw new BusinessException(ex.getMessage());
         }
     }
 
