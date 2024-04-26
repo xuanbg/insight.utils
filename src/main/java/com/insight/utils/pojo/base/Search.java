@@ -344,7 +344,7 @@ public class Search extends BaseXo {
     }
 
     public String getOrderBy() {
-        if (orderBy == null || !orderBy.matches("^[0-9a-zA-Z_,`' ]*$")) {
+        if (orderBy == null || !orderBy.matches("^[0-9a-zA-Z_,.`' ]*$")) {
             return "id desc";
         } else {
             orderBy = orderBy.replace("DESC", "desc").replace("ASC", "asc");
