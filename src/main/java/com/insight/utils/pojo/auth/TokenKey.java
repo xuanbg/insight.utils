@@ -63,4 +63,8 @@ public class TokenKey extends BaseXo {
     public void setSecret(String secret) {
         this.secret = secret;
     }
+
+    public String getKey(){
+        return "Token:%d:%d:%d".formatted(appId, tenantId, userId);
+    }
 }
