@@ -66,7 +66,7 @@ public class TokenKey extends BaseXo {
     }
 
     @JsonIgnore
-    public String getKey(){
-        return "Token:%d:%d:%d".formatted(appId, tenantId, userId);
+    public String getKey() {
+        return "Token:%d:%d:%d".formatted(appId, tenantId == null ? 0 : tenantId, userId);
     }
 }
