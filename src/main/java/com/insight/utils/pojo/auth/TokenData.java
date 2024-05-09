@@ -6,6 +6,7 @@ import com.insight.utils.DateTime;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 宣炳刚
@@ -61,11 +62,6 @@ public class TokenData extends TokenKey {
     private Boolean autoRefresh;
 
     /**
-     * 限定用户类型
-     */
-    private Integer limitType;
-
-    /**
      * 授权码获取时间
      */
     private LocalDateTime permitTime;
@@ -74,11 +70,6 @@ public class TokenData extends TokenKey {
      * Token过期时间
      */
     private LocalDateTime expiryTime;
-
-    /**
-     * Token验证密钥
-     */
-    private String secretKey;
 
     /**
      * 功能授权代码集合
@@ -157,14 +148,6 @@ public class TokenData extends TokenKey {
         this.autoRefresh = autoRefresh;
     }
 
-    public Integer getLimitType() {
-        return limitType;
-    }
-
-    public void setLimitType(Integer limitType) {
-        this.limitType = limitType;
-    }
-
     public LocalDateTime getPermitTime() {
         return permitTime;
     }
@@ -181,14 +164,6 @@ public class TokenData extends TokenKey {
         this.expiryTime = expiryTime;
     }
 
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
     public List<String> getPermitFuncs() {
         return permitFuncs == null ? new ArrayList<>() : permitFuncs;
     }
@@ -200,12 +175,12 @@ public class TokenData extends TokenKey {
     /**
      * 验证Token是否合法
      *
-     * @param secretKey 令牌安全码
+     * @param secret 令牌安全码
      * @return Token是否合法
      */
     @JsonIgnore
-    public boolean verifySecretKey(String secretKey) {
-        return this.secretKey.equals(secretKey);
+    public boolean verify(String secret) {
+        return Objects.equals(this.secret, secret);
     }
 
     /**

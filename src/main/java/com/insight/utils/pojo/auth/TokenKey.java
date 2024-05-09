@@ -28,9 +28,15 @@ public class TokenKey extends BaseXo {
     /**
      * 安全码，用于验证令牌合法性
      */
-    private String secret;
+    protected String secret;
 
     public TokenKey() {
+    }
+
+    public TokenKey(Long appId, Long tenantId, Long userId) {
+        this.appId = appId;
+        this.tenantId = tenantId;
+        this.userId = userId;
     }
 
     public Long getAppId() {

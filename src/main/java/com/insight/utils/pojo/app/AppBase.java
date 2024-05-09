@@ -15,11 +15,6 @@ public class AppBase extends BaseXo {
     private Long id;
 
     /**
-     * 类型: 0.常规应用, 1.限定应用(与用户类型匹配)
-     */
-    private Integer type;
-
-    /**
      * 授权码生命周期(秒)
      */
     private Long permitLife;
@@ -45,6 +40,11 @@ public class AppBase extends BaseXo {
     private Boolean autoRefresh;
 
     /**
+     * 是否平台应用: 0.租户应用, 1.平台应用
+     */
+    private Boolean platform;
+
+    /**
      * 是否限定用户类型
      */
     private Integer limitType;
@@ -55,14 +55,6 @@ public class AppBase extends BaseXo {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public Long getPermitLife() {
@@ -103,6 +95,14 @@ public class AppBase extends BaseXo {
 
     public void setAutoRefresh(Boolean autoRefresh) {
         this.autoRefresh = autoRefresh;
+    }
+
+    public Boolean getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(Boolean platform) {
+        this.platform = platform;
     }
 
     public Integer getLimitType() {
