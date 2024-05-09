@@ -17,21 +17,6 @@ public class TokenData extends BaseXo {
     public static final int TIME_OUT = 300;
 
     /**
-     * 应用ID
-     */
-    private Long appId;
-
-    /**
-     * 用户ID
-     */
-    private Long userId;
-
-    /**
-     * 租户ID
-     */
-    private Long tenantId;
-
-    /**
      * 租户名称
      */
     private String tenantName;
@@ -100,30 +85,6 @@ public class TokenData extends BaseXo {
      * 功能授权代码集合
      */
     private List<String> permitFuncs;
-
-    public Long getAppId() {
-        return appId;
-    }
-
-    public void setAppId(Long appId) {
-        this.appId = appId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
-    }
 
     public String getTenantName() {
         return tenantName;

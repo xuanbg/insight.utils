@@ -10,9 +10,19 @@ import com.insight.utils.pojo.base.BaseXo;
 public class TokenKey extends BaseXo {
 
     /**
-     * 令牌ID，唯一
+     * 应用ID
      */
-    private String id;
+    private Long appId;
+
+    /**
+     * 租户ID
+     */
+    private Long tenantId;
+
+    /**
+     * 用户ID
+     */
+    private Long userId;
 
     /**
      * 安全码，用于验证令牌合法性
@@ -22,12 +32,28 @@ public class TokenKey extends BaseXo {
     public TokenKey() {
     }
 
-    public String getId() {
-        return id;
+    public Long getAppId() {
+        return appId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAppId(Long appId) {
+        this.appId = appId;
+    }
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getSecret() {
