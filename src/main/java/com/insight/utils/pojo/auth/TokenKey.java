@@ -1,5 +1,6 @@
 package com.insight.utils.pojo.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.pojo.base.BaseXo;
 
 /**
@@ -64,6 +65,7 @@ public class TokenKey extends BaseXo {
         this.secret = secret;
     }
 
+    @JsonIgnore
     public String getKey(){
         return "Token:%d:%d:%d".formatted(appId, tenantId, userId);
     }
