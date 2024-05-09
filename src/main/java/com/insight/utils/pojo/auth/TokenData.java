@@ -2,7 +2,6 @@ package com.insight.utils.pojo.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.DateTime;
-import com.insight.utils.pojo.base.BaseXo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.List;
  * @date 2018/1/4
  * @remark 令牌信息实体类
  */
-public class TokenData extends BaseXo {
+public class TokenData extends TokenKey {
     public static final int TIME_OUT = 300;
 
     /**
