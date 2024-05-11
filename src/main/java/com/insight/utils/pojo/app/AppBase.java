@@ -45,7 +45,7 @@ public class AppBase extends BaseXo {
     private Boolean platform;
 
     /**
-     * 是否限定用户类型
+     * 限定用户类型
      */
     private Integer limitType;
 

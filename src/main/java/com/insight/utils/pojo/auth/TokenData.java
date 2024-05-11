@@ -17,6 +17,11 @@ public class TokenData extends TokenKey {
     public static final int TIME_OUT = 300;
 
     /**
+     * 用户特征字符串
+     */
+    private String fingerprint;
+
+    /**
      * 租户名称
      */
     private String tenantName;
@@ -37,34 +42,19 @@ public class TokenData extends TokenKey {
     private String areaCode;
 
     /**
-     * 用户特征字符串
-     */
-    private String fingerprint;
-
-    /**
      * 授权码生命周期(秒)
      */
     private Long permitLife;
 
     /**
-     * 令牌生命周期(秒)
-     */
-    private Long life;
-
-    /**
-     * 单点登录
-     */
-    private Boolean signInOne;
-
-    /**
-     * 是否自动刷新
-     */
-    private Boolean autoRefresh;
-
-    /**
      * 授权码获取时间
      */
     private LocalDateTime permitTime;
+
+    /**
+     * 令牌生命周期(秒)
+     */
+    private Long life;
 
     /**
      * Token过期时间
@@ -75,6 +65,14 @@ public class TokenData extends TokenKey {
      * 功能授权代码集合
      */
     private List<String> permitFuncs;
+
+    public String getFingerprint() {
+        return fingerprint;
+    }
+
+    public void setFingerprint(String fingerprint) {
+        this.fingerprint = fingerprint;
+    }
 
     public String getTenantName() {
         return tenantName;
@@ -108,14 +106,6 @@ public class TokenData extends TokenKey {
         this.areaCode = areaCode;
     }
 
-    public String getFingerprint() {
-        return fingerprint;
-    }
-
-    public void setFingerprint(String fingerprint) {
-        this.fingerprint = fingerprint;
-    }
-
     public Long getPermitLife() {
         return permitLife == null ? 0L : permitLife;
     }
@@ -124,36 +114,20 @@ public class TokenData extends TokenKey {
         this.permitLife = permitLife;
     }
 
-    public Long getLife() {
-        return life == null ? 0L : life;
-    }
-
-    public void setLife(Long life) {
-        this.life = life;
-    }
-
-    public Boolean getSignInOne() {
-        return signInOne != null && signInOne;
-    }
-
-    public void setSignInOne(Boolean signInOne) {
-        this.signInOne = signInOne;
-    }
-
-    public Boolean getAutoRefresh() {
-        return getLife() > 0 && autoRefresh != null && autoRefresh;
-    }
-
-    public void setAutoRefresh(Boolean autoRefresh) {
-        this.autoRefresh = autoRefresh;
-    }
-
     public LocalDateTime getPermitTime() {
         return permitTime;
     }
 
     public void setPermitTime(LocalDateTime permitTime) {
         this.permitTime = permitTime;
+    }
+
+    public Long getLife() {
+        return life == null ? 0L : life;
+    }
+
+    public void setLife(Long life) {
+        this.life = life;
     }
 
     public LocalDateTime getExpiryTime() {
@@ -176,7 +150,7 @@ public class TokenData extends TokenKey {
      * 验证Token是否合法
      *
      * @param secret 令牌安全码
-     * @return Token是否合法
+     * @return 是否合法
      */
     @JsonIgnore
     public boolean verify(String secret) {
@@ -194,9 +168,19 @@ public class TokenData extends TokenKey {
     }
 
     /**
+     * Token是否过期
+     *
+     * @return 是否过期
+     */
+    @JsonIgnore
+    public boolean isExpiry() {
+        return getLife() > 0 && LocalDateTime.now().isAfter(expiryTime.plusSeconds(TIME_OUT));
+    }
+
+    /**
      * 授权是否过期
      *
-     * @return 授权是否过期
+     * @return 是否过期
      */
     @JsonIgnore
     public boolean isPermitExpiry() {
@@ -208,12 +192,13 @@ public class TokenData extends TokenKey {
     }
 
     /**
-     * Token是否过期
+     * 指纹是否相同
      *
-     * @return Token是否过期
+     * @param fingerprint 指纹
+     * @return 是否相同
      */
     @JsonIgnore
-    public boolean isExpiry() {
-        return getLife() > 0 && LocalDateTime.now().isAfter(expiryTime.plusSeconds(TIME_OUT));
+    public boolean fingerprintIsMatch(String fingerprint) {
+        return Objects.equals(this.fingerprint, fingerprint);
     }
 }
