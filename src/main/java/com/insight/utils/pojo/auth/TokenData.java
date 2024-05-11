@@ -66,6 +66,11 @@ public class TokenData extends TokenKey {
      */
     private List<String> permitFuncs;
 
+    /**
+     * 是否自动刷新
+     */
+    private Boolean autoRefresh;
+
     public String getFingerprint() {
         return fingerprint;
     }
@@ -144,6 +149,14 @@ public class TokenData extends TokenKey {
 
     public void setPermitFuncs(List<String> permitFuncs) {
         this.permitFuncs = permitFuncs;
+    }
+
+    public Boolean getAutoRefresh() {
+        return autoRefresh;
+    }
+
+    public void setAutoRefresh(Boolean autoRefresh) {
+        this.autoRefresh = autoRefresh;
     }
 
     /**
