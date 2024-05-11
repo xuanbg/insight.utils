@@ -197,11 +197,7 @@ public class TokenData extends TokenKey {
      */
     @JsonIgnore
     public boolean isPermitExpiry() {
-        if (getPermitLife() <= 0) {
-            return false;
-        }
-
-        return LocalDateTime.now().isAfter(permitTime.plusSeconds(getPermitLife()));
+        return getPermitLife() > 0 && LocalDateTime.now().isAfter(permitTime.plusSeconds(getPermitLife()));
     }
 
     /**
