@@ -232,7 +232,7 @@ public class Search extends BaseXo {
     }
 
     public String getKeyword() {
-        return Util.isEmpty(keyword) ? null : keyword.replace("%", "\\%");
+        return Util.isEmpty(keyword) ? null : keyword.trim().replace("%", "\\%");
     }
 
     public void setKeyword(String keyword) {
@@ -264,7 +264,11 @@ public class Search extends BaseXo {
     }
 
     public LocalDate getStartDate() {
-        return startDate != null ? startDate : (Util.isNotEmpty(year) && weeks != null) ? DateTime.getWeeksOfYeay(year, weeks) : null;
+        return startDate != null
+                ? startDate
+                : (Util.isNotEmpty(getYear()) && weeks != null)
+                ? DateTime.getWeeksOfYeay(getYear(), weeks)
+                : null;
     }
 
     public void setStartDate(LocalDate startDate) {
@@ -272,7 +276,11 @@ public class Search extends BaseXo {
     }
 
     public LocalDate getEndDate() {
-        return endDate != null ? endDate.plusDays(1) : (Util.isNotEmpty(year) && weeks != null) ? DateTime.getWeeksOfYeay(year, weeks).plusDays(7) : null;
+        return endDate != null
+                ? endDate.plusDays(1)
+                : (Util.isNotEmpty(getYear()) && weeks != null)
+                ? DateTime.getWeeksOfYeay(getYear(), weeks).plusDays(7)
+                : null;
     }
 
     public void setEndDate(LocalDate endDate) {
@@ -280,7 +288,7 @@ public class Search extends BaseXo {
     }
 
     public String getYear() {
-        return year;
+        return year.trim();
     }
 
     public void setYear(String year) {

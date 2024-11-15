@@ -71,21 +71,20 @@ public class HashOps extends KeyOps {
      * @param key 键
      * @return Value
      */
-    public static Map<String, String> entries(String key) {
-        var map = REDIS.opsForHash().entries(key);
-        return Json.toStringValueMap(map);
+    public static Map<Object, Object> entries(String key) {
+        return REDIS.opsForHash().entries(key);
     }
 
     /**
-     * 读取指定键的数据为指定类型的对象
+     * 读取指定键的数据为对象
      *
      * @param key  键
      * @param type 指定的类型
+     * @param <T>  泛型
      * @return Value
      */
     public static <T> T entries(String key, Class<T> type) {
-        var map = REDIS.opsForHash().entries(key);
-        return Json.clone(map, type);
+        return Json.clone(entries(key), type);
     }
 
     /**
@@ -117,8 +116,7 @@ public class HashOps extends KeyOps {
      * @return Value
      */
     public static <T> List<T> values(String key, Class<T> type) {
-        var val = REDIS.opsForHash().values(key);
-        return Json.cloneList(val, type);
+        return REDIS.opsForHash().values(key).stream().map(i -> Json.clone(i, type)).toList();
     }
 
     /**

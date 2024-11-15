@@ -1,5 +1,7 @@
 package com.insight.utils.pojo.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
 
 /**
@@ -163,5 +165,10 @@ public class InterfaceDto extends BaseXo {
 
     public void setLogResult(Boolean logResult) {
         this.logResult = logResult;
+    }
+
+    @JsonIgnore
+    public String getHash() {
+        return Util.md5(method + ":" + url);
     }
 }

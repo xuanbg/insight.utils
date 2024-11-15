@@ -377,6 +377,23 @@ public final class Util {
     }
 
     /**
+     * 获取字符串中指定字符的个数
+     *
+     * @param str 指定字符串
+     * @param c   指定字符
+     * @return 字符个数
+     */
+    public static int getCharCount(String str, char c) {
+        var count = 0;
+        for (var i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == c) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * 逗号分割字符串转整型集合
      *
      * @param str 逗号分割字符串
