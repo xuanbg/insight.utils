@@ -288,7 +288,7 @@ public class Search extends BaseXo {
     }
 
     public String getYear() {
-        return year.trim();
+        return year == null ? null : year.trim();
     }
 
     public void setYear(String year) {
