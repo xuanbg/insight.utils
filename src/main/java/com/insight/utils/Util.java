@@ -541,7 +541,7 @@ public final class Util {
      * @return 是否不为空
      */
     public static <T> boolean isNotEmpty(List<T> list) {
-        return list != null && !list.isEmpty();
+        return list != null && !list.isEmpty() && list.stream().allMatch(Objects::nonNull);
     }
 
     /**
@@ -551,7 +551,17 @@ public final class Util {
      * @return 是否为空
      */
     public static <T> boolean isEmpty(List<T> list) {
-        return list == null || list.isEmpty();
+        return list == null || list.isEmpty() || list.stream().allMatch(Objects::isNull);
+    }
+
+    /**
+     * 集合是否有空值
+     *
+     * @param list 集合
+     * @return 是否有空值
+     */
+    public static <T> boolean hasAnyEmpty(List<T> list) {
+        return list == null || list.isEmpty() || list.stream().anyMatch(Objects::isNull);
     }
 
     /**
