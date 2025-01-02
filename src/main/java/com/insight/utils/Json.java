@@ -1,5 +1,6 @@
 package com.insight.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -130,18 +131,31 @@ public final class Json {
     /**
      * 将json转换成指定类型的集合
      *
-     * @param json           json数据
-     * @param elementClasses 集合元素类型
-     * @param <T>            泛型
+     * @param obj  对象
+     * @param type 集合元素类型
+     * @param <T>  泛型
      * @return List
      */
-    public static <T> T toList(String json, Class<?>... elementClasses) {
+    public static <T> List<T> toList(Object obj, Class<T> type) {
+        var json = toJson(obj);
+        return toList(json, type);
+    }
+
+    /**
+     * 将json转换成指定类型的集合
+     *
+     * @param json json数据
+     * @param type 集合元素类型
+     * @param <T>  泛型
+     * @return List
+     */
+    public static <T> List<T> toList(String json, Class<T> type) {
         if (json == null || json.isEmpty()) {
             return null;
         }
 
         try {
-            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementClasses));
+            return MAPPER.readValue(json, new TypeReference<>() {});
         } catch (IOException ex) {
             throw new BusinessException(ex.getMessage());
         }
@@ -262,11 +276,10 @@ public final class Json {
      * 获取泛型Collection JavaType
      *
      * @param collectionClass 泛型的Collection
-     * @param elementClasses  元素类
+     * @param elementType     元素类
      * @return JavaType Java类型
-     * @since 1.0
      */
-    public static JavaType getJavaType(Class<?> collectionClass, Class<?>... elementClasses) {
-        return MAPPER.getTypeFactory().constructParametricType(collectionClass, elementClasses);
+    public static JavaType getJavaType(Class<?> collectionClass, Class<?>... elementType) {
+        return MAPPER.getTypeFactory().constructParametricType(collectionClass, elementType);
     }
 }

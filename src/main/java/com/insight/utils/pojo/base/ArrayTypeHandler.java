@@ -8,13 +8,14 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author 宣炳刚
  * @date 2018/8/2
  * @remark 数据库json字段转换集合
  */
-public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
+public class ArrayTypeHandler<T> extends BaseTypeHandler<List<T>> {
     private final Class<T> clazz;
 
     /**
@@ -38,7 +39,7 @@ public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
      * @param jdbcType  类型
      */
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, List<T> parameter, JdbcType jdbcType) throws SQLException {
         ps.setString(i, Json.toJson(parameter));
     }
 
@@ -50,7 +51,7 @@ public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
      * @return 对象实体
      */
     @Override
-    public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
+    public List<T> getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return Json.toList(rs.getString(columnName), clazz);
     }
 
@@ -62,7 +63,7 @@ public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
      * @return 对象实体
      */
     @Override
-    public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+    public List<T> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return Json.toList(rs.getString(columnIndex), clazz);
     }
 
@@ -74,7 +75,7 @@ public class ArrayTypeHandler<T> extends BaseTypeHandler<T> {
      * @return 对象实体
      */
     @Override
-    public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+    public List<T> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         return Json.toList(cs.getString(columnIndex), clazz);
     }
 }

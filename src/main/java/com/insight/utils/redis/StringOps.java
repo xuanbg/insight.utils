@@ -44,8 +44,8 @@ public final class StringOps extends KeyOps {
     public static void set(String key, Object value) {
         var json = Json.toJson(value);
 
-        var expire = getExpire(key);
-        if (expire == null || expire < 0) {
+        long expire = getExpire(key);
+        if (expire < 0) {
             REDIS.opsForValue().set(key, json);
         } else if (expire > 0) {
             REDIS.opsForValue().set(key, json, expire, TimeUnit.SECONDS);

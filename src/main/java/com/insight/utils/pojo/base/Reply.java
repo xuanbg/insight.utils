@@ -3,6 +3,8 @@ package com.insight.utils.pojo.base;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Json;
 
+import java.util.List;
+
 /**
  * @author 作者
  * @date 2017年9月5日
@@ -93,7 +95,7 @@ public final class Reply extends BaseXo {
      * @return 对象集合数据
      */
     @JsonIgnore
-    public <T> T getListFromData(Class<?>... type) {
+    public <T> List<T> getListFromData(Class<T> type) {
         String json = Json.toJson(data);
         return Json.toList(json, type);
     }
@@ -119,7 +121,7 @@ public final class Reply extends BaseXo {
      * @return 对象集合数据
      */
     @JsonIgnore
-    public <T> T getListFromOption(Class<?>... type) {
+    public <T> List<T> getListFromOption(Class<T> type) {
         String json = Json.toJson(option);
         return Json.toList(json, type);
     }

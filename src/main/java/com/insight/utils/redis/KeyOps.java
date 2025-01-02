@@ -38,7 +38,7 @@ public class KeyOps {
      * @param key 键
      * @return 过期时间
      */
-    public static Long getExpire(String key) {
+    public static long getExpire(String key) {
         return REDIS.getExpire(key);
     }
 
@@ -65,10 +65,6 @@ public class KeyOps {
      */
     public static void changeExpire(String key, long time) {
         var expire = getExpire(key);
-        if (expire == null){
-            return;
-        }
-
         if (expire + time == 0) {
             delete(key);
         } else {
