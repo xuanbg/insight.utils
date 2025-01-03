@@ -155,7 +155,7 @@ public final class Json {
         }
 
         try {
-            return MAPPER.readValue(json, new TypeReference<>() {});
+            return MAPPER.readValue(json, new TypeReference<List<T>>() {});
         } catch (IOException ex) {
             throw new BusinessException(ex.getMessage());
         }
