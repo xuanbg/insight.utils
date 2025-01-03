@@ -1,6 +1,5 @@
 package com.insight.utils;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -155,7 +154,7 @@ public final class Json {
         }
 
         try {
-            return MAPPER.readValue(json, new TypeReference<List<T>>() {});
+            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, type));
         } catch (IOException ex) {
             throw new BusinessException(ex.getMessage());
         }
