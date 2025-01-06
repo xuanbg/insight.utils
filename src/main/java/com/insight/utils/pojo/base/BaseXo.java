@@ -22,7 +22,7 @@ public class BaseXo implements Serializable {
      * @return 指定类型数据对象
      */
     public <T> T convert(Class<T> type) {
-        return Json.clone(this, type);
+        return Json.toBean(this, type);
     }
 
     /**

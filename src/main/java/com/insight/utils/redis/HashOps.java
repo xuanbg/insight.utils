@@ -84,7 +84,7 @@ public class HashOps extends KeyOps {
      * @return Value
      */
     public static <T> T entries(String key, Class<T> type) {
-        return Json.clone(entries(key), type);
+        return Json.toBean(entries(key), type);
     }
 
     /**
@@ -95,7 +95,7 @@ public class HashOps extends KeyOps {
      */
     public static List<String> keys(String key) {
         var val = REDIS.opsForHash().keys(key);
-        return Json.cloneList(val, String.class);
+        return Json.toList(val, String.class);
     }
 
     /**
@@ -116,7 +116,7 @@ public class HashOps extends KeyOps {
      * @return Value
      */
     public static <T> List<T> values(String key, Class<T> type) {
-        return REDIS.opsForHash().values(key).stream().map(i -> Json.clone(i, type)).toList();
+        return Json.toList(REDIS.opsForHash().values(key), type);
     }
 
     /**

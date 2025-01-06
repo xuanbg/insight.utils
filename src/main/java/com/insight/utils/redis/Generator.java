@@ -22,7 +22,7 @@ public final class Generator {
     private static final Map<String, Object> SET;
 
     static {
-        String val = Redis.get("Config:GarbleSet");
+        String val = StringOps.get("Config:GarbleSet");
         if (val == null || val.isEmpty()) {
             List<String> list = new ArrayList<>();
             for (int i = 0; i < 100; i++) {
@@ -37,7 +37,7 @@ public final class Generator {
                 list.remove(index);
             }
 
-            Redis.set("Config:GarbleSet", toJson());
+            StringOps.set("Config:GarbleSet", toJson());
         } else {
             SET = toMap(val);
         }
@@ -87,7 +87,7 @@ public final class Generator {
         // 获取流水号,如流水号不存在,则生成流水号(加密方式初始为随机数,非加密方式初始为1)
         int no;
         String key = "CodeGroup:" + group;
-        String val = Redis.get(key);
+        String val = StringOps.get(key);
         if (val == null || val.isEmpty()) {
             if (isEncrypt) {
                 int max = (int) Math.pow(10, len);
@@ -101,7 +101,7 @@ public final class Generator {
         }
 
         // 更新流水号并释放锁
-        Redis.set(key, String.valueOf(no));
+        StringOps.set(key, String.valueOf(no));
         LOCK.releaseLock(param);
 
         // 格式化流水号

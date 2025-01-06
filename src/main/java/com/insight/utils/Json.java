@@ -22,10 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author duxl
@@ -57,35 +54,6 @@ public final class Json {
     }
 
     /**
-     * 克隆一个对象或将一个对象转换成新的类型并复制相同属性的值
-     *
-     * @param type bean类型
-     * @param <T>  泛型
-     * @return bean
-     */
-    public static <T> T clone(Object obj, Class<T> type) {
-        var json = toJson(obj);
-        return toBean(json, type);
-    }
-
-    /**
-     * 将json转换成指定类型的集合
-     *
-     * @param <T>         泛型
-     * @param obj         bean类型
-     * @param elementType 集合元素类型
-     * @return List
-     */
-    public static <T> T cloneList(Object obj, Class<?>... elementType) {
-        var json = toJson(obj);
-        try {
-            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, elementType));
-        } catch (IOException ex) {
-            throw new BusinessException(ex.getMessage());
-        }
-    }
-
-    /**
      * 将bean转换成json
      *
      * @param obj bean对象
@@ -108,6 +76,18 @@ public final class Json {
     }
 
     /**
+     * 克隆一个对象或将一个对象转换成新的类型并复制相同属性的值
+     *
+     * @param type bean类型
+     * @param <T>  泛型
+     * @return bean
+     */
+    public static <T> T toBean(Object obj, Class<T> type) {
+        var json = toJson(obj);
+        return toBean(json, type);
+    }
+
+    /**
      * 把json字符串转换为相应的JavaBean对象
      *
      * @param json json数据
@@ -116,14 +96,14 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBean(String json, Class<T> type) {
-        if (Util.isNotEmpty(json) && json.trim().matches("^\\s*([{\\[])(.*?)([}\\]])\\s*$")) {
-            try {
-                return MAPPER.readValue(json.trim(), type);
-            } catch (IOException ex) {
-                throw new BusinessException(ex.getMessage());
-            }
-        } else {
+        if (Util.isEmpty(json) || !json.trim().matches("^([\\[{])(.*?)([}\\]])$")) {
             return null;
+        }
+
+        try {
+            return MAPPER.readValue(json.trim(), type);
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
         }
     }
 
@@ -149,12 +129,12 @@ public final class Json {
      * @return List
      */
     public static <T> List<T> toList(String json, Class<T> type) {
-        if (json == null || json.isEmpty()) {
-            return null;
+        if (Util.isEmpty(json) || !json.trim().matches("^\\[(.*?)]$")) {
+            return new ArrayList<>();
         }
 
         try {
-            return MAPPER.readValue(json, MAPPER.getTypeFactory().constructParametricType(List.class, type));
+            return MAPPER.readValue(json.trim(), MAPPER.getTypeFactory().constructParametricType(List.class, type));
         } catch (IOException ex) {
             throw new BusinessException(ex.getMessage());
         }
@@ -173,7 +153,7 @@ public final class Json {
 
         try {
             //noinspection unchecked
-            return MAPPER.readValue(json, HashMap.class);
+            return MAPPER.readValue(json.trim(), HashMap.class);
         } catch (IOException ex) {
             throw new BusinessException(ex.getMessage());
         }

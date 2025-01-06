@@ -45,8 +45,8 @@ public class LockHandler {
 
             long startTime = System.currentTimeMillis();
             while (true) {
-                if (Redis.setIfAbsent(key, param.getValue())) {
-                    Redis.set(key, param.getValue(), paramExpireTime);
+                if (StringOps.setIfAbsent(key, param.getValue())) {
+                    StringOps.set(key, param.getValue(), paramExpireTime);
                     return true;
                 }
 
@@ -113,9 +113,9 @@ public class LockHandler {
      */
     public void releaseLock(LockParam param) {
         String key = "Lock:" + param.getKey();
-        String val = Redis.get(key);
+        String val = StringOps.get(key);
         if (val.equals(param.getValue())) {
-            Redis.deleteKey(key);
+            KeyOps.delete(key);
         }
     }
 }

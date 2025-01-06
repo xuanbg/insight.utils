@@ -486,11 +486,7 @@ public final class Util {
             return true;
         }
 
-        var elementType = source.get(0).getClass();
-        List<T> s = Json.cloneList(source, elementType);
-        List<T> t = Json.cloneList(target, elementType);
-
-        return s.retainAll(t) || t.retainAll(s);
+        return source.retainAll(target) || target.retainAll(source);
     }
 
     /**
