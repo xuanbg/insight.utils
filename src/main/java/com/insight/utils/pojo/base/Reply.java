@@ -83,8 +83,7 @@ public final class Reply extends BaseXo {
      */
     @JsonIgnore
     public <T> T getBeanFromData(Class<T> type) {
-        String json = Json.toJson(data);
-        return Json.toBean(json, type);
+        return Json.toBean(data, type);
     }
 
     /**
@@ -96,8 +95,7 @@ public final class Reply extends BaseXo {
      */
     @JsonIgnore
     public <T> List<T> getListFromData(Class<T> type) {
-        String json = Json.toJson(data);
-        return Json.toList(json, type);
+        return Json.toList(data, type);
     }
 
     /**
@@ -109,8 +107,7 @@ public final class Reply extends BaseXo {
      */
     @JsonIgnore
     public <T> T getBeanFromOption(Class<T> type) {
-        String json = Json.toJson(option);
-        return Json.toBean(json, type);
+        return Json.toBean(option, type);
     }
 
     /**
@@ -122,7 +119,6 @@ public final class Reply extends BaseXo {
      */
     @JsonIgnore
     public <T> List<T> getListFromOption(Class<T> type) {
-        String json = Json.toJson(option);
-        return Json.toList(json, type);
+        return Json.toList(option, type);
     }
 }
