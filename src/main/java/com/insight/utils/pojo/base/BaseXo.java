@@ -2,6 +2,7 @@ package com.insight.utils.pojo.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Json;
+import com.insight.utils.Util;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class BaseXo implements Serializable {
      */
     @JsonIgnore
     public String getHash() {
-        return Json.toJson(this);
+        return Util.md5(Json.toJson(this));
     }
 
     /**

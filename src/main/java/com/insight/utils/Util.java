@@ -1,6 +1,7 @@
 package com.insight.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.jsoup.Jsoup;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +19,24 @@ import java.util.stream.Collectors;
  * @remark 基础帮助类
  */
 public final class Util {
+
+    /**
+     * 清理富文本
+     *
+     * @param html 富文本
+     * @return 清理后的富文本
+     */
+    public static String cleanRichText(String html) {
+        if (html == null || html.trim().isEmpty()) {
+            return html;
+        }
+
+        var doc = Jsoup.parse(html);
+        var elements = doc.select("*:not(img)");
+        elements.stream().filter(element -> !element.tagName().equalsIgnoreCase("img"))
+                .forEach(element -> element.html(element.text()));
+        return doc.body().html().replaceAll("\\s+", " ").strip();
+    }
 
     /**
      * 获取文件字节数

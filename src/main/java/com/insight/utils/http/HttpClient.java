@@ -1,5 +1,6 @@
 package com.insight.utils.http;
 
+import com.insight.utils.Json;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BusinessException;
 import org.apache.http.HttpEntity;
@@ -213,11 +214,11 @@ public final class HttpClient {
      * http post application/json
      *
      * @param requestUri 请求URL
-     * @param assertion  json字符串
+     * @param body  json对象
      * @return 请求结果
      */
-    public static String postJson(String requestUri, String assertion) {
-        return postJson(requestUri, null, assertion);
+    public static String postJson(String requestUri, Object body) {
+        return postJson(requestUri, null, body);
     }
 
     /**
@@ -225,11 +226,11 @@ public final class HttpClient {
      *
      * @param requestUri  请求URL
      * @param headerParam 请求头参数
-     * @param assertion   json字符串
+     * @param body   json对象
      * @return 请求结果
      */
-    public static String postJson(String requestUri, Map<String, String> headerParam, String assertion) {
-        return postJson(requestUri, headerParam, assertion, ContentType.APPLICATION_JSON, "UTF-8");
+    public static String postJson(String requestUri, Map<String, String> headerParam, Object body) {
+        return postJson(requestUri, headerParam, body, ContentType.APPLICATION_JSON, "UTF-8");
     }
 
     /**
@@ -237,16 +238,16 @@ public final class HttpClient {
      *
      * @param requestUri   请求URL
      * @param headerParam  请求头参数
-     * @param assertion    json字符串
+     * @param body    json对象
      * @param contentType  ContentType
      * @param resultEncode 返回值编码
      * @return 请求结果
      */
-    public static String postJson(String requestUri, Map<String, String> headerParam, String assertion, ContentType contentType, String resultEncode) {
+    public static String postJson(String requestUri, Map<String, String> headerParam, Object body, ContentType contentType, String resultEncode) {
         try {
             var httpPost = new HttpPost(requestUri);
             Optional.ofNullable(headerParam).orElse(new HashMap<>(16)).forEach(httpPost::setHeader);
-            HttpEntity httpEntity = new StringEntity(assertion, contentType);
+            HttpEntity httpEntity = new StringEntity(Json.toJson(body), contentType);
             httpPost.setEntity(httpEntity);
 
             return execute(httpPost, resultEncode);
