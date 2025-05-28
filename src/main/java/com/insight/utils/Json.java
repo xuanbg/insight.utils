@@ -245,6 +245,31 @@ public final class Json {
      * 获取json中的某个字段值
      *
      * @param json json字符串
+     * @param name 字段名称
+     * @param type bean 类型
+     * @return 字段值
+     */
+    public static <T> T getObjectValue(String json, String name, Class<T> type) {
+        return toBean(getValue(json, name), type);
+    }
+
+    /**
+     * 获取json中的某个字段值
+     *
+     * @param json json字符串
+     * @param name 字段名称
+     * @param type bean 类型
+     * @return 字段值
+     */
+    public static <T> List<T> getListValue(String json, String name, Class<T> type) {
+        return toList(getValue(json, name), type);
+    }
+
+    /**
+     * 获取json中的某个字段值
+     *
+     * @param json json字符串
+     * @param name 字段名称
      * @return 字段值
      */
     public static Object getValue(String json, String name) {
