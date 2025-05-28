@@ -249,7 +249,7 @@ public final class Json {
      * @param type bean 类型
      * @return 字段值
      */
-    public static <T> T getObjectValue(String json, String name, Class<T> type) {
+    public static <T> T getValue(String json, String name, Class<T> type) {
         return toBean(getValue(json, name), type);
     }
 
