@@ -134,7 +134,7 @@ public final class Json {
         }
 
         try {
-            return MAPPER.readValue(json.trim(), MAPPER.getTypeFactory().constructParametricType(List.class, type));
+            return MAPPER.readValue(json.trim(), getJavaType(List.class, type));
         } catch (IOException ex) {
             throw new BusinessException(ex.getMessage());
         }

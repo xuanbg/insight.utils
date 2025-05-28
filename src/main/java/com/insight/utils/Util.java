@@ -27,15 +27,21 @@ public final class Util {
      * @return 清理后的富文本
      */
     public static String cleanRichText(String html) {
-        if (html == null || html.trim().isEmpty()) {
+        if (isEmpty(html)) {
             return html;
         }
 
+        var content = new StringBuilder();
         var doc = Jsoup.parse(html);
-        var elements = doc.select("*:not(img)");
-        elements.stream().filter(element -> !element.tagName().equalsIgnoreCase("img"))
-                .forEach(element -> element.html(element.text()));
-        return doc.body().html().replaceAll("\\s+", " ").strip();
+        for (var element : doc.getAllElements()) {
+            if (element.tagName().equalsIgnoreCase("img")) {
+                content.append(element.html());
+            }
+
+            content.append(element.text().strip());
+        }
+
+        return content.toString().strip();
     }
 
     /**
