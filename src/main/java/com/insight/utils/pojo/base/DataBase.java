@@ -10,12 +10,12 @@ public class DataBase extends BaseXo {
     /**
      * 唯一ID
      */
-    private Long id;
+    protected Long id;
 
     /**
      * 名称
      */
-    private String name;
+    protected String name;
 
     public Long getId() {
         return id;

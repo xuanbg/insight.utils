@@ -8,30 +8,12 @@ import java.util.Objects;
  * @date 2021/12/10
  * @remark 树形数据VO
  */
-public class TreeBase extends BaseXo {
-
-    /**
-     * 主键
-     */
-    private Long id;
+public class TreeBase extends DataBase {
 
     /**
      * 父级ID
      */
-    private Long parentId;
-
-    /**
-     * 名称
-     */
-    private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    protected Long parentId;
 
     public Long getParentId() {
         return parentId;
@@ -39,14 +21,6 @@ public class TreeBase extends BaseXo {
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -57,6 +31,6 @@ public class TreeBase extends BaseXo {
      * @return 如果当前对象的parentId和name与给定的parentId和name相等，则返回true；否则返回false。
      */
     public Boolean equals(Long parentId, String name) {
-        return Objects.equals(this.parentId, parentId) && Objects.equals(this.name, name);
+        return Objects.equals(this.parentId, parentId) && Objects.equals(super.name, name);
     }
 }

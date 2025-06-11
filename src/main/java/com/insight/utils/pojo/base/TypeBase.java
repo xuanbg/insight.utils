@@ -5,7 +5,7 @@ package com.insight.utils.pojo.base;
  * @date 2023/9/9
  * @remark 带类型的基础类
  */
-public class TypeBase extends DataBase {
+public class TypeBase extends TreeBase {
 
     /**
      * 类型枚举值
