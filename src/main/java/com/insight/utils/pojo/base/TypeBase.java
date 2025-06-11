@@ -10,7 +10,7 @@ public class TypeBase extends TreeBase {
     /**
      * 类型枚举值
      */
-    private Integer type;
+    protected Integer type;
 
     public Integer getType() {
         return type;

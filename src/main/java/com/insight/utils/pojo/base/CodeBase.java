@@ -10,7 +10,7 @@ public class CodeBase extends DataBase {
     /**
      * 代码
      */
-    private String code;
+    protected String code;
 
     public String getCode() {
         return code;
