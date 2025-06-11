@@ -24,6 +24,16 @@ public class TreeBase extends DataBase {
     }
 
     /**
+     * 判断当前对象与给定的parentId是否相等。
+     *
+     * @param parentId 父id
+     * @return 如果当前对象的parentId与给定的parentId相等，则返回true；否则返回false。
+     */
+    public Boolean parentMatch(Long parentId) {
+        return Objects.equals(this.parentId, parentId);
+    }
+
+    /**
      * 判断当前对象与给定的parentId和name是否相等。
      *
      * @param parentId 父id
