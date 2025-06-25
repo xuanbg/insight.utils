@@ -458,7 +458,7 @@ public final class Util {
      */
     public static List<String> toStringList(String str, String regex) {
         if (str == null) {
-            return null;
+            return new ArrayList<>();
         }
 
         var list = str.split(regex);
