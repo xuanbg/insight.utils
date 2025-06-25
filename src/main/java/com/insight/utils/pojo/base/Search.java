@@ -124,7 +124,7 @@ public class Search extends BaseXo {
     /**
      * 最后ID
      */
-    private Long LastId;
+    private Long lastId;
 
     /**
      * 偏移量
@@ -336,11 +336,11 @@ public class Search extends BaseXo {
     }
 
     public Long getLastId() {
-        return LastId;
+        return lastId;
     }
 
     public void setLastId(Long lastId) {
-        LastId = lastId;
+        this.lastId = lastId;
     }
 
     public Integer getOffset() {

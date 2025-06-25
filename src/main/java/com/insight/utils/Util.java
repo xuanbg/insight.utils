@@ -425,8 +425,8 @@ public final class Util {
      * @return 整型集合
      */
     public static List<Integer> toIntList(String str) {
-        var list = str.split(",");
-        return Arrays.stream(list).map(Integer::parseInt).collect(Collectors.toList());
+        var list = toStringList(str, ",");
+        return list.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
     /**
@@ -436,8 +436,8 @@ public final class Util {
      * @return 长整型集合
      */
     public static List<Long> toLongList(String str) {
-        var list = str.split(",");
-        return Arrays.stream(list).map(Long::parseLong).collect(Collectors.toList());
+        var list = toStringList(str,",");
+        return list.stream().map(Long::parseLong).collect(Collectors.toList());
     }
 
     /**
@@ -457,6 +457,10 @@ public final class Util {
      * @return 字符串集合
      */
     public static List<String> toStringList(String str, String regex) {
+        if (str == null) {
+            return null;
+        }
+
         var list = str.split(regex);
         return Arrays.asList(list);
     }
@@ -470,6 +474,10 @@ public final class Util {
      * @return List<List>
      */
     public static <T> List<List<T>> splitList(List<T> source, Integer n) {
+        if (source == null){
+            return null;
+        }
+
         List<List<T>> result = new ArrayList<>();
         var remaider = source.size() % n;
         var number = source.size() / n;
