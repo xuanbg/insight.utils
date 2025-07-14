@@ -15,12 +15,25 @@ public class TreeBase extends DataBase {
      */
     protected Long parentId;
 
+    /**
+     * 子节点数量
+     */
+    protected Integer count;
+
     public Long getParentId() {
         return parentId;
     }
 
     public void setParentId(Long parentId) {
         this.parentId = parentId;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     /**
