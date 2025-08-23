@@ -47,4 +47,8 @@ public class OpenId extends BaseXo {
     public void setService(String service) {
         this.service = service;
     }
+
+    public Boolean matches(String appId, String service) {
+        return this.appId.equals(appId) && (service == null || service.equals(this.service));
+    }
 }
