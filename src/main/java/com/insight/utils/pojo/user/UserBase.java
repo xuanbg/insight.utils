@@ -1,10 +1,8 @@
 package com.insight.utils.pojo.user;
 
 import com.insight.utils.Util;
-import com.insight.utils.pojo.auth.OpenId;
 import com.insight.utils.pojo.base.BaseXo;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -43,11 +41,6 @@ public class UserBase extends BaseXo {
      * 用户E-mail
      */
     private String email;
-
-    /**
-     * 第三方登录信息
-     */
-    private List<OpenId> openIds;
 
     /**
      * 微信昵称
@@ -105,14 +98,6 @@ public class UserBase extends BaseXo {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<OpenId> getOpenIds() {
-        return openIds;
-    }
-
-    public void setOpenIds(List<OpenId> openIds) {
-        this.openIds = openIds;
     }
 
     public String getNickname() {

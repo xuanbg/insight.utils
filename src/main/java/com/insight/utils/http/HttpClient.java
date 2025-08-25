@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author luwenbao
@@ -214,7 +215,7 @@ public final class HttpClient {
      * http post application/json
      *
      * @param requestUri 请求URL
-     * @param body  json对象
+     * @param body       json对象
      * @return 请求结果
      */
     public static String postJson(String requestUri, Object body) {
@@ -226,7 +227,7 @@ public final class HttpClient {
      *
      * @param requestUri  请求URL
      * @param headerParam 请求头参数
-     * @param body   json对象
+     * @param body        json对象
      * @return 请求结果
      */
     public static String postJson(String requestUri, Map<String, String> headerParam, Object body) {
@@ -238,7 +239,7 @@ public final class HttpClient {
      *
      * @param requestUri   请求URL
      * @param headerParam  请求头参数
-     * @param body    json对象
+     * @param body         json对象
      * @param contentType  ContentType
      * @param resultEncode 返回值编码
      * @return 请求结果
@@ -323,7 +324,6 @@ public final class HttpClient {
         }
     }
 
-
     /**
      * 根据url获取远程文件资源
      *
@@ -342,5 +342,22 @@ public final class HttpClient {
         } catch (IOException e) {
             throw new BusinessException(e.getMessage());
         }
+    }
+
+    /**
+     * 构造URL
+     *
+     * @param url   url
+     * @param param 参数
+     * @return 用请求参数构造的URL
+     */
+    public static String buildUrl(String url, Map<String, String> param) {
+        if (param == null || param.isEmpty()) {
+            return url;
+        }
+
+        return url + "?" + param.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
     }
 }
