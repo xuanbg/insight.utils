@@ -141,8 +141,8 @@ public class HashOps extends KeyOps {
      * @param obj 对象
      */
     public static void putAll(String key, Object obj) {
-        var stringMap = Json.toStringValueMap(obj);
-        REDIS.opsForHash().putAll(key, stringMap);
+        var map = Json.toStringValueMap(obj);
+        REDIS.opsForHash().putAll(key, map);
     }
 
     /**
