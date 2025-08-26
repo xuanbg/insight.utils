@@ -29,7 +29,6 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author luwenbao
@@ -353,13 +352,24 @@ public final class HttpClient {
      * @param param 参数
      * @return 用请求参数构造的URL
      */
-    public static String buildUrl(String url, Map<String, String> param) {
+    public static String buildUrl(String url, SortedMap<String, Object> param) {
         if (param == null || param.isEmpty()) {
             return url;
         }
 
-        return url + "?" + param.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8))
-                .collect(Collectors.joining("&"));
+        var sb = new StringBuilder(url + "?");
+        for (var e : param.entrySet()) {
+            if (e.getValue() == null) {
+                continue;
+            }
+
+            if (!sb.isEmpty()) {
+                sb.append("&");
+            }
+
+            sb.append(e.getKey()).append("=").append(URLEncoder.encode(e.getValue().toString(), StandardCharsets.UTF_8));
+        }
+
+        return sb.toString();
     }
 }
