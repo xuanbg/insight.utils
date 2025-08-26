@@ -2,6 +2,7 @@ package com.insight.utils.encrypt;
 
 
 import com.insight.utils.common.Base64Encryptor;
+import com.insight.utils.pojo.base.BusinessException;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -10,6 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 /**
  * @author duxl
@@ -29,7 +31,7 @@ public final class AesEncryptor {
     /**
      * 密钥key
      */
-    private static String defaultKey = "apinaes";
+    private static final String defaultKey = "apinaes";
     /**
      * 加密秘钥
      */
@@ -67,10 +69,8 @@ public final class AesEncryptor {
 
             return Base64Encryptor.encode(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
@@ -86,12 +86,10 @@ public final class AesEncryptor {
 
             byte[] result = cipher.doFinal(Base64Encryptor.decode(content));
 
-            return result.toString();
+            return Arrays.toString(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
@@ -108,9 +106,7 @@ public final class AesEncryptor {
 
             return new SecretKeySpec(secretKey.getEncoded(), KEY_ALGORITHM);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            throw new BusinessException(e.getMessage());
         }
-
-        return null;
     }
 }
