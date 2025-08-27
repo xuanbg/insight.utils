@@ -363,7 +363,7 @@ public final class HttpClient {
                 continue;
             }
 
-            if (!sb.isEmpty()) {
+            if (sb.length() > url.length() + 1) {
                 sb.append("&");
             }
 

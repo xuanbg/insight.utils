@@ -20,11 +20,6 @@ public class OpenId extends BaseXo {
     private String openId;
 
     /**
-     * 服务类型
-     */
-    private String service;
-
-    /**
      * 构造函数
      */
     public OpenId() {
@@ -39,19 +34,6 @@ public class OpenId extends BaseXo {
     public OpenId(String appId, String openId) {
         this.appId = appId;
         this.openId = openId;
-    }
-
-    /**
-     * 构造函数
-     *
-     * @param appId    应用ID
-     * @param openId   OpenId
-     * @param service  服务类型
-     */
-    public OpenId(String appId, String openId, String service) {
-        this.appId = appId;
-        this.openId = openId;
-        this.service = service;
     }
 
     public String getAppId() {
@@ -70,15 +52,7 @@ public class OpenId extends BaseXo {
         this.openId = openId;
     }
 
-    public String getService() {
-        return service;
-    }
-
-    public void setService(String service) {
-        this.service = service;
-    }
-
-    public Boolean matches(OpenId data) {
-        return this.appId.equals(data.appId) && (data.service == null || data.service.equals(this.service));
+    public Boolean matches(String appId) {
+        return this.appId.equals(appId);
     }
 }
