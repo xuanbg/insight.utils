@@ -357,17 +357,14 @@ public final class HttpClient {
             return url;
         }
 
-        var sb = new StringBuilder(url + "?");
+        var sb = new StringBuilder(url);
         for (var e : param.entrySet()) {
             if (e.getValue() == null) {
                 continue;
             }
 
-            if (sb.length() > url.length() + 1) {
-                sb.append("&");
-            }
-
-            sb.append(e.getKey()).append("=").append(URLEncoder.encode(e.getValue().toString(), StandardCharsets.UTF_8));
+            sb.append(sb.indexOf("?") < 0 ? "?" : "&").append(e.getKey()).append("=")
+                    .append(URLEncoder.encode(e.getValue().toString(), StandardCharsets.UTF_8));
         }
 
         return sb.toString();
