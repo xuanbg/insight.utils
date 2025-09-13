@@ -171,6 +171,36 @@ public final class Json {
     }
 
     /**
+     * 将json字符串转换为HashMap
+     *
+     * @param json json
+     * @return hashmap
+     */
+    public static SortedMap<String, Object> toTreeMap(String json) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+
+        try {
+            //noinspection unchecked
+            return MAPPER.readValue(json.trim(), TreeMap.class);
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
+        }
+    }
+
+    /**
+     * 将对象转换为HashMap
+     *
+     * @param obj 对象
+     * @return hashmap
+     */
+    public static SortedMap<String, Object> toTreeMap(Object obj) {
+        var json = toJson(obj);
+        return toTreeMap(json);
+    }
+
+    /**
      * 将对象转换为值为String类型的HashMap
      *
      * @param obj 对象
