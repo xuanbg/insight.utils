@@ -1,7 +1,5 @@
 package com.insight.utils.pojo.problem;
 
-import com.insight.utils.pojo.basedata.ProblemBase;
-
 import java.math.BigDecimal;
 import java.util.List;
 

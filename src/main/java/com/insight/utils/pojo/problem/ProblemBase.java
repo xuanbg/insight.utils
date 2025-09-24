@@ -1,4 +1,4 @@
-package com.insight.utils.pojo.basedata;
+package com.insight.utils.pojo.problem;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

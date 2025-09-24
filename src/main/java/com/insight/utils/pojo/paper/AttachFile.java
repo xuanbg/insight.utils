@@ -96,6 +96,27 @@ public class AttachFile extends BaseXo {
         this.page = page;
     }
 
+    /**
+     * 获取资源类型
+     *
+     * @return 资源类型
+     */
+    @JsonIgnore
+    public Integer getResourceType() {
+        return switch (getExt()) {
+            case "docx", "doc", "pdf" -> 2;
+            case "pptx" -> 3;
+            case "mp4" -> 4;
+            default -> 9;
+        };
+    }
+
+    /**
+     * 判断当前附件是否与指定URL一致
+     *
+     * @param url URL
+     * @return 布尔值
+     */
     @JsonIgnore
     public Boolean equals(String url) {
         return this.url != null && this.url.equals(url);

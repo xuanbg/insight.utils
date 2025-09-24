@@ -3,7 +3,7 @@ package com.insight.utils.pojo.paper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Json;
 import com.insight.utils.Util;
-import com.insight.utils.pojo.basedata.ProblemBase;
+import com.insight.utils.pojo.problem.ProblemBase;
 
 import java.math.BigDecimal;
 import java.util.List;
