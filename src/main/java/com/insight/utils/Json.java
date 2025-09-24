@@ -171,12 +171,12 @@ public final class Json {
     }
 
     /**
-     * 将json字符串转换为HashMap
+     * 将json字符串转换为TreeMap
      *
      * @param json json
-     * @return hashmap
+     * @return TreeMap
      */
-    public static SortedMap<String, Object> toTreeMap(String json) {
+    public static TreeMap<String, Object> toTreeMap(String json) {
         if (json == null || json.isEmpty()) {
             return null;
         }
@@ -190,12 +190,12 @@ public final class Json {
     }
 
     /**
-     * 将对象转换为HashMap
+     * 将对象转换为TreeMap
      *
      * @param obj 对象
-     * @return hashmap
+     * @return TreeMap
      */
-    public static SortedMap<String, Object> toTreeMap(Object obj) {
+    public static TreeMap<String, Object> toTreeMap(Object obj) {
         var json = toJson(obj);
         return toTreeMap(json);
     }

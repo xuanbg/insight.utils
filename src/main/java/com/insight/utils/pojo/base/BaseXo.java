@@ -1,8 +1,6 @@
 package com.insight.utils.pojo.base;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Json;
-import com.insight.utils.Util;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -25,16 +23,6 @@ public class BaseXo implements Serializable {
      */
     public <T> T convert(Class<T> type) {
         return Json.toBean(this, type);
-    }
-
-    /**
-     * 获取当前对象哈希值
-     *
-     * @return 哈希值
-     */
-    @JsonIgnore
-    public String getHash() {
-        return Util.md5(Json.toJson(this));
     }
 
     /**

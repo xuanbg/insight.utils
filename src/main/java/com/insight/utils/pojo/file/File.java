@@ -12,6 +12,7 @@ import java.util.Objects;
  */
 public class File extends Folder {
 
+    private String name;
     /**
      * 文件名
      */

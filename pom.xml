@@ -88,6 +88,11 @@
             <artifactId>jsoup</artifactId>
             <version>1.16.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.xkw.xop</groupId>
+            <artifactId>xkw-xop-qbmsdk</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 
     <repositories>
