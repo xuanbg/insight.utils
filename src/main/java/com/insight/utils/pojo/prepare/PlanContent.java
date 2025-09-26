@@ -73,6 +73,16 @@ public class PlanContent extends BaseXo {
     }
 
     /**
+     * 获取所有模型类型
+     *
+     * @return 所有模型类型
+     */
+    @JsonIgnore
+    public List<Integer> getModelTypes() {
+        return models.stream().map(PlanModel::getType).toList();
+    }
+
+    /**
      * 获取所有资源ID
      *
      * @return 所有资源ID
