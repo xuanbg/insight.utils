@@ -109,7 +109,7 @@ public class Resource extends BaseXo {
      */
     @JsonIgnore
     public List<AttachFile> getFiles() {
-        return content == null ? null : Json.toList(content.getFiles(), AttachFile.class);
+        return content == null ? null : content.getFiles();
     }
 
     /**
@@ -123,7 +123,7 @@ public class Resource extends BaseXo {
             return;
         }
 
-        content.setFiles(files);
+        files.forEach(this::addFile);
     }
 
     /**
@@ -137,10 +137,7 @@ public class Resource extends BaseXo {
             return;
         }
 
-        var files = content.getFiles();
-        if (files.stream().noneMatch(i -> i.getId().equals(file.getId()))) {
-            files.add(file);
-        }
+        content.addFile(file);
     }
 
     @JsonIgnore

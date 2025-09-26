@@ -315,7 +315,9 @@ public class Content extends BaseXo {
             files = new ArrayList<>();
         }
 
-        files.add(file);
+        if (files.stream().noneMatch(i -> i.getId().equals(file.getId()))) {
+            files.add(file);
+        }
     }
 
     /**
