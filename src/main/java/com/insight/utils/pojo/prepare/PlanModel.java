@@ -42,6 +42,23 @@ public class PlanModel extends BaseXo {
      */
     private Resource data;
 
+    /**
+     * 默认构造函数
+     */
+    public PlanModel() {
+    }
+
+    /**
+     * 构造函数
+     *
+     * @param type  类型
+     * @param name  名称
+     */
+    public PlanModel(Integer type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
     public Integer getSerial() {
         return serial;
     }
