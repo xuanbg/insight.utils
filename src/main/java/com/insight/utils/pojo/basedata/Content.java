@@ -128,7 +128,7 @@ public class Content extends BaseXo {
         }
 
         var index = url == null ? -1 : url.lastIndexOf(".");
-        return index < 0 ? "" : url.substring(index + 1);
+        return index < 0 ? "." : url.substring(index + 1);
     }
 
     public void setExt(String ext) {
