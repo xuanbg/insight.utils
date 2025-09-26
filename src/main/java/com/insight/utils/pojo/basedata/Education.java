@@ -1,6 +1,7 @@
-package com.insight.utils.pojo.prepare;
+package com.insight.utils.pojo.basedata;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.Json;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
@@ -14,6 +15,7 @@ import java.util.List;
  * @date 2024/11/9
  * @remark 教学资源实体类
  */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Education extends BaseXo {
 
     /**

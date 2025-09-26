@@ -1,5 +1,6 @@
 package com.insight.utils.pojo.prepare;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.pojo.base.BaseXo;
 
 import java.util.ArrayList;
@@ -49,5 +50,36 @@ public class PlanContent extends BaseXo {
 
     public void setModels(List<PlanModel> models) {
         this.models = models;
+    }
+
+    /**
+     * 是否有目标模块
+     *
+     * @return 是否有目标模块
+     */
+    @JsonIgnore
+    public Boolean hasObject() {
+        return models.stream().anyMatch(m -> m.getType() == 1);
+    }
+
+    /**
+     * 获取目标模块
+     *
+     * @return 目标模块
+     */
+    @JsonIgnore
+    public Resource getObject() {
+        return models.stream().filter(m -> m.getType() == 1).findFirst().map(PlanModel::getData).orElse(null);
+    }
+
+    /**
+     * 获取所有资源ID
+     *
+     * @return 所有资源ID
+     */
+    @JsonIgnore
+    public List<Long> getResourceIds() {
+        return models.stream().filter(PlanModel::hasResource)
+                .map(model -> model.getResource().getId()).toList();
     }
 }

@@ -7,6 +7,9 @@ import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.DataBase;
 import com.insight.utils.pojo.paper.AttachFile;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * @author 宣炳刚
  * @date 2024/12/5
@@ -79,6 +82,31 @@ public class PlanModel extends BaseXo {
         this.data = data;
     }
 
+    /**
+     * 是否有资源
+     *
+     * @return 是否有资源
+     */
+    @JsonIgnore
+    public Boolean hasResource() {
+        return resource != null;
+    }
+
+    /**
+     * 获取资源ID
+     *
+     * @return 资源ID
+     */
+    @JsonIgnore
+    public Long getResourceId() {
+        return resource == null ? null : resource.getId();
+    }
+
+    /**
+     * 获取资源类型
+     *
+     * @return 资源类型
+     */
     @JsonIgnore
     public Integer getResourceType() {
         if (type == null || type < 1 || type > 8) {
@@ -101,5 +129,57 @@ public class PlanModel extends BaseXo {
             }
             default -> type;
         };
+    }
+
+    /**
+     * 获取模型类型
+     *
+     * @param type 模型类型
+     * @return 模型类型
+     */
+    @JsonIgnore
+    public Integer getModelType(Integer type) {
+        return switch (this.type) {
+            case 1, 6 -> type == 1 ? resource == null ? this.type : 0 : 0;
+            case 2 -> type == 2 ? resource == null ? this.type : 20 - this.type : (List.of(3, 4, 9).contains(type) ? (resource == null ? 0 : 20 - this.type) : 0);
+            case 3 -> type == 5 || type == 7 ? resource == null ? this.type : 0 : 0;
+            case 4 -> type == 3 ? resource == null ? this.type : 20 - this.type : (List.of(2, 4, 9).contains(type) ? (resource == null ? 0 : 20 - this.type) : 0);
+            case 5 -> type == 4 ? resource == null ? this.type : 20 - this.type : (List.of(2, 3, 9).contains(type) ? (resource == null ? 0 : 20 - this.type) : 0);
+            case 7 -> type == 6 ? resource == null ? this.type : 0 : 0;
+            case 8 -> type == 2 || type == 3 ? (resource == null ? this.type : 20 - this.type) : List.of(4, 9).contains(type) ? (resource == null ? 0 : 20 - this.type) : 0;
+            default -> throw new BusinessException("为定义的模块类型");
+        };
+    }
+
+    /**
+     * 是否为空总结
+     *
+     * @return 是否为空总结
+     */
+    @JsonIgnore
+    public Boolean isEmptySumUp() {
+        return type == 6 && resource == null;
+    }
+
+    /**
+     * 类型是否相等
+     *
+     * @param type 类型
+     * @return 是否相等
+     */
+    @JsonIgnore
+    public Boolean typeEquals(Integer type) {
+        return Objects.equals(this.type, type);
+    }
+
+    /**
+     * 清空数据
+     */
+    @JsonIgnore
+    public void clearData() {
+        if (data != null) {
+            resource = data.convert(DataBase.class);
+            data = null;
+        }
     }
 }
