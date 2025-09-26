@@ -305,6 +305,20 @@ public class Content extends BaseXo {
     }
 
     /**
+     * 添加附件
+     *
+     * @param file 附件
+     */
+    @JsonIgnore
+    public void addFile(AttachFile file) {
+        if (files == null) {
+            files = new ArrayList<>();
+        }
+
+        files.add(file);
+    }
+
+    /**
      * 获取真实页面
      *
      * @return 真实页面

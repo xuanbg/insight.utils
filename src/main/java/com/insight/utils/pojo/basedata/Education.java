@@ -6,6 +6,7 @@ import com.insight.utils.Json;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
 import com.insight.utils.pojo.base.BusinessException;
+import com.insight.utils.pojo.paper.AttachFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -171,13 +172,33 @@ public class Education extends BaseXo {
         this.creatorId = creatorId;
     }
 
+    /**
+     * 设置资源URL
+     *
+     * @param url 资源URL
+     */
     @JsonIgnore
     public void setUrl(String url) {
         content.setUrl(url);
     }
 
+    /**
+     * 设置资源预览页面
+     *
+     * @param page 页码
+     */
     @JsonIgnore
     public void setPage(String page) {
         content.setPage(page);
+    }
+
+    /**
+     * 添加附件文件
+     *
+     * @param file 附件文件
+     */
+    @JsonIgnore
+    public void addFile(AttachFile file) {
+        content.addFile(file);
     }
 }
