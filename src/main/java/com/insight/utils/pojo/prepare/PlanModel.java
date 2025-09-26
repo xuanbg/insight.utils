@@ -86,7 +86,7 @@ public class PlanModel extends BaseXo {
         }
 
         return switch (type) {
-            case 3 -> 7;
+            case 3 -> 5;
             case 4 -> 3;
             case 5 -> 4;
             case 6 -> 1;
