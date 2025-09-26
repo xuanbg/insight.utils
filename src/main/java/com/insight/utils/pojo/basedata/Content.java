@@ -104,14 +104,12 @@ public class Content extends BaseXo {
 
     public Integer getType() {
         if (type == null) {
-            if (Util.isEmpty(getExt())) {
-                if (Util.isNotEmpty(html)) {
-                    return 0;
-                }
-            } else {
-                if ("pdf|doc|docx".contains(getExt())) {
-                    return 3;
-                }
+            if (Util.isNotEmpty(html)) {
+                return 0;
+            }
+
+            if ("pdf|doc|docx".contains(getExt())) {
+                return 3;
             }
         }
 

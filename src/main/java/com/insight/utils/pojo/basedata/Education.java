@@ -190,7 +190,7 @@ public class Education extends BaseXo {
     @JsonIgnore
     public Boolean isFile() {
         return switch (type) {
-            case 2 -> content.getType() == 3;
+            case 2 -> content != null && content.getType() == 3;
             case 3, 4, 9 -> true;
             default -> false;
         };
