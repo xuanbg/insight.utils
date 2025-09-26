@@ -24,6 +24,11 @@ public class Education extends BaseXo {
     protected Long id;
 
     /**
+     * 学科ID
+     */
+    protected Long subjectId;
+
+    /**
      * 资源类型: 0.教案, 1.思维导图, 2.导学案, 3.课件, 4.微课, 5.堂练, 6.堂测, 7.作业, 8.试卷, 9.素材
      */
     protected Integer type;
@@ -74,6 +79,14 @@ public class Education extends BaseXo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getSubjectId() {
+        return subjectId;
+    }
+
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
     }
 
     public Integer getType() {

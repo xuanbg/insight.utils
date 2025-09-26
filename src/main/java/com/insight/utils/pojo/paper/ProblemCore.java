@@ -115,6 +115,15 @@ public class ProblemCore extends ProblemBase {
     }
 
     /**
+     * 是否未批改
+     *
+     * @return 是否未批改
+     */
+    public Boolean notExamined() {
+        return Util.isEmpty(examPoint) || examPoint.stream().anyMatch(ExamPoint::notExamined);
+    }
+
+    /**
      * 获取试题总分
      *
      * @return 试题总分
@@ -124,6 +133,11 @@ public class ProblemCore extends ProblemBase {
         return examPoint == null ? BigDecimal.valueOf(5) : examPoint.stream().map(ExamPoint::getPoint).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    /**
+     * 试题是否包含错误
+     *
+     * @return 是否包含错误
+     */
     @JsonIgnore
     public Boolean hasErrors() {
        return Util.isEmpty(examPoint);

@@ -284,6 +284,17 @@ public class Content extends BaseXo {
     }
 
     /**
+     * 获取指定习题
+     *
+     * @param id 习题ID
+     * @return 习题
+     */
+    @JsonIgnore
+    public ProblemCore getProblem(Long id) {
+        return getProblems().stream().filter(i -> i.equals(id)).findFirst().orElse(null);
+    }
+
+    /**
      * 试卷内容是否有错误
      *
      * @return 是否有错误
