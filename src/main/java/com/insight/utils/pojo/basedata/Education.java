@@ -173,6 +173,30 @@ public class Education extends BaseXo {
     }
 
     /**
+     * 是否是试卷
+     *
+     * @return 是否是试卷
+     */
+    @JsonIgnore
+    public Boolean isPaper() {
+        return List.of(5, 6, 7).contains(type);
+    }
+
+    /**
+     * 是否是文件
+     *
+     * @return 是否是文件
+     */
+    @JsonIgnore
+    public Boolean isFile() {
+        return switch (type) {
+            case 2 -> content.getType() == 3;
+            case 3, 4, 9 -> true;
+            default -> false;
+        };
+    }
+
+    /**
      * 设置资源URL
      *
      * @param url 资源URL
