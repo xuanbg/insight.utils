@@ -152,7 +152,7 @@ public class Content extends BaseXo {
     }
 
     public List<AttachFile> getFiles() {
-        return files;
+        return files == null ? new ArrayList<>() : files;
     }
 
     public void setFiles(List<AttachFile> files) {
