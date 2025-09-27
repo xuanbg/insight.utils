@@ -21,11 +21,6 @@ public class ProblemCore extends ProblemBase {
     private String index;
 
     /**
-     * 题型名称
-     */
-    private String species;
-
-    /**
      * 题型类型: 0.主观题, 1.单选题, 2.多选题, 3.是非题, 4.客观填空题
      */
     private Integer speciesType;
@@ -51,14 +46,6 @@ public class ProblemCore extends ProblemBase {
 
     public void setIndex(String index) {
         this.index = index;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
     }
 
     public Integer getSpeciesType() {

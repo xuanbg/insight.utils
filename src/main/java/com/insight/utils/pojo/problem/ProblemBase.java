@@ -33,6 +33,11 @@ public class ProblemBase extends BaseXo {
     private Long speciesId;
 
     /**
+     * 题型名称
+     */
+    private String species;
+
+    /**
      * 题干
      */
     private String question;
@@ -79,6 +84,14 @@ public class ProblemBase extends BaseXo {
 
     public void setSpeciesId(Long speciesId) {
         this.speciesId = speciesId;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(String species) {
+        this.species = species;
     }
 
     public String getQuestion() {

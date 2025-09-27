@@ -3,6 +3,7 @@ package com.insight.utils.pojo.problem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.pojo.base.BaseXo;
+import com.insight.utils.pojo.base.DataBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public class Group extends BaseXo {
     private Long xkwId;
 
     /**
+     * 学校名称
+     */
+    private String school;
+
+    /**
      * 标题
      */
     private String caption;
@@ -40,6 +46,11 @@ public class Group extends BaseXo {
      * 习题集合
      */
     private List<Problem> problems = new ArrayList<>();
+
+    /**
+     * 教学目标集合
+     */
+    private List<DataBase> objects;
 
     public Long getId() {
         return id;
@@ -65,6 +76,14 @@ public class Group extends BaseXo {
         this.xkwId = xkwId;
     }
 
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
     public String getCaption() {
         return caption;
     }
@@ -79,6 +98,14 @@ public class Group extends BaseXo {
 
     public void setProblems(List<Problem> problems) {
         this.problems = problems;
+    }
+
+    public List<DataBase> getObjects() {
+        return objects;
+    }
+
+    public void setObjects(List<DataBase> objects) {
+        this.objects = objects;
     }
 
     /**

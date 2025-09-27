@@ -1,6 +1,7 @@
 package com.insight.utils.pojo.problem;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -29,6 +30,41 @@ public class Problem extends ProblemBase {
      * 认知要求: 1.记忆, 2.理解, 3.应用, 4.分析, 5.综合运用
      */
     private Integer level;
+
+    /**
+     * 评价得分
+     */
+    private BigDecimal score;
+
+    /**
+     * 更新人
+     */
+    private String updater;
+
+    /**
+     * 更新人ID
+     */
+    private Long updaterId;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
+
+    /**
+     * 创建人
+     */
+    private String creator;
+
+    /**
+     * 创建人ID
+     */
+    private Long creatorId;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createdTime;
 
     public List<String> getExamPoint() {
         return examPoint;
@@ -62,4 +98,59 @@ public class Problem extends ProblemBase {
         this.level = level;
     }
 
+    public BigDecimal getScore() {
+        return score;
+    }
+
+    public void setScore(BigDecimal score) {
+        this.score = score;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater;
+    }
+
+    public Long getUpdaterId() {
+        return updaterId;
+    }
+
+    public void setUpdaterId(Long updaterId) {
+        this.updaterId = updaterId;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
+    }
 }
