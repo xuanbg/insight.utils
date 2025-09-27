@@ -1,5 +1,8 @@
 package com.insight.utils.pojo.problem;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.insight.utils.common.MultiDateDeserializer;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,6 +38,16 @@ public class Problem extends ProblemBase {
      * 认知要求: 1.记忆, 2.理解, 3.应用, 4.分析, 5.综合运用
      */
     private Integer level;
+
+    /**
+     * 是否原创
+     */
+    private Boolean original;
+
+    /**
+     * 是否范例
+     */
+    private Boolean example;
 
     /**
      * 评价得分
@@ -74,6 +87,7 @@ public class Problem extends ProblemBase {
     /**
      * 创建时间
      */
+    @JsonDeserialize(using = MultiDateDeserializer.class)
     private LocalDateTime createdTime;
 
     public Long getTenantId() {
@@ -114,6 +128,22 @@ public class Problem extends ProblemBase {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    public Boolean getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(Boolean original) {
+        this.original = original;
+    }
+
+    public Boolean getExample() {
+        return example;
+    }
+
+    public void setExample(Boolean example) {
+        this.example = example;
     }
 
     public BigDecimal getScore() {
