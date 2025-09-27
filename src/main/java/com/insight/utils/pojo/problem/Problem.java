@@ -42,6 +42,11 @@ public class Problem extends ProblemBase {
     private BigDecimal score;
 
     /**
+     * 试题备注
+     */
+    private String remark;
+
+    /**
      * 更新人
      */
     private String updater;
@@ -117,6 +122,14 @@ public class Problem extends ProblemBase {
 
     public void setScore(BigDecimal score) {
         this.score = score;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getUpdater() {
