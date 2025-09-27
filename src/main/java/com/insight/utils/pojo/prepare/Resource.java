@@ -6,7 +6,7 @@ import com.insight.utils.Json;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
 import com.insight.utils.pojo.basedata.Content;
-import com.insight.utils.pojo.paper.AttachFile;
+import com.insight.utils.pojo.basedata.AttachFile;
 import com.insight.utils.pojo.paper.ProblemGroup;
 
 import java.util.List;

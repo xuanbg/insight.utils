@@ -1,4 +1,4 @@
-package com.insight.utils.pojo.paper;
+package com.insight.utils.pojo.basedata;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;

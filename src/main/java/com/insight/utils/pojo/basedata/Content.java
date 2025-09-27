@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
 import com.insight.utils.pojo.base.DataBase;
-import com.insight.utils.pojo.paper.AttachFile;
 import com.insight.utils.pojo.paper.PaperGroup;
 import com.insight.utils.pojo.paper.ProblemCore;
 import com.insight.utils.pojo.paper.ProblemGroup;
@@ -108,7 +107,7 @@ public class Content extends BaseXo {
                 return 0;
             }
 
-            if ("pdf|doc|docx".contains(getExt())) {
+            if (Util.isNotEmpty(getExt()) && "pdf|doc|docx".contains(getExt())) {
                 return 3;
             }
         }
@@ -126,7 +125,7 @@ public class Content extends BaseXo {
         }
 
         var index = url == null ? -1 : url.lastIndexOf(".");
-        return index < 0 ? "." : url.substring(index + 1);
+        return index < 0 ? null : url.substring(index + 1);
     }
 
     public void setExt(String ext) {
