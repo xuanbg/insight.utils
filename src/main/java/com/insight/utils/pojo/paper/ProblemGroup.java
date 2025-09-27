@@ -27,6 +27,11 @@ public class ProblemGroup extends BaseXo {
     private String index;
 
     /**
+     * 标题
+     */
+    private String caption;
+
+    /**
      * 习题集合
      */
     private List<ProblemCore> problems;
@@ -45,6 +50,14 @@ public class ProblemGroup extends BaseXo {
 
     public void setIndex(String index) {
         this.index = index;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 
     public List<ProblemCore> getProblems() {

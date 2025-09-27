@@ -26,11 +26,6 @@ public class ProblemCore extends ProblemBase {
     private Integer speciesType;
 
     /**
-     * 标题
-     */
-    private String caption;
-
-    /**
      * 得分点
      */
     private List<ExamPoint> examPoint;
@@ -54,14 +49,6 @@ public class ProblemCore extends ProblemBase {
 
     public void setSpeciesType(Integer speciesType) {
         this.speciesType = speciesType;
-    }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption = caption;
     }
 
     public List<ExamPoint> getExamPoint() {
