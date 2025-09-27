@@ -12,6 +12,11 @@ import java.util.List;
 public class Problem extends ProblemBase {
 
     /**
+     * 租户ID
+     */
+    private Long tenantId;
+
+    /**
      * 得分点
      */
     private List<String> examPoint;
@@ -65,6 +70,14 @@ public class Problem extends ProblemBase {
      * 创建时间
      */
     private LocalDateTime createdTime;
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
+    }
 
     public List<String> getExamPoint() {
         return examPoint;
