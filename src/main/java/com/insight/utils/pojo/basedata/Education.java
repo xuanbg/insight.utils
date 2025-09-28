@@ -130,9 +130,12 @@ public class Education extends BaseXo {
             throw new BusinessException("资源内容不存在");
         }
 
-        return type != null && List.of(0, 2, 3, 4, 9).contains(type) && Util.isNotEmpty(content.getUrl())
-                ? Util.md5(content.getUrl())
-                : Util.md5(Json.toJson(content));
+        if (isFile()) {
+            var data = Util.isEmpty(content.getFiles()) ? content.getUrl() : content.getUrl() + Json.toJson(content.getFiles());
+            return Util.md5(data);
+        } else {
+            return Util.md5(Json.toJson(content));
+        }
     }
 
     public void setHash(String hash) {
@@ -189,7 +192,7 @@ public class Education extends BaseXo {
     @JsonIgnore
     public Boolean isFile() {
         return switch (type) {
-            case 2 -> content != null && content.getType() == 3;
+            case 0, 2 -> content != null && content.getType() == 3;
             case 3, 4, 9 -> true;
             default -> false;
         };
