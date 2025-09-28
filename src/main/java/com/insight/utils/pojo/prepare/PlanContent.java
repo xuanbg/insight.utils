@@ -1,7 +1,9 @@
 package com.insight.utils.pojo.prepare;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.pojo.base.BaseXo;
+import com.insight.utils.pojo.basedata.Content;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,23 @@ import java.util.List;
  * @date 2024/12/5
  * @remark 学案内容实体类
  */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class PlanContent extends BaseXo {
+
+    /**
+     * 资源ID
+     */
+    private Long id;
+
+    /**
+     * 名称
+     */
+    private String name;
+
+    /**
+     * 内容
+     */
+    private Content content;
 
     /**
      * 课程前提
@@ -27,6 +45,30 @@ public class PlanContent extends BaseXo {
      * 课程步骤
      */
     private List<PlanModel> models;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Content getContent() {
+        return content;
+    }
+
+    public void setContent(Content content) {
+        this.content = content;
+    }
 
     public Premise getPremise() {
         return premise;
