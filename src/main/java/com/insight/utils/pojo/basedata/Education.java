@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.Json;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
-import com.insight.utils.pojo.base.BusinessException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -128,14 +127,15 @@ public class Education extends BaseXo {
         }
 
         if (content == null) {
-            throw new BusinessException("资源内容不存在");
+            return Util.md5("{}");
         }
 
         if (isFile()) {
             var data = Util.isEmpty(content.getFiles()) ? content.getUrl() : content.getUrl() + Json.toJson(content.getFiles());
             return Util.md5(data);
         } else {
-            return Util.md5(Json.toJson(content));
+            var data = content.toTreeMap();
+            return Util.md5(Json.toJson(data));
         }
     }
 

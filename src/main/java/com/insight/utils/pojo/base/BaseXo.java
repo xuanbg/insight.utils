@@ -4,6 +4,8 @@ import com.insight.utils.Json;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author 宣炳刚
@@ -23,6 +25,24 @@ public class BaseXo implements Serializable {
      */
     public <T> T convert(Class<T> type) {
         return Json.toBean(this, type);
+    }
+
+    /**
+     * 类型转换
+     *
+     * @return Map
+     */
+    public Map toMap() {
+        return Json.toMap(this);
+    }
+
+    /**
+     * 类型转换
+     *
+     * @return TreeMap
+     */
+    public TreeMap toTreeMap() {
+        return Json.toTreeMap(this);
     }
 
     /**
