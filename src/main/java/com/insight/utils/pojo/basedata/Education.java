@@ -9,6 +9,7 @@ import com.insight.utils.pojo.base.BusinessException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 宣炳刚
@@ -196,6 +197,29 @@ public class Education extends BaseXo {
             case 3, 4, 9 -> true;
             default -> false;
         };
+    }
+
+    /**
+     * 当前用户是否可编辑
+     *
+     * @param data 当前数据
+     * @return 是否可编辑
+     */
+    @JsonIgnore
+    public Boolean canEdit(Education data) {
+        return Objects.equals(creatorId, data.getCreatorId())
+               && (level == 0 || Objects.equals(hash, data.getHash()));
+    }
+
+    /**
+     * 当前数据内容是否一致
+     *
+     * @param data 当前数据
+     * @return 是否一致
+     */
+    @JsonIgnore
+    public Boolean contentEquals(Education data) {
+        return Objects.equals(id, data.getId()) && Objects.equals(getHash(), data.getHash());
     }
 
     /**
