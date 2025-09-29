@@ -182,7 +182,7 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean isPaper() {
-        return List.of(5, 6, 7).contains(type);
+        return type != null && List.of(5, 6, 7).contains(type);
     }
 
     /**
@@ -192,7 +192,7 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean isFile() {
-        return switch (type) {
+        return type != null && switch (type) {
             case 0, 2 -> content != null && content.getType() == 3;
             case 3, 4, 9 -> true;
             default -> false;
