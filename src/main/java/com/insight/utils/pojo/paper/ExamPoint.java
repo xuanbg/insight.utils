@@ -28,6 +28,23 @@ public class ExamPoint extends BaseXo {
      */
     private Boolean gain;
 
+    /**
+     * 构造函数
+     */
+    public ExamPoint() {
+    }
+
+    /**
+     * 构造函数
+     *
+     * @param name  考点名称
+     * @param point 得分
+     */
+    public ExamPoint(String name, BigDecimal point) {
+        this.name = name;
+        this.point = point;
+    }
+
     public String getName() {
         return name;
     }

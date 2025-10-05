@@ -3,9 +3,11 @@ package com.insight.utils.pojo.paper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Json;
 import com.insight.utils.Util;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.problem.ProblemBase;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,10 +58,31 @@ public class ProblemCore extends ProblemBase {
     }
 
     public void setExamPoint(Object examPoint) {
-        if (examPoint instanceof ExamPoint) {
+        if (examPoint == null) {
+            this.examPoint = List.of(new ExamPoint("分值", BigDecimal.valueOf(5)));
+        } else if (examPoint instanceof ExamPoint) {
             this.examPoint = List.of((ExamPoint) examPoint);
+        } else if (examPoint instanceof List<?>) {
+            this.examPoint = new ArrayList<>();
+            var list = (List) examPoint;
+            if (list.isEmpty()) {
+                this.examPoint.add(new ExamPoint("分值", BigDecimal.valueOf(5)));
+            } else {
+                var firstElement = list.get(0);
+                if (firstElement instanceof String) {
+                    for (Object item : list) {
+                        this.examPoint.add(new ExamPoint(item.toString(), BigDecimal.valueOf(5)));
+                    }
+                } else if (firstElement instanceof ExamPoint) {
+                    for (Object item : list) {
+                        this.examPoint.add((ExamPoint) item);
+                    }
+                } else {
+                    throw new BusinessException("不支持的考点数据类型: " + Json.toJson(firstElement));
+                }
+            }
         } else {
-            this.examPoint = Json.toList(examPoint, ExamPoint.class);
+            throw new BusinessException("不支持的考点数据类型: " + Json.toJson(examPoint));
         }
     }
 
@@ -114,6 +137,6 @@ public class ProblemCore extends ProblemBase {
      */
     @JsonIgnore
     public Boolean hasErrors() {
-       return Util.isEmpty(examPoint);
+        return Util.isEmpty(examPoint);
     }
 }

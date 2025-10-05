@@ -34,12 +34,12 @@ public class PlanContent extends BaseXo {
     /**
      * 课程前提
      */
-    private Premise premise;
+    private Premise premise = new Premise();
 
     /**
      * 课程奖励
      */
-    private Award award;
+    private Award award = new Award();
 
     /**
      * 课程步骤

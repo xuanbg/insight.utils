@@ -87,19 +87,24 @@ public class Content extends BaseXo {
     private Object models;
 
     /**
-     * 数据
+     * 元数据
      */
-    private Object data;
+    private Object meta;
 
     /**
-     * 数据格式
+     * 格式
      */
     private String format;
 
     /**
-     * 元数据
+     * 数据
      */
-    private Object meta;
+    private List<Object> data;
+
+    /**
+     * 原始数据
+     */
+    private List<Object> source;
 
     public Integer getType() {
         if (type == null) {
@@ -212,12 +217,12 @@ public class Content extends BaseXo {
         this.models = models;
     }
 
-    public Object getData() {
-        return data;
+    public Object getMeta() {
+        return meta;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setMeta(Object meta) {
+        this.meta = meta;
     }
 
     public String getFormat() {
@@ -228,12 +233,20 @@ public class Content extends BaseXo {
         this.format = format;
     }
 
-    public Object getMeta() {
-        return meta;
+    public List<Object> getData() {
+        return data;
     }
 
-    public void setMeta(Object meta) {
-        this.meta = meta;
+    public void setData(List<Object> data) {
+        this.data = data;
+    }
+
+    public List<Object> getSource() {
+        return source;
+    }
+
+    public void setSource(List<Object> source) {
+        this.source = source;
     }
 
     /**

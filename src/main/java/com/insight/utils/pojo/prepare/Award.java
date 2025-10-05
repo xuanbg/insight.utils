@@ -1,8 +1,6 @@
 package com.insight.utils.pojo.prepare;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.pojo.base.BaseXo;
-import com.insight.utils.pojo.base.BusinessException;
 
 import java.math.BigDecimal;
 
@@ -16,17 +14,17 @@ public class Award extends BaseXo {
     /**
      * 测验时间(分)
      */
-    private Integer testTime;
+    private Integer testTime = 20;
 
     /**
      * 达标成绩
      */
-    private BigDecimal standardScore;
+    private BigDecimal standardScore = BigDecimal.valueOf(60);
 
     /**
      * 奖励学分
      */
-    private BigDecimal credit;
+    private BigDecimal credit = BigDecimal.valueOf(0.01);
 
     public Integer getTestTime() {
         return testTime;
@@ -50,16 +48,5 @@ public class Award extends BaseXo {
 
     public void setCredit(BigDecimal credit) {
         this.credit = credit;
-    }
-
-    @JsonIgnore
-    public void check() {
-        if (testTime == null || testTime == 0) {
-            throw new BusinessException("请在课程设置中设置测验时间");
-        }
-
-        if (standardScore == null || standardScore.compareTo(BigDecimal.ZERO) == 0) {
-            throw new BusinessException("请在课程设置中设置达标成绩");
-        }
     }
 }
