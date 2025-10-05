@@ -1,6 +1,7 @@
 package com.insight.utils.pojo.problem;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.insight.utils.Util;
 import com.insight.utils.common.MultiDateDeserializer;
 
 import java.math.BigDecimal;
@@ -99,7 +100,7 @@ public class Problem extends ProblemBase {
     }
 
     public List<String> getExamPoint() {
-        return examPoint;
+        return Util.isEmpty(examPoint) ? List.of("分值") : examPoint;
     }
 
     public void setExamPoint(List<String> examPoint) {
