@@ -73,12 +73,10 @@ public class ProblemCore extends ProblemBase {
                     for (Object item : list) {
                         this.examPoint.add(new ExamPoint(item.toString(), BigDecimal.valueOf(5)));
                     }
-                } else if (firstElement instanceof ExamPoint) {
-                    for (Object item : list) {
-                        this.examPoint.add((ExamPoint) item);
-                    }
                 } else {
-                    throw new BusinessException("不支持的考点数据类型: " + Json.toJson(firstElement));
+                    for (Object item : list) {
+                        this.examPoint.add(Json.toBean(item, ExamPoint.class));
+                    }
                 }
             }
         } else {
