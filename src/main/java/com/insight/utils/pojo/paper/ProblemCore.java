@@ -3,7 +3,6 @@ package com.insight.utils.pojo.paper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.Json;
 import com.insight.utils.Util;
-import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.problem.ProblemBase;
 
 import java.math.BigDecimal;
@@ -58,11 +57,7 @@ public class ProblemCore extends ProblemBase {
     }
 
     public void setExamPoint(Object examPoint) {
-        if (examPoint == null) {
-            this.examPoint = List.of(new ExamPoint("分值", BigDecimal.valueOf(5)));
-        } else if (examPoint instanceof ExamPoint) {
-            this.examPoint = List.of((ExamPoint) examPoint);
-        } else if (examPoint instanceof List<?>) {
+        if (examPoint instanceof List<?>) {
             this.examPoint = new ArrayList<>();
             var list = (List) examPoint;
             if (list.isEmpty()) {
@@ -80,7 +75,7 @@ public class ProblemCore extends ProblemBase {
                 }
             }
         } else {
-            throw new BusinessException("不支持的考点数据类型: " + Json.toJson(examPoint));
+            this.examPoint = List.of(new ExamPoint("分值", BigDecimal.valueOf(5)));
         }
     }
 
