@@ -112,6 +112,11 @@ public class Content extends BaseXo {
                 return 0;
             }
 
+            if (Util.isNotEmpty(groups)) {
+                var list = groups.get(0).getProblemList();
+                return Util.isEmpty(list) || Util.isEmpty(list.get(0).getAnswer()) ? 1 : 2;
+            }
+
             if (Util.isNotEmpty(getExt()) && "pdf|doc|docx".contains(getExt())) {
                 return 3;
             }
