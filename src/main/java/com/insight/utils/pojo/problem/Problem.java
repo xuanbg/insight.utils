@@ -132,7 +132,7 @@ public class Problem extends ProblemBase {
     }
 
     public Boolean getOriginal() {
-        return original;
+        return original != null && original;
     }
 
     public void setOriginal(Boolean original) {
@@ -140,7 +140,7 @@ public class Problem extends ProblemBase {
     }
 
     public Boolean getExample() {
-        return example;
+        return example != null && example;
     }
 
     public void setExample(Boolean example) {
