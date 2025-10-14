@@ -22,11 +22,6 @@ public class ProblemCore extends ProblemBase {
     private String index;
 
     /**
-     * 题型类型: 0.主观题, 1.单选题, 2.多选题, 3.是非题, 4.客观填空题
-     */
-    private Integer speciesType;
-
-    /**
      * 得分点
      */
     private List<ExamPoint> examPoint;
@@ -42,14 +37,6 @@ public class ProblemCore extends ProblemBase {
 
     public void setIndex(String index) {
         this.index = index;
-    }
-
-    public Integer getSpeciesType() {
-        return speciesType == null ? 0 : speciesType;
-    }
-
-    public void setSpeciesType(Integer speciesType) {
-        this.speciesType = speciesType;
     }
 
     public List<ExamPoint> getExamPoint() {

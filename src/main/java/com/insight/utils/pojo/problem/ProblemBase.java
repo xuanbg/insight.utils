@@ -38,6 +38,11 @@ public class ProblemBase extends BaseXo {
     private String species;
 
     /**
+     * 题型类型: 0.主观题, 1.单选题, 2.多选题, 3.是非题, 4.客观填空题
+     */
+    private Integer speciesType;
+
+    /**
      * 题干
      */
     private String question;
@@ -92,6 +97,14 @@ public class ProblemBase extends BaseXo {
 
     public void setSpecies(String species) {
         this.species = species;
+    }
+
+    public Integer getSpeciesType() {
+        return speciesType == null ? 0 : speciesType;
+    }
+
+    public void setSpeciesType(Integer speciesType) {
+        this.speciesType = speciesType;
     }
 
     public String getQuestion() {
