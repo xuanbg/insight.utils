@@ -436,7 +436,7 @@ public final class Util {
      * @return 长整型集合
      */
     public static List<Long> toLongList(String str) {
-        var list = toStringList(str,",");
+        var list = toStringList(str, ",");
         return list.stream().map(Long::parseLong).collect(Collectors.toList());
     }
 
@@ -474,7 +474,7 @@ public final class Util {
      * @return List<List>
      */
     public static <T> List<List<T>> splitList(List<T> source, Integer n) {
-        if (source == null){
+        if (source == null) {
             return null;
         }
 
@@ -495,31 +495,46 @@ public final class Util {
     }
 
     /**
-     * 比较两个集合是否不同
+     * 集合是否完全相同
      *
-     * @param source 源集合
-     * @param target 目标集合
-     * @param <T>    类型
+     * @param list1 集合1
+     * @param list2 集合2
+     * @param <T>   类型
+     * @return 集合是否完全相同
+     */
+    public static <T> boolean isDuplicate(List<T> list1, List<T> list2) {
+        // 检查引用是否相同
+        if (list1 == list2) {
+            return true;
+        }
+
+        // 检查是否为null
+        if (list1 == null || list2 == null) {
+            return false;
+        }
+
+        // 使用equals方法比较
+        return list1.equals(list2);
+    }
+
+    /**
+     * 比较两个集合是否相同
+     *
+     * @param list1 集合1
+     * @param list2 集合2
+     * @param <T>   类型
      * @return 集合是否不同
      */
-    public static <T> boolean isDifferent(List<T> source, List<T> target) {
-        if (source == null && target == null) {
-            return false;
-        }
-
-        if (source == null || target == null) {
+    public static <T> boolean equalIgnoreOrder(List<T> list1, List<T> list2) {
+        if (list1 == list2) {
             return true;
         }
 
-        if (source.isEmpty() && target.isEmpty()) {
+        if (list1 == null || list2 == null || list1.size() != list2.size()) {
             return false;
         }
 
-        if (source.size() != target.size()) {
-            return true;
-        }
-
-        return source.retainAll(target) || target.retainAll(source);
+        return new HashSet<>(list1).equals(new HashSet<>(list2));
     }
 
     /**
