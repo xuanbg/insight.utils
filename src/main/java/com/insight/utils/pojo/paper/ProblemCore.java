@@ -40,7 +40,7 @@ public class ProblemCore extends ProblemBase {
     }
 
     public List<ExamPoint> getExamPoint() {
-        return examPoint;
+        return examPoint == null ? List.of() : examPoint;
     }
 
     public void setExamPoint(Object examPoint) {
