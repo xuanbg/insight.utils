@@ -59,6 +59,11 @@ public class Education extends BaseXo {
     protected String remark;
 
     /**
+     * 得分
+     */
+    private Integer score;
+
+    /**
      * 慧学分
      */
     protected BigDecimal points;
@@ -151,6 +156,14 @@ public class Education extends BaseXo {
         this.remark = remark;
     }
 
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     public BigDecimal getPoints() {
         return points == null ? BigDecimal.ZERO : points;
     }
@@ -211,7 +224,7 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean canEdit(Education data) {
-        return Objects.equals(creatorId, data.getCreatorId())
+        return data != null && Objects.equals(creatorId, data.getCreatorId())
                && (level == 0 || Objects.equals(hash, data.getHash()));
     }
 
@@ -223,7 +236,7 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean contentEquals(Education data) {
-        return Objects.equals(id, data.getId()) && Objects.equals(getHash(), data.getHash());
+        return data != null && Objects.equals(id, data.getId()) && Objects.equals(getHash(), data.getHash());
     }
 
     /**

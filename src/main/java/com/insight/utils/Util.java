@@ -629,7 +629,7 @@ public final class Util {
      * @return 密文
      */
     public static String md5(String key) {
-        return DigestUtils.md5Hex(key);
+        return isEmpty(key) ? "-" : DigestUtils.md5Hex(key);
     }
 
     /**

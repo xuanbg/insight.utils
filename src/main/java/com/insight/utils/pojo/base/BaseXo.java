@@ -17,12 +17,6 @@ public class BaseXo implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
-     * 默认构造函数
-     */
-    public BaseXo() {
-    }
-
-    /**
      * 类型转换
      *
      * @param type 指定的数据类型
