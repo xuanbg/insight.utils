@@ -70,10 +70,16 @@ public class GroupDto extends Group {
         var stems = data.getStem();
         if (stems.getType().equals("复合题")) {
             setCaption(stems.getHtml());
-            for (var i = 0; i < stems.getSqs().size(); i++) {
-                var stem = stems.getSqs().get(i);
-                var answer = data.getAnswer().getAnSqs().get(i);
-                var analyze = data.getExplanation().getExplanationSegs().size() > i ? data.getExplanation().getExplanationSegs().get(i) : null;
+            var sqs= stems.getSqs();
+            for (var i = 0; i < sqs.size(); i++) {
+                var stem = sqs.get(i);
+
+                var anSqs = data.getAnswer().getAnSqs();
+                var answer = anSqs.size() > i ? anSqs.get(i) : null;
+
+                var expSqs = data.getExplanation().getExplanationSegs();
+                var analyze = expSqs.size() > i ? expSqs.get(i) : null;
+
                 var problem = createProblem(stem, answer, analyze);
                 addProblem(problem);
             }

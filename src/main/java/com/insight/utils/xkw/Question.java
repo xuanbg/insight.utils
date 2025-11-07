@@ -72,12 +72,6 @@ public class Question extends BaseXo {
     private List<Score> score;
 
     /**
-     * 难度等级
-     */
-    @JsonAlias("difficulty_level")
-    private Difficulty difficultyLevel;
-
-    /**
      * 难度系数
      */
     private BigDecimal difficulty;
@@ -177,14 +171,6 @@ public class Question extends BaseXo {
 
     public void setScore(List<Score> score) {
         this.score = score;
-    }
-
-    public Difficulty getDifficultyLevel() {
-        return difficultyLevel;
-    }
-
-    public void setDifficultyLevel(Difficulty difficultyLevel) {
-        this.difficultyLevel = difficultyLevel;
     }
 
     public BigDecimal getDifficulty() {
