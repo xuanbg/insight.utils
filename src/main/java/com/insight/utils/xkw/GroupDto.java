@@ -100,7 +100,6 @@ public class GroupDto extends Group {
      * @return 试题
      */
     private Problem createProblem(Stem stem, AnSq answer, ExplanationSeg analyze) {
-
         var problem = new Problem();
         problem.setQuestion(stem.getHtml());
         if (stem.getType().equals("选择题")) {
@@ -112,8 +111,7 @@ public class GroupDto extends Group {
             problem.setOption(map);
         }
 
-        var list = answer.getAns().stream().map(An::getHtml).toList();
-        problem.setAnswer(list);
+        problem.setAnswer(answer == null ? null : answer.getAns().stream().map(An::getHtml).toList());
         problem.setAnalyze(analyze == null ? null : analyze.getHtml());
         problem.setBaseTime(BigDecimal.TEN.divide(difficulty, 2, RoundingMode.HALF_UP).intValue() * 10);
         problem.setDifficulty(difficulty);
