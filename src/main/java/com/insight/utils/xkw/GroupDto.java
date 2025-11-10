@@ -1,5 +1,6 @@
 package com.insight.utils.xkw;
 
+import com.insight.utils.Util;
 import com.insight.utils.pojo.problem.Group;
 import com.insight.utils.pojo.problem.Problem;
 import com.xkw.xop.qbmsdk.QuestionParser;
@@ -60,9 +61,9 @@ public class GroupDto extends Group {
             return;
         }
 
-         typeId = question.getTypeId();
-         difficulty = question.getDifficulty();
-         level = 5 - difficulty.multiply(new BigDecimal(4)).setScale(0, RoundingMode.HALF_UP).intValue();
+        typeId = question.getTypeId();
+        difficulty = question.getDifficulty();
+        level = 5 - difficulty.multiply(new BigDecimal(4)).setScale(0, RoundingMode.HALF_UP).intValue();
 
         setXkwId(question.getId());
         var parser = new QuestionParser(new Setting());
@@ -70,7 +71,7 @@ public class GroupDto extends Group {
         var stems = data.getStem();
         if (stems.getType().equals("复合题")) {
             setCaption(stems.getHtml());
-            var sqs= stems.getSqs();
+            var sqs = stems.getSqs();
             for (var i = 0; i < sqs.size(); i++) {
                 var stem = sqs.get(i);
 
@@ -94,9 +95,9 @@ public class GroupDto extends Group {
     /**
      * 创建试题
      *
-     * @param stem     题干
-     * @param answer   答案
-     * @param analyze  解析
+     * @param stem    题干
+     * @param answer  答案
+     * @param analyze 解析
      * @return 试题
      */
     private Problem createProblem(Stem stem, AnSq answer, ExplanationSeg analyze) {
@@ -111,7 +112,7 @@ public class GroupDto extends Group {
             problem.setOption(map);
         }
 
-        problem.setAnswer(answer == null ? null : answer.getAns().stream().map(An::getHtml).toList());
+        problem.setAnswer(answer == null || Util.isEmpty(answer.getAns()) ? null : answer.getAns().stream().map(An::getHtml).toList());
         problem.setAnalyze(analyze == null ? null : analyze.getHtml());
         problem.setBaseTime(BigDecimal.TEN.divide(difficulty, 2, RoundingMode.HALF_UP).intValue() * 10);
         problem.setDifficulty(difficulty);
