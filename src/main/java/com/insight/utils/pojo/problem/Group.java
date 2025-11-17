@@ -119,6 +119,16 @@ public class Group extends BaseXo {
     }
 
     /**
+     * 添加视频地址
+     *
+     * @param url 视频地址
+     */
+    @JsonIgnore
+    public void addVideo(String url) {
+        problems.forEach(problem -> problem.setVideoUrl(url));
+    }
+
+    /**
      * 判断当前习题组是否为指定习题组
      *
      * @param xkwId 习题组ID
