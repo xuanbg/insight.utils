@@ -100,6 +100,15 @@ public class PlanModel extends BaseXo {
     }
 
     /**
+     * 获取资源ID
+     *
+     * @return 资源ID
+     */
+    public Long getResourceId() {
+        return resource == null ? null : resource.getId();
+    }
+
+    /**
      * 是否有资源
      *
      * @return 是否有资源
@@ -107,16 +116,6 @@ public class PlanModel extends BaseXo {
     @JsonIgnore
     public Boolean hasResource() {
         return resource != null;
-    }
-
-    /**
-     * 获取资源ID
-     *
-     * @return 资源ID
-     */
-    @JsonIgnore
-    public Long getResourceId() {
-        return resource == null ? null : resource.getId();
     }
 
     /**
