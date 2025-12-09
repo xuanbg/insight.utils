@@ -95,6 +95,20 @@ public class PlanContent extends BaseXo {
     }
 
     /**
+     * 添加模块
+     *
+     * @param model 学程模块
+     */
+    @JsonIgnore
+    public void addModel(PlanModel model) {
+        if (models == null) {
+            models = new ArrayList<>();
+        }
+
+        models.add(model);
+    }
+
+    /**
      * 是否有目标模块
      *
      * @return 是否有目标模块
