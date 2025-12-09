@@ -145,7 +145,8 @@ public class PlanContent extends BaseXo {
      */
     @JsonIgnore
     public List<Long> getResourceIds() {
-        return models.stream().filter(PlanModel::hasResource)
+        return models == null ? List.of()
+                : models.stream().filter(PlanModel::hasResource)
                 .map(model -> model.getResource().getId()).toList();
     }
 }
