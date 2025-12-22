@@ -3,7 +3,6 @@ package com.insight.utils.pojo.prepare;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.pojo.base.BaseXo;
-import com.insight.utils.pojo.basedata.Content;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +24,6 @@ public class PlanContent extends BaseXo {
      * 名称
      */
     private String name;
-
-    /**
-     * 内容
-     */
-    private Content content;
 
     /**
      * 课程前提
@@ -60,14 +54,6 @@ public class PlanContent extends BaseXo {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Content getContent() {
-        return content;
-    }
-
-    public void setContent(Content content) {
-        this.content = content;
     }
 
     public Premise getPremise() {

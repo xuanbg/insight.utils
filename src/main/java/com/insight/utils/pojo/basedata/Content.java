@@ -82,11 +82,6 @@ public class Content extends BaseXo {
     private List<DataBase> objects;
 
     /**
-     * 教学模式集合
-     */
-    private Object models;
-
-    /**
      * 元数据
      */
     private Object meta;
@@ -212,14 +207,6 @@ public class Content extends BaseXo {
 
     public void setObjects(List<DataBase> objects) {
         this.objects = objects;
-    }
-
-    public Object getModels() {
-        return models;
-    }
-
-    public void setModels(Object models) {
-        this.models = models;
     }
 
     public Object getMeta() {
