@@ -39,6 +39,11 @@ public class LoginInfo extends UserBase {
      */
     private String areaCode;
 
+    /**
+     * 是否管理员
+     */
+    private Boolean manager;
+
     public Long getAppId() {
         return appId;
     }
@@ -85,5 +90,13 @@ public class LoginInfo extends UserBase {
 
     public void setAreaCode(String areaCode) {
         this.areaCode = areaCode;
+    }
+
+    public Boolean getManager() {
+        return manager;
+    }
+
+    public void setManager(Boolean manager) {
+        this.manager = manager;
     }
 }

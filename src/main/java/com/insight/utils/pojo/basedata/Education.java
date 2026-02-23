@@ -197,9 +197,10 @@ public class Education extends BaseXo {
     public Boolean isPaper() {
         return type != null
                && List.of(5, 6, 7).contains(type)
-               && content != null
                && content.getType() != null
-               && content.getType() == 1;
+               && content.getType() == 1
+               && content != null
+               && Util.isNotEmpty(content.getGroupIds());
     }
 
     /**
