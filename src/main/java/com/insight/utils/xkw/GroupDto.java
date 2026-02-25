@@ -22,6 +22,11 @@ import java.util.HashMap;
 public class GroupDto extends Group {
 
     /**
+     * 租户ID
+     */
+    private Long tenantId;
+
+    /**
      * 章节ID
      */
     private Long unitId;
@@ -118,6 +123,14 @@ public class GroupDto extends Group {
         problem.setDifficulty(difficulty);
         problem.setLevel(level);
         return problem;
+    }
+
+    public Long getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(Long tenantId) {
+        this.tenantId = tenantId;
     }
 
     public Long getTypeId() {
