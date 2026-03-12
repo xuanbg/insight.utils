@@ -76,6 +76,11 @@ public class Problem extends ProblemBase {
     private LocalDateTime updateTime;
 
     /**
+     * 学校
+     */
+    private String school;
+
+    /**
      * 创建人
      */
     private String creator;
@@ -185,6 +190,14 @@ public class Problem extends ProblemBase {
 
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
     }
 
     public String getCreator() {
