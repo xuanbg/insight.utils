@@ -105,7 +105,6 @@ public class ProblemCore extends ProblemBase {
      *
      * @return 试题总分
      */
-    @JsonIgnore
     public BigDecimal getPoint() {
         return examPoint == null ? BigDecimal.valueOf(5) : examPoint.stream().map(ExamPoint::getPoint).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
