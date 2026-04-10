@@ -160,6 +160,15 @@ public class ProblemBase extends BaseXo {
     }
 
     /**
+     * 选项是否全部包含内容
+     *
+     * @return 是否包含内容
+     */
+    public Boolean getOptionHasContent(){
+        return option != null && option.values().stream().allMatch(Util::isNotEmpty);
+    }
+
+    /**
      * 判断当前试题是否为指定ID的试题
      *
      * @param id 试题ID
