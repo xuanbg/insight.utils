@@ -61,8 +61,11 @@ public class MindMap extends BaseXo {
     }
 
     @JsonIgnore
-    public Long getCount() {
-        return source == null || data == null ? null : data.stream()
-                .filter(i -> source.stream().noneMatch(i::equals)).count();
+    public Integer getCount() {
+        if (data == null) {
+            return null;
+        }
+
+        return source == null ? data.size() : data.stream().filter(i -> source.stream().noneMatch(i::equals)).toList().size();
     }
 }
