@@ -109,7 +109,7 @@ public class Content extends BaseXo {
 
             if (Util.isNotEmpty(groups)) {
                 var list = groups.get(0).getProblemList();
-                return Util.isEmpty(list) || Util.isEmpty(list.get(0).getAnswer()) ? 1 : 2;
+                return Util.isNotEmpty(list) && Util.isNotEmpty(list.get(0).getAnswer()) ? 2 : 1;
             }
 
             if (Util.isNotEmpty(getExt()) && "pdf|doc|docx".contains(getExt())) {
