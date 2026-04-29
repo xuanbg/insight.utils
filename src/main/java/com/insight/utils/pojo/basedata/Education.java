@@ -237,7 +237,7 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean contentEquals(Education data) {
-        return data != null && Objects.equals(id, data.getId()) && Objects.equals(getHash(), data.getHash());
+        return data != null && Objects.equals(getHash(), data.getHash());
     }
 
     /**
