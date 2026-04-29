@@ -240,6 +240,15 @@ public class Education extends BaseXo {
         return data != null && Objects.equals(getHash(), data.getHash());
     }
 
+    @JsonIgnore
+    public Boolean pptEquals(Education data) {
+        return content != null
+               && data != null
+               && data.getContent() != null
+               && "pptx".equals(data.getContent().getExt())
+               && Objects.equals(content.getUrl(), data.getContent().getUrl());
+    }
+
     /**
      * 设置资源URL
      *
