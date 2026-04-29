@@ -237,16 +237,10 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean contentEquals(Education data) {
-        return data != null && Objects.equals(getHash(), data.getHash());
-    }
-
-    @JsonIgnore
-    public Boolean pptEquals(Education data) {
-        return content != null
-               && data != null
-               && data.getContent() != null
-               && "pptx".equals(data.getContent().getExt())
-               && Objects.equals(content.getUrl(), data.getContent().getUrl());
+        return data != null && content != null
+               && (Objects.equals(getHash(), data.getHash()) ||
+                   data.getContent() != null && "pptx".equals(data.getContent().getExt())
+                   && Objects.equals(content.getUrl(), data.getContent().getUrl()));
     }
 
     /**
