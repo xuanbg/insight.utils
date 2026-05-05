@@ -140,14 +140,7 @@ public class ProblemBase extends BaseXo {
     }
 
     public void setAnswer(List<String> answer) {
-        switch (speciesType) {
-            case 1, 3 -> this.answer = answer.subList(0, 1);
-            case 2, 4 -> {
-                var data = answer.stream().flatMap(ans -> Util.toStringList(ans).stream()).toList();
-                this.answer = data.stream().distinct().toList();
-            }
-            default -> this.answer = answer;
-        }
+        this.answer = answer;
     }
 
     public String getAnalyze() {
@@ -171,7 +164,7 @@ public class ProblemBase extends BaseXo {
      *
      * @return 是否包含内容
      */
-    public Boolean getOptionHasContent(){
+    public Boolean getOptionHasContent() {
         return option != null && option.values().stream().allMatch(Util::isNotEmpty);
     }
 
