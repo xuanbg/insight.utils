@@ -108,16 +108,19 @@ public class GroupDto extends Group {
     private Problem createProblem(Stem stem, AnSq answer, ExplanationSeg analyze) {
         var problem = new Problem();
         problem.setQuestion(stem.getHtml());
+        problem.setAnswer(answer == null || Util.isEmpty(answer.getAns()) ? null : answer.getAns().stream().map(An::getHtml).toList());
         if (stem.getType().equals("选择题")) {
+            var ans = Util.isEmpty(problem.getAnswer()) ? null : problem.getAnswer().stream().flatMap(a -> Util.toStringList(a).stream()).toList();
             var map = new HashMap<String, String>();
             var options = stem.getOg().getOgOps();
             for (var option : options) {
                 map.put(option.getIndex(), option.getHtml());
             }
+
             problem.setOption(map);
+            problem.setAnswer(ans == null ? null : ans.stream().distinct().toList());
         }
 
-        problem.setAnswer(answer == null || Util.isEmpty(answer.getAns()) ? null : answer.getAns().stream().map(An::getHtml).toList());
         problem.setAnalyze(analyze == null ? null : analyze.getHtml());
         problem.setBaseTime(BigDecimal.TEN.divide(difficulty, 2, RoundingMode.HALF_UP).intValue() * 10);
         problem.setDifficulty(difficulty);
