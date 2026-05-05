@@ -12,7 +12,9 @@ import com.xkw.xop.qbmsdk.model.stem.Stem;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -110,7 +112,15 @@ public class GroupDto extends Group {
         problem.setQuestion(stem.getHtml());
         problem.setAnswer(answer == null || Util.isEmpty(answer.getAns()) ? null : answer.getAns().stream().map(An::getHtml).toList());
         if (stem.getType().equals("选择题")) {
-            var ans = Util.isEmpty(problem.getAnswer()) ? null : problem.getAnswer().stream().flatMap(a -> Util.toStringList(a).stream()).toList();
+            List<String> list = null;
+            if (Util.isNotEmpty(problem.getAnswer())) {
+                list = new ArrayList<>();
+                for (String an : problem.getAnswer()) {
+                    var ans = an.chars().filter(Character::isLetter).mapToObj(c -> String.valueOf((char) c)).toList();
+                    list.addAll(ans);
+                }
+            }
+
             var map = new HashMap<String, String>();
             var options = stem.getOg().getOgOps();
             for (var option : options) {
@@ -118,7 +128,7 @@ public class GroupDto extends Group {
             }
 
             problem.setOption(map);
-            problem.setAnswer(ans == null ? null : ans.stream().distinct().toList());
+            problem.setAnswer(list == null ? null : list.stream().distinct().toList());
         }
 
         problem.setAnalyze(analyze == null ? null : analyze.getHtml());
