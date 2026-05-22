@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,21 @@ public class ProblemBase extends BaseXo {
      * 视频地址
      */
     private String videoUrl;
+
+    /**
+     * 试题难度系数
+     */
+    private BigDecimal difficulty;
+
+    /**
+     * 认知要求: 1.记忆, 2.理解, 3.应用, 4.分析, 5.综合运用
+     */
+    private Integer level;
+
+    /**
+     * 答题基准时间(秒)
+     */
+    private Integer baseTime;
 
     public Long getId() {
         return id;
@@ -157,6 +174,46 @@ public class ProblemBase extends BaseXo {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public BigDecimal getDifficulty() {
+        if (difficulty == null) {
+            if (level == null) {
+                return BigDecimal.valueOf(0.5);
+            } else {
+                return BigDecimal.ONE.divide(BigDecimal.valueOf(level), 1, RoundingMode.UP);
+            }
+        }
+
+        return difficulty;
+    }
+
+    public void setDifficulty(BigDecimal difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Integer getLevel() {
+        if (level == null) {
+            if (difficulty == null) {
+                return 2;
+            } else {
+                return BigDecimal.ONE.divide(difficulty, 0, RoundingMode.FLOOR).intValue();
+            }
+        }
+
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public Integer getBaseTime() {
+        return baseTime != null && baseTime > 10 * getLevel() ? baseTime : (int) ((baseTime == null ? 10 : baseTime) * 3 * Math.sqrt(getLevel()));
+    }
+
+    public void setBaseTime(Integer baseTime) {
+        this.baseTime = baseTime;
     }
 
     /**
