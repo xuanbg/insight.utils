@@ -70,6 +70,11 @@ public class ProblemBase extends BaseXo {
     private String videoUrl;
 
     /**
+     * AI解析
+     */
+    private String aiAnalysi;
+
+    /**
      * 试题难度系数
      */
     private BigDecimal difficulty;
@@ -174,6 +179,14 @@ public class ProblemBase extends BaseXo {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public String getAiAnalysi() {
+        return aiAnalysi;
+    }
+
+    public void setAiAnalysi(String aiAnalysi) {
+        this.aiAnalysi = aiAnalysi;
     }
 
     public BigDecimal getDifficulty() {
