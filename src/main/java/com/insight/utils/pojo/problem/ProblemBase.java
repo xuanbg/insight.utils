@@ -235,4 +235,21 @@ public class ProblemBase extends BaseXo {
     public Boolean equals(Long id) {
         return this.id != null && this.id.equals(id);
     }
+
+    /**
+     * 获取题干文本
+     *
+     * @return 题干文本
+     */
+    @JsonIgnore
+    public String getQuestionText() {
+        var content = new StringBuilder(Util.cleanRichText(question));
+        if (getOptionHasContent()){
+            for (var key : option.keySet()) {
+                content.append("\n").append(key).append(": ").append(Util.cleanRichText(option.get(key)));
+            }
+        }
+
+        return content.toString();
+    }
 }

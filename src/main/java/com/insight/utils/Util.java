@@ -35,7 +35,10 @@ public final class Util {
         var doc = Jsoup.parse(html);
         for (var element : doc.getAllElements()) {
             if (element.tagName().equalsIgnoreCase("img")) {
-                content.append(element.html());
+                var src = element.attr("src");
+                if (Util.isNotEmpty(src)) {
+                    content.append("![](").append(src).append(")");
+                }
             }
 
             content.append(element.text().strip());
