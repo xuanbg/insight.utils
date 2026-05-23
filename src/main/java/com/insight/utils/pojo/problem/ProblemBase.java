@@ -72,7 +72,7 @@ public class ProblemBase extends BaseXo {
     /**
      * AI解析
      */
-    private String aiAnalysi;
+    private String aiAnalyze;
 
     /**
      * 试题难度系数
@@ -181,12 +181,12 @@ public class ProblemBase extends BaseXo {
         this.videoUrl = videoUrl;
     }
 
-    public String getAiAnalysi() {
-        return aiAnalysi;
+    public String getAiAnalyze() {
+        return aiAnalyze;
     }
 
-    public void setAiAnalysi(String aiAnalysi) {
-        this.aiAnalysi = aiAnalysi;
+    public void setAiAnalyze(String aiAnalyze) {
+        this.aiAnalyze = aiAnalyze;
     }
 
     public BigDecimal getDifficulty() {
