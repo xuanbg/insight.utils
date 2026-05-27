@@ -189,6 +189,56 @@ public class Education extends BaseXo {
     }
 
     /**
+     * 内容类型: 1.思维导图, 2.富文本, 3.PDF, 4.课件, 5.试卷, 6.答题卡, 7.图片, 8.音频, 9.视频
+     */
+    public Integer getContentType() {
+        return switch (type) {
+            case 0, 2 -> switch (content.getType()) {
+                case 0 -> 2;
+                case 1 -> 3;
+                default -> 0;
+            };
+            case 1 -> 1;
+            case 3 -> 4;
+            case 4 -> 7;
+            case 5, 6, 7 -> {
+                // 文本试卷
+                if (Util.isNotEmpty(content.getHtml())) {
+                    yield 2;
+                }
+
+                // 判断是试卷还是答题卡
+                var groups = content.getGroups();
+                if (Util.isEmpty(groups)) {
+                    yield 0;
+                }
+
+                var group = groups.stream().filter(i -> Util.isNotEmpty(i.getProblems())).findFirst().orElse(null);
+                if (group == null) {
+                    yield 0;
+                }
+
+                var problems = group.getProblemList();
+                if (Util.isEmpty(problems)) {
+                    yield 0;
+                }
+
+                var problem = problems.get(0);
+                yield Util.isEmpty(problem.getAnswer()) ? 5 : 6;
+            }
+            case 9 -> content.getExt() == null ? 0 : switch (content.getExt()) {
+                case "pdf", "doc", "docx", "xls", "xlsx" -> 3;
+                case "ppt", "pptx" -> 4;
+                case "png", "jpg", "jpeg", "gif" -> 7;
+                case "mp3" -> 8;
+                case "mp4" -> 9;
+                default -> 0;
+            };
+            default -> 0;
+        };
+    }
+
+    /**
      * 是否是试卷
      *
      * @return 是否是试卷

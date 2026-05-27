@@ -73,7 +73,7 @@ public class AttachFile extends BaseXo {
         }
 
         int index = url == null ? -1 : url.lastIndexOf(".");
-        return index < 0 ? "." : url.substring(index + 1);
+        return index < 0 ? "." : url.substring(index + 1).toLowerCase();
     }
 
     public void setExt(String ext) {
@@ -94,6 +94,20 @@ public class AttachFile extends BaseXo {
 
     public void setPage(String page) {
         this.page = page;
+    }
+
+    /**
+     * 内容类型: 1.思维导图, 2.富文本, 3.PDF, 4.课件, 5.试卷, 6.答题卡, 7.图片, 8.音频, 9.视频
+     */
+    public Integer getContentType() {
+        return getExt() == null ? 0 : switch (getExt()) {
+            case "pdf", "doc", "docx", "xls", "xlsx" -> 3;
+            case "ppt", "pptx" -> 4;
+            case "png", "jpg", "jpeg", "gif" -> 7;
+            case "mp3" -> 8;
+            case "mp4" -> 9;
+            default -> 0;
+        };
     }
 
     /**
