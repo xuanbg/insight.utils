@@ -195,7 +195,7 @@ public class Education extends BaseXo {
         return content == null || type == null ? 0 : switch (type) {
             case 0, 2 -> switch (content.getType()) {
                 case 0 -> 2;
-                case 1 -> 3;
+                case 3 -> 3;
                 default -> 0;
             };
             case 1 -> 1;
