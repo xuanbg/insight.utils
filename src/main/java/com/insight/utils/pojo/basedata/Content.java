@@ -146,7 +146,11 @@ public class Content extends BaseXo {
     }
 
     public String getPage() {
-        return page == null && getType() != null && getType() == 3 ? url : page;
+        if (page != null) {
+            return page;
+        }
+
+        return getExt() == null || List.of("doc", "docx", "xls", "xlsx", "ppt", "pptx").contains(getExt()) ? null : url;
     }
 
     public void setPage(String page) {
