@@ -200,7 +200,7 @@ public class Education extends BaseXo {
             };
             case 1 -> 1;
             case 3 -> 4;
-            case 4 -> 7;
+            case 4 -> 9;
             case 5, 6, 7 -> {
                 // 文本试卷
                 if (Util.isNotEmpty(content.getHtml())) {
