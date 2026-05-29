@@ -40,16 +40,22 @@ public class ProblemCore extends ProblemBase {
     }
 
     public List<ExamPoint> getExamPoint() {
-        return examPoint == null ? List.of() : examPoint;
+        if (examPoint == null) {
+            examPoint = new ArrayList<>();
+        }
+
+        if (examPoint.isEmpty()) {
+            examPoint.add(new ExamPoint("分值", BigDecimal.valueOf(5)));
+        }
+
+        return examPoint;
     }
 
     public void setExamPoint(Object examPoint) {
         if (examPoint instanceof List<?>) {
             this.examPoint = new ArrayList<>();
             var list = (List) examPoint;
-            if (list.isEmpty()) {
-                this.examPoint.add(new ExamPoint("分值", BigDecimal.valueOf(5)));
-            } else {
+            if (!list.isEmpty()) {
                 var firstElement = list.get(0);
                 if (firstElement instanceof String) {
                     for (Object item : list) {
@@ -61,8 +67,6 @@ public class ProblemCore extends ProblemBase {
                     }
                 }
             }
-        } else {
-            this.examPoint = List.of(new ExamPoint("分值", BigDecimal.valueOf(5)));
         }
     }
 
