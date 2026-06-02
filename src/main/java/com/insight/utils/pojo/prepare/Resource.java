@@ -33,7 +33,7 @@ public class Resource extends Education {
      */
     public Resource(AttachFile file) {
         this.id = file.getId();
-        this.type = file.getResourceType();
+        this.resourceType = file.getResourceType();
         this.name = file.getName();
         this.content = file.convert(Content.class);
     }

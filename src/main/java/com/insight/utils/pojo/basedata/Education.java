@@ -29,9 +29,14 @@ public class Education extends BaseXo {
     protected Long subjectId;
 
     /**
-     * 资源类型: 0.教案, 1.思维导图, 2.导学案, 3.课件, 4.微课, 5.堂练, 6.堂测, 7.作业, 8.试卷, 9.素材
+     * 资源类型: 1.教学资源, 2.清北, 3.中高考, 4.国家/地方中小学, 6.德育, 7.拓展技能, 8.数字图书
      */
     protected Integer type;
+
+    /**
+     * 教学资源类型: 0.教案, 1.思维导图, 2.导学案, 3.课件, 4.微课, 5.堂练, 6.堂测, 7.作业, 8.试卷, 9.素材
+     */
+    protected Integer resourceType;
 
     /**
      * 共享级别: 0.私有, 1.本校, 2.集团
@@ -61,7 +66,7 @@ public class Education extends BaseXo {
     /**
      * 得分
      */
-    private Integer score;
+    protected Integer score;
 
     /**
      * 慧学分
@@ -100,6 +105,14 @@ public class Education extends BaseXo {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Long getResourceType() {
+        return Long.valueOf(resourceType);
+    }
+
+    public void setResourceType(Integer resourceType) {
+        this.resourceType = resourceType;
     }
 
     public Integer getLevel() {
@@ -192,7 +205,7 @@ public class Education extends BaseXo {
      * 内容类型: 1.思维导图, 2.富文本, 3.PDF, 4.课件, 5.试卷, 6.答题卡, 7.图片, 8.音频, 9.视频
      */
     public Integer getContentType() {
-        return content == null || type == null ? 0 : switch (type) {
+        return content == null || resourceType == null ? 0 : switch (resourceType) {
             case 0, 2 -> switch (content.getType()) {
                 case 0 -> 2;
                 case 3 -> 3;
@@ -245,8 +258,8 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean isPaper() {
-        return type != null
-               && List.of(5, 6, 7).contains(type)
+        return resourceType != null
+               && List.of(5, 6, 7).contains(resourceType)
                && content.getType() != null
                && content.getType() == 1
                && content != null
@@ -260,7 +273,7 @@ public class Education extends BaseXo {
      */
     @JsonIgnore
     public Boolean isFile() {
-        return type != null && switch (type) {
+        return resourceType != null && switch (resourceType) {
             case 0, 2 -> content != null && content.getType() == 3;
             case 3, 4, 9 -> true;
             default -> false;
