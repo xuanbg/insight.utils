@@ -36,7 +36,7 @@ public class Education extends BaseXo {
     /**
      * 教学资源类型: 0.教案, 1.思维导图, 2.导学案, 3.课件, 4.微课, 5.堂练, 6.堂测, 7.作业, 8.试卷, 9.素材
      */
-    protected Integer resourceType;
+    protected String resourceType;
 
     /**
      * 共享级别: 0.私有, 1.本校, 2.集团
@@ -107,11 +107,11 @@ public class Education extends BaseXo {
         this.type = type;
     }
 
-    public Integer getResourceType() {
+    public String getResourceType() {
         return resourceType;
     }
 
-    public void setResourceType(Integer resourceType) {
+    public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
 
@@ -207,15 +207,15 @@ public class Education extends BaseXo {
     public Integer getContentType() {
         return content == null || resourceType == null ? 0
                 : switch (resourceType) {
-            case 0, 2 -> switch (content.getType()) {
+            case "0", "2" -> switch (content.getType()) {
                 case 0 -> 2;
                 case 3 -> 3;
                 default -> 0;
             };
-            case 1 -> 1;
-            case 3 -> 4;
-            case 4 -> 9;
-            case 5, 6, 7 -> {
+            case "1" -> 1;
+            case "3" -> 4;
+            case "4" -> 9;
+            case "5", "6", "7" -> {
                 // 文本试卷
                 if (Util.isNotEmpty(content.getHtml())) {
                     yield 2;
@@ -240,7 +240,7 @@ public class Education extends BaseXo {
                 var problem = problems.get(0);
                 yield Util.isEmpty(problem.getAnswer()) ? 5 : 6;
             }
-            case 9 -> content.getExt() == null ? 0 : switch (content.getExt()) {
+            case "9" -> content.getExt() == null ? 0 : switch (content.getExt()) {
                 case "pdf", "doc", "docx", "xls", "xlsx" -> 3;
                 case "ppt", "pptx" -> 4;
                 case "png", "jpg", "jpeg", "gif" -> 7;
@@ -260,7 +260,7 @@ public class Education extends BaseXo {
     @JsonIgnore
     public Boolean isPaper() {
         return resourceType != null
-               && List.of(5, 6, 7).contains(resourceType)
+               && List.of("5", "6", "7").contains(resourceType)
                && content.getType() != null
                && content.getType() == 1
                && content != null
@@ -275,8 +275,8 @@ public class Education extends BaseXo {
     @JsonIgnore
     public Boolean isFile() {
         return resourceType != null && switch (resourceType) {
-            case 0, 2 -> content != null && content.getType() == 3;
-            case 3, 4, 9 -> true;
+            case "0", "2" -> content != null && content.getType() == 3;
+            case "3", "4", "9" -> true;
             default -> false;
         };
     }

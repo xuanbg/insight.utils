@@ -116,12 +116,12 @@ public class AttachFile extends BaseXo {
      * @return 资源类型
      */
     @JsonIgnore
-    public Integer getResourceType() {
+    public String getResourceType() {
         return switch (getExt()) {
-            case "docx", "doc", "pdf" -> 2;
-            case "pptx" -> 3;
-            case "mp4" -> 4;
-            default -> 9;
+            case "docx", "doc", "pdf" -> "2";
+            case "pptx" -> "3";
+            case "mp4" -> "4";
+            default -> "9";
         };
     }
 
