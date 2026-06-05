@@ -205,7 +205,8 @@ public class Education extends BaseXo {
      * 内容类型: 1.思维导图, 2.富文本, 3.PDF, 4.课件, 5.试卷, 6.答题卡, 7.图片, 8.音频, 9.视频
      */
     public Integer getContentType() {
-        return content == null || resourceType == null ? 0 : switch (resourceType) {
+        return content == null || resourceType == null ? 0
+                : switch (resourceType) {
             case 0, 2 -> switch (content.getType()) {
                 case 0 -> 2;
                 case 3 -> 3;
