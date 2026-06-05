@@ -107,8 +107,8 @@ public class Education extends BaseXo {
         this.type = type;
     }
 
-    public Long getResourceType() {
-        return Long.valueOf(resourceType);
+    public Integer getResourceType() {
+        return resourceType;
     }
 
     public void setResourceType(Integer resourceType) {
