@@ -51,8 +51,8 @@ public class PlanModel extends BaseXo {
     /**
      * 构造函数
      *
-     * @param type  类型
-     * @param name  名称
+     * @param type 类型
+     * @param name 名称
      */
     public PlanModel(Integer type, String name) {
         this.type = type;
@@ -139,17 +139,17 @@ public class PlanModel extends BaseXo {
      * @return 资源类型
      */
     @JsonIgnore
-    public Integer getResourceType() {
+    public String getResourceType() {
         if (type == null || type < 1 || type > 8) {
             throw new BusinessException("不支持的模块类型");
         }
 
         return switch (type) {
-            case 3 -> 5;
-            case 4 -> 3;
-            case 5 -> 4;
-            case 6 -> 1;
-            case 7 -> 6;
+            case 3 -> "5";
+            case 4 -> "3";
+            case 5 -> "4";
+            case 6 -> "1";
+            case 7 -> "6";
             case 8 -> {
                 var content = Json.toBean(data.getContent(), AttachFile.class);
                 if (content == null || content.getResourceType() == null) {
@@ -158,7 +158,7 @@ public class PlanModel extends BaseXo {
 
                 yield content.getResourceType();
             }
-            default -> type;
+            default -> String.valueOf(type);
         };
     }
 
