@@ -29,6 +29,10 @@ public final class Util {
      * @return 清理后的富文本
      */
     public static String cleanRichText(String html) {
+        if (isEmpty(html)) {
+            return html;
+        }
+
         var cleaner = new Cleaner(Safelist.none());
         return cleaner.clean(Jsoup.parse(html)).text();
     }
