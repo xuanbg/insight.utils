@@ -270,11 +270,20 @@ public final class DateTime {
     /**
      * 计算某个日期是星期几
      *
+     * @return String - 返回星期几
+     */
+    public static Integer getWeek(LocalDateTime time) {
+        return getWeek(time.toLocalDate());
+    }
+
+    /**
+     * 计算某个日期是星期几
+     *
      * @param date 日期
-     * @return 1-7，7为星期天
+     * @return 0-6，0为星期天
      */
     public static Integer getWeek(LocalDate date) {
-        return date.getDayOfWeek().getValue();
+        return date.getDayOfWeek().getValue() % 7;
     }
 
     /**

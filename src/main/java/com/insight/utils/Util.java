@@ -2,6 +2,8 @@ package com.insight.utils;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.jsoup.Jsoup;
+import org.jsoup.safety.Cleaner;
+import org.jsoup.safety.Safelist;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +29,23 @@ public final class Util {
      * @return 清理后的富文本
      */
     public static String cleanRichText(String html) {
+        var cleaner = new Cleaner(Safelist.none());
+        return cleaner.clean(Jsoup.parse(html)).text();
+    }
+
+    /**
+     * 清理富文本
+     *
+     * @param html 富文本
+     * @return 清理后的富文本
+     */
+    public static String rich2Text(String html) {
         if (isEmpty(html)) {
+            return html;
+        }
+
+        var cleaned = Jsoup.clean(html, Safelist.none());
+        if (html.length() == cleaned.length()) {
             return html;
         }
 
