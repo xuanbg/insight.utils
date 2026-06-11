@@ -210,7 +210,8 @@ public class ProblemBase extends BaseXo {
             if (difficulty == null) {
                 return 2;
             } else {
-                return BigDecimal.ONE.divide(difficulty, 0, RoundingMode.FLOOR).intValue();
+                var val = new BigDecimal(5).multiply(BigDecimal.ONE.subtract(difficulty)).setScale(0, RoundingMode.FLOOR);
+                return val.intValue() + 1;
             }
         }
 
@@ -257,7 +258,7 @@ public class ProblemBase extends BaseXo {
     @JsonIgnore
     public String getQuestionText() {
         var content = new StringBuilder(Util.cleanRichText(question));
-        if (getOptionHasContent()){
+        if (getOptionHasContent()) {
             for (var key : option.keySet()) {
                 content.append("\n").append(key).append(": ").append(Util.cleanRichText(option.get(key)));
             }
