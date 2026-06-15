@@ -26,6 +26,11 @@ public class ProblemCore extends ProblemBase {
      */
     private List<ExamPoint> examPoint;
 
+    /**
+     * 高度
+     */
+    private Integer height;
+
     @Override
     public Long getId() {
         return super.getId() == null ? getOrder() : super.getId();
@@ -68,6 +73,14 @@ public class ProblemCore extends ProblemBase {
                 }
             }
         }
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
     /**
