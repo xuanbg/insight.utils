@@ -52,6 +52,10 @@ public class ProblemGroup extends BaseXo {
         this.index = index;
     }
 
+    public String getSpecies() {
+        return Util.isEmpty(problems) ? null : problems.size() > 1 ? "综合题" :  problems.get(0).getSpecies();
+    }
+
     public String getCaption() {
         return caption;
     }

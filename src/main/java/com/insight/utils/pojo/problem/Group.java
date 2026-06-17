@@ -2,6 +2,7 @@ package com.insight.utils.pojo.problem;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BaseXo;
 import com.insight.utils.pojo.base.DataBase;
 
@@ -82,6 +83,10 @@ public class Group extends BaseXo {
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    public String getSpecies() {
+        return Util.isEmpty(problems) ? null : problems.size() > 1 ? "综合题" :  problems.get(0).getSpecies();
     }
 
     public String getCaption() {
