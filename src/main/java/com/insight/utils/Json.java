@@ -1,23 +1,16 @@
 package com.insight.utils;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.common.Base64Encryptor;
 import com.insight.utils.pojo.auth.TokenKey;
+import com.insight.utils.pojo.base.BusinessException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.DeserializationFeature;
-import tools.jackson.databind.JavaType;
-import tools.jackson.databind.cfg.DateTimeFeature;
-import tools.jackson.databind.ext.javatime.deser.LocalDateDeserializer;
-import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
-import tools.jackson.databind.ext.javatime.deser.LocalTimeDeserializer;
-import tools.jackson.databind.ext.javatime.ser.LocalDateSerializer;
-import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
-import tools.jackson.databind.ext.javatime.ser.LocalTimeSerializer;
+import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.json.JsonMapper;
-import tools.jackson.databind.module.SimpleModule;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -27,29 +20,18 @@ import java.util.*;
  * @remark Json工具类
  */
 public final class Json {
+    private static final String objReg = "^\\s*\\{\\s*(\"[^\"]*\"\\s*:\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*(,\\s*\"[^\"]*\"\\s*:\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*)*)?\\s*}\\s*$";
+    private static final String listReg = "^\\s*\\[\\s*((\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*(,\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*)*)?\\s*]\\s*$";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final JsonMapper MAPPER = new JsonMapper();
-
-    static {
-        var module = new SimpleModule();
-
-        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
-        module.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
-        module.addSerializer(LocalTime.class, new LocalTimeSerializer(TIME_FORMATTER));
-
-        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
-        module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
-        module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
-
-        JsonMapper.builder()
-                .addModule(module)
-                .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
-                .disable(DateTimeFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
-                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                .build();
-    }
+    private static final JsonMapper MAPPER = JsonMapper.builder()
+            .changeDefaultPropertyInclusion(incl -> incl
+                    .withValueInclusion(JsonInclude.Include.NON_NULL)
+                    .withContentInclusion(JsonInclude.Include.NON_NULL))
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .enable(SerializationFeature.INDENT_OUTPUT)
+            .build();
 
     /**
      * 将bean转换成json
@@ -66,7 +48,26 @@ public final class Json {
             return (String) obj;
         }
 
-        return MAPPER.writeValueAsString(obj);
+        try {
+            return MAPPER.writeValueAsString(obj);
+        } catch (JacksonException e) {
+            throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 将 Java 对象序列化为格式化的 JSON 字符串（便于阅读）
+     *
+     * @param obj 待序列化的对象
+     * @return 格式化后的 JSON 字符串
+     */
+    public static String toPrettyJson(Object obj) {
+        try {
+            return MAPPER.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(obj);
+        } catch (JacksonException e) {
+            throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage());
+        }
     }
 
     /**
@@ -90,11 +91,15 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBean(String json, Class<T> type) {
-        if (Util.isEmpty(json) || !json.trim().matches("^([\\[{])(.*?)([}\\]])$")) {
+        if (json == null || !json.trim().matches(objReg)) {
             return null;
         }
 
-        return MAPPER.readValue(json.trim(), type);
+        try {
+            return MAPPER.readValue(json, type);
+        } catch (JacksonException e) {
+            throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
+        }
     }
 
     /**
@@ -119,26 +124,16 @@ public final class Json {
      * @return List
      */
     public static <T> List<T> toList(String json, Class<T> type) {
-        if (Util.isEmpty(json) || !json.trim().matches("^\\[(.*?)]$")) {
+        if (json == null || !json.trim().matches(listReg)) {
             return new ArrayList<>();
         }
 
-        return MAPPER.readValue(json.trim(), getJavaType(List.class, type));
-    }
-
-    /**
-     * 将json字符串转换为HashMap
-     *
-     * @param json json
-     * @return hashmap
-     */
-    public static Map<String, Object> toMap(String json) {
-        if (json == null || json.isEmpty()) {
-            return null;
+        try {
+            var javaType = MAPPER.getTypeFactory().constructParametricType(List.class, type);
+            return MAPPER.readValue(json, javaType);
+        } catch (JacksonException e) {
+            throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
-
-        //noinspection unchecked
-        return MAPPER.readValue(json.trim(), Map.class);
     }
 
     /**
@@ -153,17 +148,22 @@ public final class Json {
     }
 
     /**
-     * 将json字符串转换为TreeMap
+     * 将json字符串转换为HashMap
      *
      * @param json json
-     * @return TreeMap
+     * @return hashmap
      */
-    public static TreeMap toTreeMap(String json) {
-        if (json == null || json.isEmpty()) {
+    public static Map<String, Object> toMap(String json) {
+        if (json == null || !json.trim().matches(objReg)) {
             return null;
         }
 
-        return MAPPER.readValue(json.trim(), TreeMap.class);
+        try {
+            return MAPPER.readValue(json, new TypeReference<HashMap<String, Object>>() {
+            });
+        } catch (JacksonException e) {
+            throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
+        }
     }
 
     /**
@@ -175,6 +175,25 @@ public final class Json {
     public static TreeMap toTreeMap(Object obj) {
         var json = toJson(obj);
         return toTreeMap(json);
+    }
+
+    /**
+     * 将json字符串转换为TreeMap
+     *
+     * @param json json
+     * @return TreeMap
+     */
+    public static TreeMap toTreeMap(String json) {
+        if (json == null || !json.trim().matches(objReg)) {
+            return null;
+        }
+
+        try {
+            return MAPPER.readValue(json, new TypeReference<TreeMap<String, Object>>() {
+            });
+        } catch (JacksonException e) {
+            throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
+        }
     }
 
     /**
@@ -195,18 +214,16 @@ public final class Json {
      * @return hashmap
      */
     public static Map<String, String> toStringValueMap(String json) {
-        var obj = toMap(json);
-        if (obj == null) {
+        if (json == null || !json.trim().matches(objReg)) {
             return null;
         }
 
-        Map<String, String> map = new HashMap<>(16);
-        for (var set : obj.entrySet()) {
-            var value = set.getValue();
-            map.put(set.getKey(), toJson(value));
+        try {
+            return MAPPER.readValue(json, new TypeReference<TreeMap<String, String>>() {
+            });
+        } catch (JacksonException e) {
+            throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
-
-        return map;
     }
 
     /**
@@ -283,14 +300,4 @@ public final class Json {
         return toMap(json).get(name);
     }
 
-    /**
-     * 获取泛型Collection JavaType
-     *
-     * @param collectionClass 泛型的Collection
-     * @param elementType     元素类
-     * @return JavaType Java类型
-     */
-    public static JavaType getJavaType(Class<?> collectionClass, Class<?>... elementType) {
-        return MAPPER.getTypeFactory().constructParametricType(collectionClass, elementType);
-    }
 }
