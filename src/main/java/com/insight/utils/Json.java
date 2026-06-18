@@ -1,23 +1,20 @@
 package com.insight.utils;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
-import com.fasterxml.jackson.databind.ser.std.DateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+
 import com.insight.utils.common.Base64Encryptor;
 import com.insight.utils.pojo.auth.TokenKey;
-import com.insight.utils.pojo.base.BusinessException;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.cfg.DateTimeFeature;
+import tools.jackson.databind.ext.javatime.deser.LocalDateDeserializer;
+import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.ext.javatime.deser.LocalTimeDeserializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalTimeSerializer;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -33,24 +30,25 @@ public final class Json {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final JsonMapper MAPPER = new JsonMapper();
 
     static {
-        var module = new JavaTimeModule();
+        var module = new SimpleModule();
+
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_TIME_FORMATTER));
         module.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
         module.addSerializer(LocalTime.class, new LocalTimeSerializer(TIME_FORMATTER));
-        module.addSerializer(Date.class, new DateSerializer());
 
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATE_TIME_FORMATTER));
         module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
         module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
-        module.addDeserializer(Date.class, new DateDeserializers.DateDeserializer());
 
-        MAPPER.registerModule(module);
-        MAPPER.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        MAPPER.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
-        MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonMapper.builder()
+                .addModule(module)
+                .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .disable(DateTimeFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .build();
     }
 
     /**
@@ -68,11 +66,7 @@ public final class Json {
             return (String) obj;
         }
 
-        try {
-            return MAPPER.writeValueAsString(obj);
-        } catch (IOException ex) {
-            throw new BusinessException(ex.getMessage());
-        }
+        return MAPPER.writeValueAsString(obj);
     }
 
     /**
@@ -100,11 +94,7 @@ public final class Json {
             return null;
         }
 
-        try {
-            return MAPPER.readValue(json.trim(), type);
-        } catch (IOException ex) {
-            throw new BusinessException(ex.getMessage());
-        }
+        return MAPPER.readValue(json.trim(), type);
     }
 
     /**
@@ -133,11 +123,7 @@ public final class Json {
             return new ArrayList<>();
         }
 
-        try {
-            return MAPPER.readValue(json.trim(), getJavaType(List.class, type));
-        } catch (IOException ex) {
-            throw new BusinessException(ex.getMessage());
-        }
+        return MAPPER.readValue(json.trim(), getJavaType(List.class, type));
     }
 
     /**
@@ -151,12 +137,8 @@ public final class Json {
             return null;
         }
 
-        try {
-            //noinspection unchecked
-            return MAPPER.readValue(json.trim(), HashMap.class);
-        } catch (IOException ex) {
-            throw new BusinessException(ex.getMessage());
-        }
+        //noinspection unchecked
+        return MAPPER.readValue(json.trim(), Map.class);
     }
 
     /**
@@ -176,17 +158,12 @@ public final class Json {
      * @param json json
      * @return TreeMap
      */
-    public static TreeMap<String, Object> toTreeMap(String json) {
+    public static TreeMap toTreeMap(String json) {
         if (json == null || json.isEmpty()) {
             return null;
         }
 
-        try {
-            //noinspection unchecked
-            return MAPPER.readValue(json.trim(), TreeMap.class);
-        } catch (IOException ex) {
-            throw new BusinessException(ex.getMessage());
-        }
+        return MAPPER.readValue(json.trim(), TreeMap.class);
     }
 
     /**
@@ -195,7 +172,7 @@ public final class Json {
      * @param obj 对象
      * @return TreeMap
      */
-    public static TreeMap<String, Object> toTreeMap(Object obj) {
+    public static TreeMap toTreeMap(Object obj) {
         var json = toJson(obj);
         return toTreeMap(json);
     }

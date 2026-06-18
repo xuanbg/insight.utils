@@ -1,11 +1,10 @@
 package com.insight.utils.redis;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.insight.utils.Json;
 import com.insight.utils.common.ContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -18,7 +17,6 @@ import java.util.*;
 public final class Generator {
     private static final Logger logger = LoggerFactory.getLogger(Generator.class);
     private static final LockHandler LOCK = ContextHolder.getContext().getBean(LockHandler.class);
-    private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Map<String, Object> SET;
 
     static {
@@ -37,9 +35,9 @@ public final class Generator {
                 list.remove(index);
             }
 
-            StringOps.set("Config:GarbleSet", toJson());
+            StringOps.set("Config:GarbleSet", Json.toJson(Generator.SET));
         } else {
-            SET = toMap(val);
+            SET = Json.toMap(val);
         }
     }
 
@@ -186,39 +184,5 @@ public final class Generator {
         }
 
         return null;
-    }
-
-    /**
-     * 将bean转换成json
-     *
-     * @return json
-     */
-    private static String toJson() {
-        try {
-            return MAPPER.writeValueAsString(Generator.SET);
-        } catch (IOException ex) {
-            logger.error("序列化对象失败! {}", ex.getMessage());
-            return null;
-        }
-    }
-
-    /**
-     * 将json字符串转换为HashMap
-     *
-     * @param json json
-     * @return HashMap
-     */
-    @SuppressWarnings("unchecked")
-    private static Map<String, Object> toMap(String json) {
-        if (json == null || json.isEmpty()) {
-            return null;
-        }
-
-        try {
-            return MAPPER.readValue(json, HashMap.class);
-        } catch (IOException ex) {
-            logger.error("反序列化为Map失败! {}", ex.getMessage());
-            return null;
-        }
     }
 }

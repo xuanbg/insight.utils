@@ -1,9 +1,9 @@
 package com.insight.utils.xkw;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.insight.utils.common.MultiDateDeserializer;
 import com.insight.utils.pojo.base.BaseXo;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

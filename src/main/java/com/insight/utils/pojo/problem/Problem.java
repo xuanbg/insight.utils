@@ -1,8 +1,8 @@
 package com.insight.utils.pojo.problem;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.insight.utils.Util;
 import com.insight.utils.common.MultiDateDeserializer;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

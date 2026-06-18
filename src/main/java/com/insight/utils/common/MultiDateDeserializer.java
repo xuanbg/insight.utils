@@ -1,12 +1,11 @@
 package com.insight.utils.common;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.insight.utils.DateTime;
 import org.springframework.context.annotation.Configuration;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.ValueDeserializer;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
  * @remark
  */
 @Configuration
-public class MultiDateDeserializer extends JsonDeserializer<LocalDateTime> {
+public class MultiDateDeserializer extends ValueDeserializer<LocalDateTime> {
 
     /**
      * 反序列化时间字符串
@@ -25,8 +24,8 @@ public class MultiDateDeserializer extends JsonDeserializer<LocalDateTime> {
      * @return LocalDateTime
      */
     @Override
-    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        var date = jsonParser.getText();
+    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) {
+        var date = jsonParser.getString();
         return DateTime.autoParseDateTime(date);
     }
 }
