@@ -1,17 +1,13 @@
 package com.insight.utils;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.insight.utils.common.Base64Encryptor;
 import com.insight.utils.pojo.auth.TokenKey;
 import com.insight.utils.pojo.base.BusinessException;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.DeserializationFeature;
-import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.json.JsonMapper;
 
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -22,16 +18,7 @@ import java.util.*;
 public final class Json {
     private static final String objReg = "^\\s*\\{\\s*(\"[^\"]*\"\\s*:\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*(,\\s*\"[^\"]*\"\\s*:\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*)*)?\\s*}\\s*$";
     private static final String listReg = "^\\s*\\[\\s*((\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*(,\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*)*)?\\s*]\\s*$";
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    private static final JsonMapper MAPPER = JsonMapper.builder()
-            .changeDefaultPropertyInclusion(incl -> incl
-                    .withValueInclusion(JsonInclude.Include.NON_NULL)
-                    .withContentInclusion(JsonInclude.Include.NON_NULL))
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            .enable(SerializationFeature.INDENT_OUTPUT)
-            .build();
+    private static final JsonMapper MAPPER = JsonMapper.builder().build();
 
     /**
      * 将bean转换成json
@@ -299,5 +286,4 @@ public final class Json {
     public static Object getValue(String json, String name) {
         return toMap(json).get(name);
     }
-
 }
