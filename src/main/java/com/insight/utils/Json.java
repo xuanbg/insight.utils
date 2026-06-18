@@ -4,6 +4,8 @@ package com.insight.utils;
 import com.insight.utils.common.Base64Encryptor;
 import com.insight.utils.pojo.auth.TokenKey;
 import com.insight.utils.pojo.base.BusinessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.json.JsonMapper;
@@ -16,8 +18,7 @@ import java.util.*;
  * @remark Json工具类
  */
 public final class Json {
-    private static final String objReg = "^\\s*\\{\\s*(\"[^\"]*\"\\s*:\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*(,\\s*\"[^\"]*\"\\s*:\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*)*)?\\s*}\\s*$";
-    private static final String listReg = "^\\s*\\[\\s*((\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*(,\\s*(\"[^\"]*\"|true|false|null|-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?)\\s*)*)?\\s*]\\s*$";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Json.class);
     private static final JsonMapper MAPPER = JsonMapper.builder().build();
 
     /**
@@ -50,8 +51,7 @@ public final class Json {
      */
     public static String toPrettyJson(Object obj) {
         try {
-            return MAPPER.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(obj);
+            return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage());
         }
@@ -83,6 +83,7 @@ public final class Json {
         }
 
         try {
+            LOGGER.debug("JSON字符串是：{}", json);
             return MAPPER.readValue(json, type);
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
@@ -116,6 +117,7 @@ public final class Json {
         }
 
         try {
+            LOGGER.debug("JSON字符串是：{}", json);
             var javaType = MAPPER.getTypeFactory().constructParametricType(List.class, type);
             return MAPPER.readValue(json, javaType);
         } catch (JacksonException e) {
@@ -146,8 +148,8 @@ public final class Json {
         }
 
         try {
-            return MAPPER.readValue(json, new TypeReference<HashMap<String, Object>>() {
-            });
+            LOGGER.debug("JSON字符串是：{}", json);
+            return MAPPER.readValue(json, new TypeReference<HashMap<String, Object>>() {});
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
@@ -176,8 +178,8 @@ public final class Json {
         }
 
         try {
-            return MAPPER.readValue(json, new TypeReference<TreeMap<String, Object>>() {
-            });
+            LOGGER.debug("JSON字符串是：{}", json);
+            return MAPPER.readValue(json, new TypeReference<TreeMap<String, Object>>() {});
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
@@ -206,8 +208,8 @@ public final class Json {
         }
 
         try {
-            return MAPPER.readValue(json, new TypeReference<TreeMap<String, String>>() {
-            });
+            LOGGER.debug("JSON字符串是：{}", json);
+            return MAPPER.readValue(json, new TypeReference<TreeMap<String, String>>() {});
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
