@@ -261,7 +261,8 @@ public final class Json {
      * @return 字段值
      */
     public static <T> T getValue(String json, String name, Class<T> type) {
-        return toBean(getValue(json, name), type);
+        var value = getValue(json, name);
+        return value == null ? null : toBean(value, type);
     }
 
     /**
@@ -273,7 +274,8 @@ public final class Json {
      * @return 字段值
      */
     public static <T> List<T> getListValue(String json, String name, Class<T> type) {
-        return toList(getValue(json, name), type);
+        var value = getValue(json, name);
+        return value == null ? null : toList(value, type);
     }
 
     /**
@@ -284,6 +286,7 @@ public final class Json {
      * @return 字段值
      */
     public static Object getValue(String json, String name) {
-        return toMap(json).get(name);
+        var map = toMap(json);
+        return map == null ? null : map.get(name);
     }
 }
