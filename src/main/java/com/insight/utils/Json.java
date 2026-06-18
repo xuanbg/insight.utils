@@ -78,7 +78,7 @@ public final class Json {
      * @return bean
      */
     public static <T> T toBean(String json, Class<T> type) {
-        if (json == null || !json.trim().matches(objReg)) {
+        if (json == null || !json.trim().matches("^\\s*\\{.*}\\s*$")) {
             return null;
         }
 
@@ -111,7 +111,7 @@ public final class Json {
      * @return List
      */
     public static <T> List<T> toList(String json, Class<T> type) {
-        if (json == null || !json.trim().matches(listReg)) {
+        if (json == null || !json.trim().matches("^\\s*\\[.*]\\s*$")) {
             return new ArrayList<>();
         }
 
@@ -141,7 +141,7 @@ public final class Json {
      * @return hashmap
      */
     public static Map<String, Object> toMap(String json) {
-        if (json == null || !json.trim().matches(objReg)) {
+        if (json == null || !json.trim().matches("^\\s*\\{.*}\\s*$")) {
             return null;
         }
 
@@ -171,7 +171,7 @@ public final class Json {
      * @return TreeMap
      */
     public static TreeMap toTreeMap(String json) {
-        if (json == null || !json.trim().matches(objReg)) {
+        if (json == null || !json.trim().matches("^\\s*\\{.*}\\s*$")) {
             return null;
         }
 
@@ -201,7 +201,7 @@ public final class Json {
      * @return hashmap
      */
     public static Map<String, String> toStringValueMap(String json) {
-        if (json == null || !json.trim().matches(objReg)) {
+        if (json == null || !json.trim().matches("^\\s*\\{.*}\\s*$")) {
             return null;
         }
 
