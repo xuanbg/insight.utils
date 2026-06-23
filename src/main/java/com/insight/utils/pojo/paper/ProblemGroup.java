@@ -53,11 +53,11 @@ public class ProblemGroup extends BaseXo {
     }
 
     public String getSpecies() {
-        return Util.isEmpty(problems) ? null : problems.size() > 1 ? "综合题" :  problems.get(0).getSpecies();
+        return Util.isEmpty(problems) ? null : problems.size() > 1 ? "综合题" : problems.get(0).getSpecies();
     }
 
     public String getCaption() {
-        return caption;
+        return Util.rich2Text(caption);
     }
 
     public void setCaption(String caption) {

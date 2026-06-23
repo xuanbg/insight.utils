@@ -158,7 +158,7 @@ public class ProblemBase extends BaseXo {
     }
 
     public List<String> getAnswer() {
-        return answer;
+        return answer == null ? null : answer.stream().map(Util::rich2Text).toList();
     }
 
     public void setAnswer(List<String> answer) {
