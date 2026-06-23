@@ -45,9 +45,10 @@ public final class Util {
      */
     public static String rich2Text(String html) {
         if (isEmpty(html)) {
-            return html;
+            return null;
         }
-        Safelist safelist = new Safelist();
+
+        var safelist = new Safelist();
         safelist.addTags("img", "b", "strong", "i", "em", "u", "strike", "s", "sub", "sup");
         safelist.addAttributes("img", "src", "alt", "width", "height", ":all", "style");
         return Jsoup.clean(html, safelist);
