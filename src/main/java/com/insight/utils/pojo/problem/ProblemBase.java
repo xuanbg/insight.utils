@@ -130,7 +130,7 @@ public class ProblemBase extends BaseXo {
     }
 
     public String getQuestion() {
-        return question;
+        return Util.rich2Text(question);
     }
 
     public void setQuestion(String question) {
@@ -152,7 +152,7 @@ public class ProblemBase extends BaseXo {
             if (Util.isEmpty(val)) {
                 this.option.put(key, null);
             } else {
-                this.option.put(key, val);
+                this.option.put(key, Util.rich2Text(val));
             }
         }
     }
@@ -166,7 +166,7 @@ public class ProblemBase extends BaseXo {
     }
 
     public String getAnalyze() {
-        return analyze;
+        return Util.rich2Text(analyze);
     }
 
     public void setAnalyze(String analyze) {

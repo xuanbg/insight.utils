@@ -47,26 +47,10 @@ public final class Util {
         if (isEmpty(html)) {
             return html;
         }
-
-        var cleaned = Jsoup.clean(html, Safelist.none());
-        if (html.length() == cleaned.length()) {
-            return html;
-        }
-
-        var content = new StringBuilder();
-        var doc = Jsoup.parse(html);
-        for (var element : doc.getAllElements()) {
-            if (element.tagName().equalsIgnoreCase("img")) {
-                var src = element.attr("src");
-                if (Util.isNotEmpty(src)) {
-                    content.append("![](").append(src).append(")");
-                }
-            }
-
-            content.append(element.text().strip());
-        }
-
-        return content.toString().strip();
+        Safelist safelist = new Safelist();
+        safelist.addTags("img");
+        safelist.addAttributes("img", "src", "alt", "width", "height");
+        return Jsoup.clean(html, safelist);
     }
 
     /**
