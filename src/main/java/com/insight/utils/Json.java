@@ -8,9 +8,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tools.jackson.core.JacksonException;
 import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ext.javatime.deser.LocalDateDeserializer;
+import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.ext.javatime.deser.LocalTimeDeserializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalTimeSerializer;
 import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
+
+import static com.insight.utils.DateTime.*;
 
 /**
  * @author duxl
@@ -19,7 +31,20 @@ import java.util.*;
  */
 public final class Json {
     private static final Logger LOGGER = LoggerFactory.getLogger(Json.class);
-    private static final JsonMapper MAPPER = JsonMapper.builder().build();
+    private static final JsonMapper MAPPER;
+
+    static {
+        var module = new SimpleModule();
+
+        module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATETIME_FORMATTER));
+        module.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
+        module.addSerializer(LocalTime.class, new LocalTimeSerializer(TIME_FORMATTER));
+
+        module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATETIME_FORMATTER));
+        module.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
+        module.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
+        MAPPER = JsonMapper.builder().addModule(module).build();
+    }
 
     /**
      * 将bean转换成json
@@ -149,7 +174,8 @@ public final class Json {
 
         try {
             LOGGER.debug("JSON字符串是：{}", json);
-            return MAPPER.readValue(json, new TypeReference<HashMap<String, Object>>() {});
+            return MAPPER.readValue(json, new TypeReference<HashMap<String, Object>>() {
+            });
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
@@ -179,7 +205,8 @@ public final class Json {
 
         try {
             LOGGER.debug("JSON字符串是：{}", json);
-            return MAPPER.readValue(json, new TypeReference<TreeMap<String, Object>>() {});
+            return MAPPER.readValue(json, new TypeReference<TreeMap<String, Object>>() {
+            });
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
@@ -209,7 +236,8 @@ public final class Json {
 
         try {
             LOGGER.debug("JSON字符串是：{}", json);
-            return MAPPER.readValue(json, new TypeReference<TreeMap<String, String>>() {});
+            return MAPPER.readValue(json, new TypeReference<TreeMap<String, String>>() {
+            });
         } catch (JacksonException e) {
             throw new BusinessException("对象序列化失败！失败原因是：" + e.getMessage() + "  JSON字符串是：" + json);
         }
