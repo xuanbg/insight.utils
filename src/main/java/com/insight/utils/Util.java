@@ -48,8 +48,8 @@ public final class Util {
             return html;
         }
         Safelist safelist = new Safelist();
-        safelist.addTags("img");
-        safelist.addAttributes("img", "src", "alt", "width", "height");
+        safelist.addTags("img", "b", "strong", "i", "em", "u", "strike", "s", "sub", "sup");
+        safelist.addAttributes("img", "src", "alt", "width", "height", ":all", "style");
         return Jsoup.clean(html, safelist);
     }
 
