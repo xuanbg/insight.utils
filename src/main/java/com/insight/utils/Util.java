@@ -65,8 +65,10 @@ public final class Util {
         safelist.addAttributes(":all", "style");
 
         var text = html.replaceAll("\\R+", "<br>")
-                .replaceAll("<h\\D>", "<b>")
-                .replaceAll("</h\\D>", "</b><br>")
+                .replaceAll("<h[1-4][^>]*>", "<b>")
+                .replaceAll("</h[1-4]>", "</b><br>")
+                .replaceAll("<h[5-6][^>]*>", "")
+                .replaceAll("</h[5-6]>", "<br>")
                 .replace("<p>", "")
                 .replace("</p>", "<br>");
         return Jsoup.clean(text, safelist).replace("\n", "");
