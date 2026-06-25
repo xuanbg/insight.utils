@@ -90,7 +90,7 @@ public class Group extends BaseXo {
     }
 
     public String getCaption() {
-        return caption;
+        return Util.rich2Text(caption);
     }
 
     public void setCaption(String caption) {
