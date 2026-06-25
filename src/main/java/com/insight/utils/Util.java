@@ -49,9 +49,12 @@ public final class Util {
         }
 
         var safelist = new Safelist();
-        safelist.addTags("img", "b", "strong", "i", "em", "u", "strike", "s", "sub", "sup", "br");
+        safelist.addTags("img", "b", "strong", "i", "em", "u", "strike", "s", "sub", "sup", "br", "table", "tbody", "thead", "tr", "th", "td", "caption");
         safelist.addAttributes("img", "src", "alt", "width", "height", ":all", "style");
-        return Jsoup.clean(html, safelist);
+
+        var text = html.replaceAll("\\R|\\\\n|\\\\r\\\\n|\\r\\n|\\r|\\n|<br>+", "<br>")
+                .replaceAll("(?:<br>\\s*)+", "<br>");
+        return Jsoup.clean(text, safelist);
     }
 
     /**
