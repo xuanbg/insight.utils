@@ -49,12 +49,24 @@ public final class Util {
         }
 
         var safelist = new Safelist();
-        safelist.addTags("img", "b", "strong", "i", "em", "u", "strike", "s", "sub", "sup", "br", "table", "tbody", "thead", "tr", "th", "td", "caption");
-        safelist.addAttributes("img", "src", "alt", "width", "height", ":all", "style");
+        // 基础标签：加粗、斜体、下划线、图片、换行、表格等
+        safelist.addTags("b", "strong", "i", "em", "u", "strike", "s", "sub", "sup");
+        safelist.addTags("img", "br");
+        safelist.addTags("table", "tr", "td", "th", "tbody", "caption");
+        safelist.addTags("span"); // 必须加上 span（如果数据用 div 包裹，也加上 "div"）
 
-        var text = html.replaceAll("\\R|\\\\n|\\\\r\\\\n|\\r\\n|\\r|\\n|<br>+", "<br>")
-                .replaceAll("(?:<br>\\s*)+", "<br>");
-        return Jsoup.clean(text, safelist);
+        // 图片属性
+        safelist.addAttributes("img", "src", "alt", "width", "height");
+        // 表格属性
+        safelist.addAttributes("table", "border", "cellpadding", "cellspacing");
+        safelist.addAttributes("td", "colspan", "rowspan");
+        safelist.addAttributes("th", "colspan", "rowspan");
+
+        // 【核心】允许所有标签保留 style 属性（这样波浪线、点状线样式就能保留）
+        safelist.addAttributes(":all", "style");
+
+        var text = html.replaceAll("\\R+", "<br>");
+        return Jsoup.clean(text, safelist).replace("\n", "");
     }
 
     /**
