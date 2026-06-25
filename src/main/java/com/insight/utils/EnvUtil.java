@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class EnvUtil implements EnvironmentAware {
-    private static Environment environment;
+    private Environment environment;
 
     /**
      * 设置环境变量
@@ -20,7 +20,7 @@ public class EnvUtil implements EnvironmentAware {
      */
     @Override
     public void setEnvironment(Environment environment) {
-        EnvUtil.environment = environment;
+        this.environment = environment;
     }
 
     /**
@@ -29,7 +29,7 @@ public class EnvUtil implements EnvironmentAware {
      * @param key 配置Key
      * @return 配置值
      */
-    public static String getValue(String key) {
+    public String getValue(String key) {
         return environment.getProperty(key);
     }
 }
