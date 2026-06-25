@@ -61,11 +61,14 @@ public final class Util {
         safelist.addAttributes("table", "border", "cellpadding", "cellspacing");
         safelist.addAttributes("td", "colspan", "rowspan");
         safelist.addAttributes("th", "colspan", "rowspan");
-
         // 【核心】允许所有标签保留 style 属性（这样波浪线、点状线样式就能保留）
         safelist.addAttributes(":all", "style");
 
-        var text = html.replaceAll("\\R+", "<br>");
+        var text = html.replaceAll("\\R+", "<br>")
+                .replaceAll("<h\\D>", "<b>")
+                .replaceAll("</h\\D>", "</b><br>")
+                .replace("<p>", "")
+                .replace("</p>", "<br>");
         return Jsoup.clean(text, safelist).replace("\n", "");
     }
 
