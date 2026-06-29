@@ -60,7 +60,7 @@ public final class Util {
             if (style.toLowerCase().contains("font-emphasize:dot")) {
                 element.attr("style", "font-emphasize:dot");
             } else if (style.toLowerCase().contains("text-emphasisposition:under")) {
-                element.attr("style", "font-etext-emphasisposition:under");
+                element.attr("style", "text-emphasisposition:under");
             } else {
                 element.unwrap();
             }
