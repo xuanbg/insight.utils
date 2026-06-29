@@ -48,6 +48,23 @@ public final class Util {
             return null;
         }
 
+        var doc = Jsoup.parse(html);
+        var elements = doc.select("span");
+        for (var element : elements) {
+            var style = element.attr("style");
+            if (style.isEmpty()) {
+                continue;
+            }
+
+            // 判断是否包含 font-emphasize:dot（忽略大小写和空格）
+            if (style.toLowerCase().contains("font-emphasize:dot")) {
+                // 替换为仅保留该样式
+                element.attr("style", "font-emphasize:dot");
+            } else {
+                element.unwrap();
+            }
+        }
+
         var safelist = new Safelist();
         // 基础标签：加粗、斜体、下划线、图片、换行、表格等
         safelist.addTags("b", "strong", "i", "em", "u", "strike", "s", "sub", "sup");
@@ -64,11 +81,12 @@ public final class Util {
         // 【核心】允许所有标签保留 style 属性（这样波浪线、点状线样式就能保留）
         safelist.addAttributes(":all", "style");
 
-        var text = html.replaceAll("\\R+", "<br>")
+        var text = doc.body().html().replaceAll("\\R+", "<br>")
                 .replaceAll("<h[1-4][^>]*>", "<b>")
                 .replaceAll("</h[1-4]>", "</b><br>")
                 .replaceAll("<h[5-6][^>]*>", "")
                 .replaceAll("</h[5-6]>", "<br>")
+                .replaceAll("&nbsp;+", " ")
                 .replace("<p>", "")
                 .replace("</p>", "<br>");
         return Jsoup.clean(text, safelist).replace("\n", "");
