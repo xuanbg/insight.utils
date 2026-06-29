@@ -87,6 +87,7 @@ public final class Util {
                 .replaceAll("</h[1-4]>", "</b><br>")
                 .replaceAll("<h[5-6][^>]*>", "")
                 .replaceAll("</h[5-6]>", "<br>")
+                .replaceAll("<span style=\"\"[^>]*>(.*?)</span>", "$1")
                 .replaceAll("&nbsp;+", " ")
                 .replace("<p>", "")
                 .replace("</p>", "<br>");
