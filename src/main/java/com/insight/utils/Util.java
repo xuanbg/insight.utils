@@ -59,8 +59,8 @@ public final class Util {
             // 判断是否包含 font-emphasize:dot（忽略大小写和空格）
             if (style.toLowerCase().contains("font-emphasize:dot")) {
                 element.attr("style", "font-emphasize:dot");
-            } else if (style.toLowerCase().contains("text-emphasisposition:under")) {
-                element.attr("style", "text-emphasisposition:under");
+            } else if (style.toLowerCase().contains("text-decoration: underline")) {
+                element.attr("style", "text-decoration: underline");
             } else {
                 element.unwrap();
             }
