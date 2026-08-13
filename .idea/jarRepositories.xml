@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="local_release" />
+      <option name="name" value="local_release" />
+      <option name="url" value="http://172.25.254.40:8081/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="local_release" />
+      <option name="name" value="local_release" />
+      <option name="url" value="http://172.25.254.40:8081/repository/maven-releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="dev" />
+      <option name="name" value="dev" />
+      <option name="url" value="http://172.25.254.40:8081/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="local_release" />
+      <option name="name" value="local_release" />
+      <option name="url" value="http://192.168.236.8:8081/repository/maven-releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="dev" />
+      <option name="name" value="dev" />
+      <option name="url" value="https://nexus.i-facture.com/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="local_release" />
+      <option name="name" value="local_release" />
+      <option name="url" value="https://nexus.i-facture.com/repository/maven-releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="local_release" />
+      <option name="name" value="local_release" />
+      <option name="url" value="http://192.168.160.8:8081/repository/maven-releases/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="release" />
+      <option name="name" value="release" />
+      <option name="url" value="https://nexus.i-facture.com/repository/maven-public/" />
+    </remote-repository>
+  </component>
+</project>

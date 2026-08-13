@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset3" name="Config" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/com/insight/utils/common/IDGenderConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/insight/utils/common/LocalDateTimeConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/insight/utils/common/RabbitConfig.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/insight/utils/common/JsonConfig.java</file>
+        </fileset>
+      </configuration>
+    </facet>
+  </component>
+</module>
