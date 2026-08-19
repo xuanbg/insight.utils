@@ -72,8 +72,7 @@ public final class Util {
                 .replaceAll("<h[5-6][^>]*>", "")
                 .replaceAll("</h[5-6]>", "<br>")
                 .replaceAll("(?s)<span style=\"\"[^>]*>(.*?)</span>", "$1")
-                .replaceAll("(?s)(<p[^>]*>(.*?)</p>)(<br>*)*", "$1<br>")
-                .replaceAll("&nbsp;+", " ");
+                .replaceAll("(?s)(<p[^>]*>(.*?)</p>)(<br>*)*", "$1<br>");
 
         var safelist = new Safelist();
         // 基础标签：加粗、斜体、下划线、图片、换行、表格等
