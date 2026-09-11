@@ -88,8 +88,11 @@ public final class HttpClient {
      * @return 请求配置
      */
     public static RequestConfig createDefaultHttpClientConfig() {
-        return RequestConfig.custom().setSocketTimeout(SOCKET_TIMEOUT).setConnectTimeout(CONNECT_TIMEOUT)
-                .setConnectionRequestTimeout(CONNECTION_REQUEST_TIMEOUT).setRedirectsEnabled(false).build();
+        return RequestConfig.custom()
+                .setSocketTimeout(SOCKET_TIMEOUT)
+                .setConnectTimeout(CONNECT_TIMEOUT)
+                .setConnectionRequestTimeout(CONNECTION_REQUEST_TIMEOUT)
+                .setRedirectsEnabled(false).build();
     }
 
     /**
@@ -99,7 +102,10 @@ public final class HttpClient {
      * @return 请求客户端
      */
     public static CloseableHttpClient createDefaultHttpClient(RequestConfig config) {
-        return HttpClients.custom().setDefaultRequestConfig(config).setMaxConnPerRoute(MAX_CONN_PER_ROUTE).setMaxConnTotal(MAX_CONN_TOTAL).build();
+        return HttpClients.custom()
+                .setDefaultRequestConfig(config)
+                .setMaxConnPerRoute(MAX_CONN_PER_ROUTE)
+                .setMaxConnTotal(MAX_CONN_TOTAL).build();
     }
 
     /**

@@ -240,6 +240,16 @@ public class ProblemBase extends BaseXo {
     }
 
     /**
+     * 答案是否包含空值
+     *
+     * @return 是否包含内容
+     */
+    @JsonIgnore
+    public Boolean answerIsEmpty() {
+        return Util.isEmpty(answer) || answer.stream().anyMatch(Util::isEmpty);
+    }
+
+    /**
      * 判断当前试题是否为指定ID的试题
      *
      * @param id 试题ID
