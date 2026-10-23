@@ -159,4 +159,14 @@ public final class StringOps extends KeyOps {
         var absent = REDIS.opsForValue().setIfPresent(key, json, timeout, unit);
         return absent != null && absent;
     }
+
+    /**
+     * 对Key的值进行自增操作
+     *
+     * @param key 键
+     * @return 自增后的值
+     */
+    public static Long increment(String key) {
+        return REDIS.opsForValue().increment(key);
+    }
 }
